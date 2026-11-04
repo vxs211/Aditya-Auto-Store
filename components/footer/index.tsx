@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import { MenuLink } from "@/components/nav/menu-link";
 import { Container } from "@/components/ui/container";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { Sections } from "@/components/ui/sections";
 import { shopConfig } from "@/lib/config";
 import type { MenuItem } from "@/lib/menu/types";
@@ -80,7 +79,7 @@ export async function Footer() {
                 unoptimized
                 width={180}
               />
-              <Eyebrow>Made to fit your scooter. Since 2006.</Eyebrow>
+              <p className="font-heading text-h3">Made to fit your scooter. Since 2006.</p>
               <p className="text-small text-muted-foreground">{shopConfig.site.description}</p>
               {hasContact && (
                 <div className="grid gap-1 text-small text-muted-foreground">

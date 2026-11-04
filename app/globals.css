@@ -16,29 +16,33 @@
   --font-heading: var(--font-geist-sans);
   --font-label: var(--font-michroma);
   --text-xxs: 0.625rem;
-  --text-display: 3.25rem;
-  --text-display--line-height: 3.5rem;
-  --text-display--letter-spacing: -0.01em;
+  /* Two sizes do the visible work: one very large, one small. Fluid, so the hero stays large on wide screens. */
+  --text-display: clamp(2.75rem, 7.2vw, 6.5rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.035em;
   --text-display--font-weight: 700;
-  --text-h1: 2.5rem;
-  --text-h1--line-height: 2.875rem;
+  --text-h1: clamp(2.25rem, 5vw, 4rem);
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.03em;
   --text-h1--font-weight: 700;
-  --text-h2: 1.875rem;
-  --text-h2--line-height: 2.25rem;
-  --text-h2--font-weight: 600;
-  --text-h3: 1.375rem;
-  --text-h3--line-height: 1.75rem;
+  --text-h2: clamp(1.75rem, 3.4vw, 2.75rem);
+  --text-h2--line-height: 1.05;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 700;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.02em;
   --text-h3--font-weight: 600;
-  --text-h4: 1.25rem;
-  --text-h4--line-height: 1.75rem;
+  --text-h4: 1.125rem;
+  --text-h4--line-height: 1.4;
   --text-h4--font-weight: 600;
-  --text-body: 1rem;
-  --text-body--line-height: 1.625rem;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.55;
   --text-small: 0.875rem;
-  --text-small--line-height: 1.375rem;
-  --text-label: 0.75rem;
-  --text-label--line-height: 1rem;
-  --text-label--letter-spacing: 0.12em;
+  --text-small--line-height: 1.4;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.06em;
   /* Headings track tighter as they grow (Geist behavior); attaches to every text-* utility. */
   --text-lg--letter-spacing: -0.01em;
   --text-xl--letter-spacing: -0.015em;
@@ -75,7 +79,8 @@
 }
 
 :root {
-  --radius: 0.25rem;
+  /* Square: the parts are pressed steel, and the soft 8px radius is the generic default. */
+  --radius: 0rem;
   --background: #ffffff;
   --foreground: #111111;
   --card: #ffffff;

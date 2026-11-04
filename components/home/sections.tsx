@@ -3,35 +3,48 @@ import Image from "next/image";
 import { ProductCard } from "@/components/product-card/product-card";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Link } from "@/components/ui/link";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { brandDisplayName } from "@/lib/collections";
+import { brandDisplayName, modelDisplayName } from "@/lib/collections";
 import { getCollectionResults, getFitmentBrands } from "@/lib/collections/server";
 import type { FitmentBrand } from "@/lib/collections/types";
 
-export function HomeHero() {
+export async function HomeHero() {
+  // The lead brand's own photograph: a real scooter wearing the parts, not a stock picture.
+  const lead = (await getFitmentBrands()).find((brand) => brand.image);
+
   return (
     <section className="bg-foreground text-background">
-      <Container className="grid gap-6 py-16 md:py-24">
-        <Eyebrow className="text-background/70">Made in our own factory since 2006</Eyebrow>
-        <h1 className="text-h1 max-w-4xl md:text-display">
-          Footrests, bumpers, guards and matting, made to fit your scooter.
-        </h1>
-        <p className="max-w-xl text-silver">
-          Stainless steel accessories for Honda, TVS, Suzuki, Hero, Yamaha, Bajaj Chetak and
-          electric scooters. Buy one piece or order in bulk.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Button render={<Link href="/collections" />} size="lg">
-            Shop by model
-          </Button>
-          <Button render={<Link href="/collections/all" />} size="lg" variant="inverse">
-            See all products
-          </Button>
+      <div className="mx-auto grid max-w-312 items-center gap-8 px-4 pt-14 lg:grid-cols-2 lg:gap-10 lg:px-6 lg:pt-0">
+        <div className="grid gap-7 lg:py-28">
+          <h1 className="text-display">Made to fit your scooter.</h1>
+          <p className="max-w-md text-silver">
+            Footrests, bumpers, crash guards, matting and seat covers in stainless steel, for Honda,
+            TVS, Suzuki, Hero, Yamaha, Bajaj Chetak and electric scooters. One piece or in bulk.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Button render={<Link href="/collections" />} size="lg">
+              Shop by model
+            </Button>
+            <Button render={<Link href="/collections/all" />} size="lg" variant="inverse">
+              See all products
+            </Button>
+          </div>
         </div>
-      </Container>
+        {lead?.image && (
+          <div className="relative -mx-4 aspect-4/3 lg:mx-0 lg:aspect-auto lg:h-[36rem]">
+            <Image
+              alt={lead.image.altText}
+              className="object-cover"
+              fill
+              priority
+              sizes="100vw"
+              src={lead.image.url}
+            />
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -42,32 +55,32 @@ export async function ModelStrip() {
   if (models.length === 0) return null;
 
   return (
-    <section className="grid gap-5">
-      <Container>
-        <SectionHeading eyebrow="Suitable for" title="Find your scooter" />
-      </Container>
-      {/* A plain horizontal scroller: no autoplay, so it needs no motion preference handling. */}
-      <ul className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 lg:px-6">
-        {models.map(({ handle, image, title }) => (
-          <li className="w-56 shrink-0 snap-start md:w-64" key={handle}>
-            <Link className="group grid gap-2" href={`/collections/${handle}`}>
-              <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-muted">
-                {image && (
-                  <Image
-                    alt={image.altText}
-                    className="object-cover transition-transform group-hover:scale-105"
-                    fill
-                    sizes="100vw"
-                    src={image.url}
-                  />
-                )}
-              </div>
-              <p className="text-sm font-semibold uppercase">{title}</p>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </section>
+    <Container>
+      <section className="grid gap-6">
+        <SectionHeading title="Find your scooter" />
+        {/* A plain scroller: no autoplay, so it needs no motion preference handling. */}
+        <ul className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2">
+          {models.map(({ handle, image, title }) => (
+            <li className="w-56 shrink-0 snap-start md:w-64" key={handle}>
+              <Link className="group grid gap-2" href={`/collections/${handle}`}>
+                <div className="relative aspect-4/3 overflow-hidden bg-muted">
+                  {image && (
+                    <Image
+                      alt={image.altText}
+                      className="object-cover transition-transform group-hover:scale-105"
+                      fill
+                      sizes="100vw"
+                      src={image.url}
+                    />
+                  )}
+                </div>
+                <p className="font-semibold">{modelDisplayName(title)}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </Container>
   );
 }
 
@@ -79,7 +92,7 @@ export async function BestSellers() {
     <Container>
       <section className="grid gap-5">
         <div className="flex flex-wrap items-end justify-between gap-2">
-          <SectionHeading eyebrow="Our most in demand" title="Best sellers" />
+          <SectionHeading title="Best sellers" />
           <Link className="text-sm text-link hover:underline" href="/collections/best-sellers">
             View all
           </Link>
@@ -104,7 +117,7 @@ export function AboutIntro() {
   return (
     <Container>
       <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10">
-        <SectionHeading eyebrow="About us" title="We make what we sell" />
+        <SectionHeading title="We make what we sell" />
         <div className="grid gap-4 text-muted-foreground">
           <p>
             Aditya Auto Accessories manufactures two wheeler accessories in Ahmedabad, Gujarat. Our
@@ -144,7 +157,7 @@ export async function BrandMosaic() {
   return (
     <Container>
       <section className="grid gap-5">
-        <SectionHeading eyebrow="Our most trending" title="Shop by brand" />
+        <SectionHeading title="Shop by brand" />
         <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2">
           <BrandTile brand={lead} className="md:row-span-2" priority />
           {rest.slice(0, 4).map((brand) => (
@@ -204,23 +217,26 @@ function BrandTile({
   );
 }
 
-const MARQUEE = [
-  "Made in our own factory",
-  "Stainless steel",
-  "Made to fit",
-  "Single piece or bulk",
+const FACTS = [
+  { body: "Our own unit in Ahmedabad, since 2006.", title: "We make it" },
+  { body: "Jindal 202, which resists heat and rust.", title: "Stainless steel" },
+  { body: "Listed under the scooter it is made for.", title: "One model each" },
 ];
 
-export function Marquee() {
+export function ProofBand() {
   return (
-    <section aria-label="What we stand for" className="border-y border-border bg-muted py-4">
-      <ul className="flex flex-wrap justify-center gap-x-8 gap-y-2 px-4">
-        {MARQUEE.map((item) => (
-          <li className="font-label text-label uppercase text-muted-foreground" key={item}>
-            {item}
-          </li>
-        ))}
-      </ul>
+    <section className="bg-primary text-primary-foreground">
+      <Container className="grid gap-10 py-14 md:py-20">
+        <h2 className="text-h2 max-w-2xl">Parts from the people who press them.</h2>
+        <dl className="grid gap-8 md:grid-cols-3 md:gap-10">
+          {FACTS.map(({ body, title }) => (
+            <div key={title}>
+              <dt className="text-h3">{title}</dt>
+              <dd className="mt-1 text-foreground/80">{body}</dd>
+            </div>
+          ))}
+        </dl>
+      </Container>
     </section>
   );
 }
@@ -228,7 +244,7 @@ export function Marquee() {
 export function HomeContactBand() {
   return (
     <Container>
-      <section className="grid gap-4 rounded-lg bg-foreground p-6 text-background md:flex md:items-center md:justify-between md:p-10">
+      <section className="grid gap-5 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14">
         <div>
           <h2 className="text-h2">Not sure what fits?</h2>
           <p className="text-silver">Tell us your scooter and year, and we will help you choose.</p>

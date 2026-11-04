@@ -6,11 +6,11 @@ import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
 import { CollectionSchema } from "@/components/schema/collection-schema";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { Sections } from "@/components/ui/sections";
+import { modelDisplayName } from "@/lib/collections";
 import type { Collection, CollectionFitment } from "@/lib/collections/types";
 import { shopConfig } from "@/lib/config";
 
@@ -23,7 +23,9 @@ interface FitmentLayoutProps {
 // Brand pages list their models; model pages show the product grid passed as children, with no filters or sorting.
 export function FitmentLayout({ children, collection, fitment }: FitmentLayoutProps) {
   const { handle, title, updatedAt } = collection;
-  const { banner, body, brand, models } = fitment;
+  const { body, brand, models } = fitment;
+  // The banner metafield is rarely set; the collection image is a real picture of this scooter.
+  const banner = fitment.banner ?? collection.image ?? null;
   const crumbs = [
     { name: "Home", path: "/" },
     ...(brand ? [{ name: brand.title, path: `/collections/${brand.handle}` }] : []),
@@ -38,9 +40,15 @@ export function FitmentLayout({ children, collection, fitment }: FitmentLayoutPr
         collection={{ description: collection.description, handle, title, updatedAt }}
       />
       <section className="bg-foreground text-background">
-        <Container className="grid items-center gap-6 py-8 md:grid-cols-2 md:py-12">
-          <div className="relative aspect-video overflow-hidden rounded-lg bg-white/10">
-            {banner ? (
+        <Container
+          className={
+            banner
+              ? "grid items-center gap-8 py-10 md:grid-cols-2 md:py-14"
+              : "grid gap-5 py-14 md:py-20"
+          }
+        >
+          {banner && (
+            <div className="relative aspect-video overflow-hidden">
               <Image
                 alt={banner.altText}
                 className="object-cover"
@@ -49,18 +57,16 @@ export function FitmentLayout({ children, collection, fitment }: FitmentLayoutPr
                 sizes="100vw"
                 src={banner.url}
               />
-            ) : (
-              <ImagePlaceholder className="size-full" />
-            )}
-          </div>
-          <div className="grid gap-3 md:text-right">
+            </div>
+          )}
+          <div className="grid gap-3">
             <h1 className="text-display uppercase">{title}</h1>
             <p className="text-silver">Accessories made to fit {compatibleWith}</p>
           </div>
         </Container>
       </section>
       <Container>
-        <Sections className="gap-8 pt-6 md:pt-8">
+        <Sections className="gap-16 pt-6 md:gap-20 md:pt-8">
           <nav aria-label="Breadcrumb">
             <ol className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
               {crumbs.map(({ name, path }, index) => (
@@ -86,7 +92,6 @@ export function FitmentLayout({ children, collection, fitment }: FitmentLayoutPr
               {brand && (
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <div>
-                    <Eyebrow className="text-link">Shop the collection</Eyebrow>
                     <h2 className="text-h2">{title}</h2>
                   </div>
                 </div>
@@ -109,10 +114,7 @@ function ModelTiles({ models }: { models: CollectionFitment["models"] }) {
     <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
       {models.map(({ handle, image, productCount, title }) => (
         <li key={handle}>
-          <Link
-            className="group grid overflow-hidden rounded-lg border border-border bg-background"
-            href={`/collections/${handle}`}
-          >
+          <Link className="group grid overflow-hidden bg-muted" href={`/collections/${handle}`}>
             <div className="relative aspect-4/3 overflow-hidden bg-muted">
               {image ? (
                 <Image
@@ -127,7 +129,7 @@ function ModelTiles({ models }: { models: CollectionFitment["models"] }) {
               )}
             </div>
             <div className="grid gap-1 p-4">
-              <h2 className="text-h4 uppercase">{title}</h2>
+              <h2 className="text-h4 uppercase">{modelDisplayName(title)}</h2>
               <p className="text-sm text-muted-foreground">
                 {productCount} {productCount === 1 ? "product" : "products"}
               </p>
@@ -155,7 +157,7 @@ function ContentCard({ body, title }: { body: string; title: string }) {
   const paragraphs = richTextParagraphs(body);
   if (paragraphs.length === 0) return null;
   return (
-    <section className="grid gap-4 rounded-lg border border-l-4 border-border border-l-primary p-6 md:grid-cols-[1fr_2fr] md:p-8">
+    <section className="grid gap-6 bg-muted p-6 md:grid-cols-[1fr_2fr] md:p-10">
       <h2 className="text-h3">About {title}</h2>
       <div className="grid gap-3 text-muted-foreground">
         {paragraphs.map((paragraph) => (
@@ -170,7 +172,7 @@ function ContactBand() {
   const { phone, whatsapp } = shopConfig.contact;
   if (!phone && !whatsapp) return null;
   return (
-    <section className="grid gap-4 rounded-lg bg-foreground p-6 text-background md:flex md:items-center md:justify-between md:p-8">
+    <section className="grid gap-5 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-12">
       <div>
         <h2 className="text-h3">Can't find your scooter?</h2>
         <p className="text-silver">Message us the model and year and we'll help you choose.</p>

@@ -7,7 +7,7 @@ import {
   BrandMosaic,
   HomeContactBand,
   HomeHero,
-  Marquee,
+  ProofBand,
   ModelStrip,
 } from "@/components/home/sections";
 import { Page } from "@/components/ui/page";
@@ -33,7 +33,7 @@ export default function HomePage() {
   return (
     <Page className="pt-0">
       <HomeHero />
-      <Sections className="py-12 md:py-16">
+      <Sections className="gap-20 py-16 md:gap-32 md:py-24">
         <Suspense fallback={null}>
           <ModelStrip />
         </Suspense>
@@ -44,7 +44,7 @@ export default function HomePage() {
         <Suspense fallback={null}>
           <BrandMosaic />
         </Suspense>
-        <Marquee />
+        <ProofBand />
         <HomeContactBand />
       </Sections>
     </Page>

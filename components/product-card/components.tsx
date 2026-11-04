@@ -57,7 +57,8 @@ function ProductCardImage({
   return (
     <div
       data-slot="product-card-image"
-      className={cn("relative aspect-square overflow-hidden", className)}
+      // Catalogue shots are chrome on white; a tone step keeps the part from dissolving into the page.
+      className={cn("relative aspect-square overflow-hidden bg-muted", className)}
     >
       {src ? (
         <Image

@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { Suspense } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { Eyebrow } from "@/components/ui/eyebrow";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Sections } from "@/components/ui/sections";
+import { getCollectionResults } from "@/lib/collections/server";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
 const TITLE = "About us";
@@ -31,6 +33,18 @@ const STATS = [
   { label: "Products", value: "165" },
   { label: "Scooter models covered", value: "44" },
   { label: "Vehicle brands", value: "9" },
+];
+
+const RANGE = [
+  "All round accessories",
+  "Beading and front guard",
+  "Bumpers in stainless steel",
+  "Buzzer",
+  "Ladies step",
+  "Side stand",
+  "Leg guard",
+  "Floor matting",
+  "Seat covers",
 ];
 
 const VALUES = [
@@ -79,19 +93,11 @@ const INFRASTRUCTURE = [
   },
 ];
 
-const REASONS = [
-  { body: "Made in our own factory, not bought in and relabelled.", title: "We make it" },
-  { body: "Pick your scooter and see only what fits it.", title: "Easy to choose" },
-  { body: "Buy a single piece, or 50 and more in bulk.", title: "One or many" },
-  { body: "Ask us before you buy if you are unsure what fits.", title: "We will help" },
-];
-
 export default function AboutPage() {
   return (
     <Page className="pt-0 md:pt-0">
       <section className="bg-foreground text-background">
         <Container className="grid gap-5 py-12 md:py-20">
-          <Eyebrow className="text-background/70">About Aditya Auto</Eyebrow>
           <h1 className="text-display max-w-3xl">Made in our own factory since 2006</h1>
           <p className="max-w-2xl text-silver">
             Aditya Auto Accessories manufactures two wheeler accessories in Ahmedabad, Gujarat. Our
@@ -105,7 +111,7 @@ export default function AboutPage() {
           <dl className="grid grid-cols-2 gap-6 py-8 md:grid-cols-4">
             {STATS.map(({ label, value }) => (
               <div className="grid gap-1" key={label}>
-                <dt className="text-label font-label uppercase text-muted-foreground">{label}</dt>
+                <dt className="text-small text-muted-foreground">{label}</dt>
                 <dd className="text-h1">{value}</dd>
               </div>
             ))}
@@ -114,9 +120,9 @@ export default function AboutPage() {
       </section>
 
       <Container>
-        <Sections className="py-12 md:py-16">
+        <Sections className="gap-20 py-16 md:gap-28 md:py-20">
           <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10">
-            <SectionHeading eyebrow="About us" title="What we do" />
+            <SectionHeading title="What we do" />
             <div className="grid gap-4 text-muted-foreground">
               <p>
                 We manufacture stainless steel accessories with high resistance to heat and
@@ -136,43 +142,45 @@ export default function AboutPage() {
             </div>
           </section>
 
+          <section className="grid gap-8">
+            <SectionHeading title="What we manufacture" />
+            <Suspense fallback={null}>
+              <RangePictures />
+            </Suspense>
+            <ul className="grid gap-x-12 gap-y-2 text-h3 sm:grid-cols-2 lg:grid-cols-3">
+              {RANGE.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
+
           <section className="grid gap-5">
-            <SectionHeading eyebrow="What we stand for" title="How we build" />
-            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <SectionHeading title="How we build" />
+            <dl className="grid gap-x-16 gap-y-8 md:grid-cols-2">
               {VALUES.map(({ body, title }) => (
-                <li className="grid gap-1 border-l-4 border-l-primary pl-4" key={title}>
-                  <h3 className="text-h4">{title}</h3>
-                  <p className="text-sm text-muted-foreground">{body}</p>
-                </li>
+                <div key={title}>
+                  <dt className="text-h3">{title}</dt>
+                  <dd className="mt-1 text-muted-foreground">{body}</dd>
+                </div>
               ))}
-            </ul>
+            </dl>
           </section>
 
-          <section className="grid gap-5">
-            <SectionHeading eyebrow="Our infrastructure" title="What it takes to make a part" />
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {INFRASTRUCTURE.map(({ body, title }) => (
-                <li className="grid gap-1 rounded-lg border border-border p-5" key={title}>
-                  <h3 className="text-h4">{title}</h3>
-                  <p className="text-sm text-muted-foreground">{body}</p>
-                </li>
-              ))}
-            </ul>
+          <section className="bg-muted px-6 py-12 md:px-12 md:py-16">
+            <div className="grid gap-8 md:grid-cols-[1fr_2fr] md:gap-12">
+              <SectionHeading title="What it takes to make a part" />
+              <dl className="grid gap-x-12 gap-y-7 sm:grid-cols-2">
+                {INFRASTRUCTURE.map(({ body, title }) => (
+                  <div key={title}>
+                    <dt className="text-h4">{title}</dt>
+                    <dd className="mt-1 text-sm text-muted-foreground">{body}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </section>
 
-          <section className="grid gap-5">
-            <SectionHeading eyebrow="Why Aditya Auto" title="Why buy from us" />
-            <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {REASONS.map(({ body, title }) => (
-                <li className="grid gap-1" key={title}>
-                  <h3 className="text-h4">{title}</h3>
-                  <p className="text-sm text-muted-foreground">{body}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section className="grid gap-4 rounded-lg bg-foreground p-6 text-background md:flex md:items-center md:justify-between md:p-10">
+          <section className="grid gap-4 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14">
             <div>
               <h2 className="text-h2">Looking for parts for your scooter?</h2>
               <p className="text-silver">Pick your model and see what fits.</p>
@@ -187,5 +195,30 @@ export default function AboutPage() {
         </Sections>
       </Container>
     </Page>
+  );
+}
+
+// Real parts from the catalogue, so the range is shown rather than only listed.
+async function RangePictures() {
+  const { products } = await getCollectionResults({ handle: "best-sellers" });
+  const shown = products.filter((product) => product.featuredImage).slice(0, 4);
+  if (shown.length === 0) return null;
+  return (
+    <ul className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+      {shown.map((product) => (
+        <li key={product.id}>
+          <div className="relative aspect-square overflow-hidden bg-muted">
+            <Image
+              alt={product.featuredImage?.altText ?? product.title}
+              className="object-cover"
+              fill
+              sizes="100vw"
+              src={product.featuredImage?.url ?? ""}
+            />
+          </div>
+          <p className="mt-2 text-sm text-muted-foreground">{product.title}</p>
+        </li>
+      ))}
+    </ul>
   );
 }

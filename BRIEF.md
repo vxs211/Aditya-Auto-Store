@@ -289,3 +289,20 @@ the imported collection titles carry.
 - Cart lines no longer print Shopify's synthetic "Default Title" option.
 - Not built: breadcrumb (needs the product's model collection), reviews, FAQ, benefits block,
   product video section.
+
+## Look round one
+
+Applied the taste rules (its scripts were not installed; judged from browser screenshots instead).
+
+- Type: display, h1 and h2 are fluid and much larger (display up to 104px); fewer sizes doing more work.
+- Radius 0 everywhere: the parts are pressed steel, and the 8px soft radius is the generic default.
+- Eyebrows deleted sitewide (the `Eyebrow` component is gone); the information moved into headings.
+- Outlined cards replaced by filled fields or plain definition lists; no 1px boxes, no left rules.
+- Home hero now carries a dominant scooter photograph; headline cut to 25 characters.
+- Marquee of tiny caps replaced by a proof band on the orange field at readable size.
+- Brand and model banners fall back to the collection image, so no empty placeholder box.
+- About carries four real product photographs; the duplicate "why buy from us" row is gone.
+- Section rhythm 80-128px; product card images sit on a tone step.
+
+Known and not fixed: the catalogue photographs carry the partner's red watermark, the scooter
+photographs show parts with a PARAGON badge, and the brand banners are the partner's red artwork.
