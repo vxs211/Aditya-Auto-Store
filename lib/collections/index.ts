@@ -84,3 +84,16 @@ export function parseFilterInput(input: string): ProductFilter | undefined {
     return undefined;
   }
 }
+
+// Collection titles carry suffixes like "Scooter Accessories"; menus and tiles show the brand alone.
+export function brandDisplayName(title: string): string {
+  return (
+    title
+      .replace(/\s*(bike and scooter|two wheeler[a-z]*|scooter|bike)?\s*accessories$/i, "")
+      .trim() || title
+  );
+}
+
+export function modelDisplayName(title: string): string {
+  return title.replace(/\s*accessories$/i, "").trim() || title;
+}

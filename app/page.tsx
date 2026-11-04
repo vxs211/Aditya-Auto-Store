@@ -1,54 +1,51 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
-import { ProductsGrid } from "@/components/product/products-grid";
-import { Container } from "@/components/ui/container";
+import {
+  AboutIntro,
+  BestSellers,
+  BrandMosaic,
+  HomeContactBand,
+  HomeHero,
+  Marquee,
+  ModelStrip,
+} from "@/components/home/sections";
 import { Page } from "@/components/ui/page";
 import { Sections } from "@/components/ui/sections";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const title = "Home";
-  const description = "Explore featured products, curated collections, and seasonal campaigns.";
-  return {
-    title: `${title} | ${shopConfig.site.name}`,
-    description,
-    alternates: buildAlternates({ pathname: "/" }),
-    openGraph: buildOpenGraph({
-      title,
-      description,
-      url: "/",
-      type: "website",
-    }),
-  };
-}
+const DESCRIPTION = shopConfig.site.description;
+
+export const metadata: Metadata = {
+  title: "Scooter accessories made to fit",
+  description: DESCRIPTION,
+  alternates: buildAlternates({ pathname: "/" }),
+  openGraph: buildOpenGraph({
+    description: DESCRIPTION,
+    title: shopConfig.site.name,
+    type: "website",
+    url: "/",
+  }),
+};
 
 export default function HomePage() {
   return (
     <Page className="pt-0">
-      <Sections>
-        <section className="grid grid-cols-1">
-          <div className="col-start-1 row-start-1 hidden md:block md:aspect-4/1" />
-          <div className="relative col-start-1 row-start-1 flex items-center justify-center px-5 py-10 lg:px-10">
-            <div className="flex flex-col items-center text-center gap-2.5">
-              <h1 className="text-3xl md:text-5xl max-w-3xl text-foreground">
-                A Storefront Built on Vercel Shop
-              </h1>
-              <p className="text-sm md:text-base max-w-xl text-foreground">
-                Agent-ready commerce, powered by Shopify, Next, and Eve.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <Container>
-          <ProductsGrid
-            title="Products"
-            eagerCount={4}
-            limit={8}
-            collectionUrl="/collections/all"
-          />
-        </Container>
+      <HomeHero />
+      <Sections className="py-12 md:py-16">
+        <Suspense fallback={null}>
+          <ModelStrip />
+        </Suspense>
+        <Suspense fallback={null}>
+          <BestSellers />
+        </Suspense>
+        <AboutIntro />
+        <Suspense fallback={null}>
+          <BrandMosaic />
+        </Suspense>
+        <Marquee />
+        <HomeContactBand />
       </Sections>
     </Page>
   );

@@ -1,6 +1,6 @@
 import { BotIdClient } from "botid/client";
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Inter, Michroma } from "next/font/google";
 
 import "./globals.css";
 import { Suspense } from "react";
@@ -8,12 +8,14 @@ import { Suspense } from "react";
 import { ActionBar } from "@/components/action-bar";
 import { AgentButton } from "@/components/agent/agent-button";
 import { AnalyticsComponents } from "@/components/analytics";
+import { AnnouncementBar } from "@/components/announcement-bar";
 import { CartUI } from "@/components/cart/cart-ui";
 import { CartProviderWrapper } from "@/components/cart/context";
 import { CartStandardActionsScript } from "@/components/cart/standard-actions";
 import { Footer } from "@/components/footer";
 import { Nav } from "@/components/nav";
 import { SiteSchema } from "@/components/schema/site-schema";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { botIdProtectedRoutes } from "@/lib/botid";
 import { seedCartData } from "@/lib/cart/server";
 import { shopConfig } from "@/lib/config";
@@ -29,9 +31,15 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+});
+
+const michroma = Michroma({
+  subsets: ["latin"],
+  variable: "--font-michroma",
+  weight: "400",
 });
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -44,7 +52,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartStandardActionsScript />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex min-h-dvh flex-col font-sans antialiased`}
+        className={`${geistSans.variable} ${inter.variable} ${michroma.variable} flex min-h-dvh flex-col font-sans antialiased`}
       >
         <a
           href="#main-content"
@@ -55,11 +63,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteSchema />
 
         <CartProviderWrapper cartData={cartData}>
+          <AnnouncementBar />
           <Nav />
           <main id="main-content" className="flex flex-1 flex-col min-w-0">
             {children}
           </main>
           <Footer />
+          <WhatsAppButton />
           <CartUI />
           <Suspense>
             <ActionBar>{shopConfig.agent.isEnabled && <AgentButton />}</ActionBar>
@@ -75,7 +85,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return {
-    description: `Shop premium products, curated collections, and latest offers from ${shopConfig.site.name}.`,
+    description: shopConfig.site.description,
     generator: shopConfig.site.name,
     metadataBase: new URL(shopConfig.site.url),
     openGraph: {

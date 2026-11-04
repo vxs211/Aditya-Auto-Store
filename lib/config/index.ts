@@ -2,7 +2,7 @@ import type { ShopConfig } from "./types";
 
 const defaultUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "http://localhost:3000";
+  : "http://localhost:3100";
 
 export const shopConfig = {
   agent: {
@@ -23,6 +23,8 @@ export const shopConfig = {
       isEnabled: false,
     },
   },
+  // TODO(owner): real announcements, for example a bulk-order offer once the discount is set.
+  announcements: [],
   auth: {
     isEnabled: false,
   },
@@ -30,10 +32,17 @@ export const shopConfig = {
     checkLevel: "basic",
     isEnabled: false,
   },
+  // TODO(owner): email and postal address. A section renders only when set.
+  contact: {
+    address: null as string | null,
+    email: null as string | null,
+    phone: "+91 95583 94079" as string | null,
+    whatsapp: "919558394079" as string | null,
+  },
   localization: {
-    country: "US",
+    country: "IN",
     language: "EN",
-    locale: "en-US" as const,
+    locale: "en-IN" as const,
   },
   pdp: {
     bundles: {
@@ -67,9 +76,14 @@ export const shopConfig = {
   },
   site: {
     description:
-      "A Storefront Built on Vercel Shop. Agent-ready commerce, powered by Shopify, Next, and Eve.",
-    name: "Vercel Shop",
+      "Footrests, bumpers, crash guards, matting and seat covers for popular scooter models. Made in our own factory since 2006.",
+    name: "Aditya Auto Accessories",
     url: defaultUrl,
+  },
+  social: {
+    facebook: "https://www.facebook.com/AdityaAutoAcce",
+    instagram: "https://www.instagram.com/adityaautoaccessories/",
+    linkedin: "https://www.linkedin.com/in/aditya-auto-accessories-621084229/",
   },
 } satisfies ShopConfig;
 

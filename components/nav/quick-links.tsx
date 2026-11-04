@@ -5,7 +5,7 @@ import type { MenuItem } from "@/lib/menu/types";
 
 import { MenuLink } from "./menu-link";
 
-const MAX_COLUMNS = 5;
+const MAX_COLUMNS = 10;
 
 export function QuickLinks({ items }: { items: MenuItem[] }) {
   return (
@@ -22,7 +22,7 @@ const TRIGGER_CLASS = "flex items-center gap-1 text-sm hover:opacity-70 transiti
 function NavItem({ item }: { item: MenuItem }) {
   if (item.items.length === 0) {
     return (
-      <li className="flex items-center h-16">
+      <li className="flex items-center h-18">
         <MenuLink url={item.url} className={TRIGGER_CLASS}>
           {item.title}
         </MenuLink>
@@ -33,7 +33,7 @@ function NavItem({ item }: { item: MenuItem }) {
   const columns = item.items.slice(0, MAX_COLUMNS);
 
   return (
-    <li className="group flex items-center h-16">
+    <li className="group flex items-center h-18">
       <MenuLink url={item.url} className={TRIGGER_CLASS}>
         {item.title}
         <ChevronDown className="size-3" aria-hidden="true" />
@@ -50,7 +50,7 @@ function NavItem({ item }: { item: MenuItem }) {
         )}
       >
         <div className="px-5 lg:px-10 pb-5">
-          <div className="grid grid-cols-5 gap-5">
+          <div className="grid grid-cols-5 gap-x-5 gap-y-6">
             {columns.map((column) => (
               <div key={column.id}>
                 {column.url ? (

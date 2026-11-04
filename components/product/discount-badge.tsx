@@ -9,7 +9,7 @@ export function DiscountBadge({ percent, className, ...props }: DiscountBadgePro
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full px-2 py-0.5 font-mono text-xs font-medium tabular-nums bg-positive/15 text-positive",
+        "inline-flex items-center rounded-lg bg-primary/10 px-2 py-0.5 text-xs font-semibold tabular-nums text-link",
         className,
       )}
       {...props}

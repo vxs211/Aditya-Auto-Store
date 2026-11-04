@@ -131,7 +131,11 @@ function ProductCardPrice({
     <div data-slot="product-card-price" className={cn(className)}>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <span className="inline-flex items-baseline gap-x-1 text-sm text-foreground">
-          <Price amount={amount} currencyCode={currencyCode} className="text-sm text-foreground" />
+          <Price
+            amount={amount}
+            currencyCode={currencyCode}
+            className={cn("text-sm", discountPercent !== null ? "text-link" : "text-foreground")}
+          />
           {isRange && (
             <>
               <span>–</span>

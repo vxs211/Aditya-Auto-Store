@@ -1,0 +1,25 @@
+import { cn } from "cn";
+import type { ComponentProps, ReactNode } from "react";
+
+import { Eyebrow } from "@/components/ui/eyebrow";
+
+interface SectionHeadingProps extends Omit<ComponentProps<"div">, "title"> {
+  align?: "center" | "left";
+  eyebrow?: string;
+  title: ReactNode;
+}
+
+export function SectionHeading({
+  align = "left",
+  className,
+  eyebrow,
+  title,
+  ...props
+}: SectionHeadingProps) {
+  return (
+    <div className={cn("grid gap-2", align === "center" && "text-center", className)} {...props}>
+      {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
+      <h2 className="font-heading text-h2">{title}</h2>
+    </div>
+  );
+}

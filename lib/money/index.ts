@@ -11,7 +11,12 @@ export function formatCurrencySymbol(
 }
 
 export function formatPrice(money: Money, locale: string = shopConfig.localization.locale): string {
-  return formatMoney(money, { locale }).localizedString;
+  const amount = Number(money.amount);
+  return new Intl.NumberFormat(locale, {
+    currency: money.currencyCode,
+    minimumFractionDigits: Number.isInteger(amount) ? 0 : undefined,
+    style: "currency",
+  }).format(amount);
 }
 
 // Shopify minor units follow each currency's ISO 4217 exponent, which Intl reports.

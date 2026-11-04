@@ -36,6 +36,10 @@ export interface ShopConfig {
       isEnabled: boolean;
     };
   };
+  announcements: {
+    href?: string;
+    message: string;
+  }[];
   auth: {
     isEnabled: boolean;
   };
@@ -46,6 +50,12 @@ export interface ShopConfig {
       >["checkLevel"]
     >;
     isEnabled: boolean;
+  };
+  contact: {
+    address: string | null;
+    email: string | null;
+    phone: string | null;
+    whatsapp: string | null;
   };
   localization: CommerceLocale & {
     locale: string;
@@ -85,4 +95,5 @@ export interface ShopConfig {
     name: string;
     url: string;
   };
+  social: Partial<Record<"facebook" | "instagram" | "linkedin" | "x" | "youtube", string>>;
 }

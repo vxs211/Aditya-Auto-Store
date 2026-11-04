@@ -9,6 +9,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Link } from "@/components/ui/link";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { MenuItem } from "@/lib/menu/types";
 
@@ -27,12 +29,17 @@ export function MobileMenu({ items }: { items: MenuItem[] }) {
         }
       />
       <SheetContent side="left" className="gap-0">
-        <div className="flex h-16 items-center px-5">
+        <div className="flex h-18 items-center px-5">
           <SheetTitle className="text-lg font-semibold">Menu</SheetTitle>
         </div>
         <nav className="min-h-0 flex-1 overflow-y-auto px-5 pb-5">
           <MobileMenuList items={items} onLinkClick={close} />
         </nav>
+        <div className="border-t p-5">
+          <Button className="w-full" render={<Link href="/collections" onClick={close} />}>
+            Shop by model
+          </Button>
+        </div>
       </SheetContent>
     </Sheet>
   );

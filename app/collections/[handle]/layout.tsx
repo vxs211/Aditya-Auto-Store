@@ -5,7 +5,8 @@ import {
   CollectionDetailSkeleton,
   CollectionLayout,
 } from "@/components/collections/collection-page";
-import { getCollection, getCollections } from "@/lib/collections/server";
+import { FitmentLayout } from "@/components/collections/fitment";
+import { getCollection, getCollectionFitment, getCollections } from "@/lib/collections/server";
 import { PLACEHOLDER_HANDLE } from "@/lib/static-params";
 
 export async function generateStaticParams() {
@@ -36,8 +37,21 @@ async function CollectionHandleLayoutContent({
 }: Pick<LayoutProps<"/collections/[handle]">, "children" | "params">) {
   const { handle } = await params;
   if (handle === PLACEHOLDER_HANDLE) notFound();
-  const collection = await getCollection({ handle });
+  const [collection, fitment] = await Promise.all([
+    getCollection({ handle }),
+    getCollectionFitment({ handle }),
+  ]);
   if (!collection) notFound();
+
+  // A brand lists model tiles instead of products, so its default grid is not rendered.
+  if (fitment.models.length > 0) return <FitmentLayout collection={collection} fitment={fitment} />;
+  if (fitment.brand) {
+    return (
+      <FitmentLayout collection={collection} fitment={fitment}>
+        {children}
+      </FitmentLayout>
+    );
+  }
 
   return (
     <CollectionLayout collection={collection} handle={handle}>

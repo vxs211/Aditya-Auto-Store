@@ -6,7 +6,9 @@ import type {
   BrowseResults,
   BrowseState,
   Collection,
+  CollectionFitment,
   CollectionWithThumbnail,
+  FitmentBrand,
 } from "@/lib/collections/types";
 import { shopConfig } from "@/lib/config";
 import type { CommerceLocale } from "@/lib/config/types";
@@ -15,6 +17,8 @@ import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 import { getNumericShopifyId } from "@/lib/shopify/id/server";
 import {
   fetchCollection,
+  fetchCollectionFitment,
+  fetchFitmentBrands,
   fetchCollections,
   fetchCollectionsListing,
 } from "@/lib/shopify/operations/collections/server";
@@ -59,6 +63,26 @@ export async function getCollection(params: {
   const collection = await fetchCollection(params);
   if (collection) tagCollections([collection]);
   return collection;
+}
+
+export async function getCollectionFitment(params: {
+  handle: string;
+  locale?: CommerceLocale;
+}): Promise<CollectionFitment> {
+  "use cache: remote";
+  cacheLife("max");
+  // Model counts depend on product membership, so product changes must refresh it.
+  cacheTag("collections", `collection-${params.handle}`, "products-index");
+
+  return fetchCollectionFitment(params);
+}
+
+export async function getFitmentBrands(): Promise<FitmentBrand[]> {
+  "use cache: remote";
+  cacheLife("max");
+  cacheTag("collections", "collections-index");
+
+  return fetchFitmentBrands();
 }
 
 export async function getCollectionsListing(

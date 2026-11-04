@@ -41,3 +41,25 @@ export interface CollectionWithThumbnail extends Collection {
 }
 
 export type SortValue = (typeof SORT_VALUES)[number];
+
+export interface FitmentModel {
+  handle: string;
+  image: Image | null;
+  productCount: number;
+  title: string;
+}
+
+// A brand lists models; a model points at its brand; neither means an ordinary collection.
+export interface CollectionFitment {
+  banner: Image | null;
+  body: string | null;
+  brand: { handle: string; title: string } | null;
+  models: FitmentModel[];
+}
+
+export interface FitmentBrand {
+  handle: string;
+  image: Image | null;
+  models: { handle: string; image: Image | null; title: string }[];
+  title: string;
+}
