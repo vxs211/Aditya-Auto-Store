@@ -74,9 +74,11 @@ function CartLineItem({ item }: CartLineItemProps) {
   const originalUnitPrice =
     finalUnitPrice < sellingUnitPrice ? sellingUnitPrice : compareAtUnitPrice;
   const title = merchandise?.product.title || "Cart item";
-  const variantLabel = merchandise?.selectedOptions?.length
-    ? merchandise.selectedOptions.map((option) => option.value).join(" / ")
-    : "";
+  // Shopify gives single-variant products a synthetic Title/Default Title option; it is not a choice the buyer made.
+  const chosenOptions = (merchandise?.selectedOptions ?? []).filter(
+    (option) => !(option.name === "Title" && option.value === "Default Title"),
+  );
+  const variantLabel = chosenOptions.map((option) => option.value).join(" / ");
   const lineName = variantLabel ? `${title}, ${variantLabel}` : title;
   const href = merchandise?.product.handle ? `/products/${merchandise.product.handle}` : undefined;
   const image = merchandise?.image;

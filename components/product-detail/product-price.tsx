@@ -21,7 +21,11 @@ export function ProductPrice({
   const markedDown = isMarkedDown(amount, compareAtAmount);
   const discountPercent = getDiscountPercent(amount, compareAtAmount);
   return (
-    <div className={cn("flex items-center gap-2.5 flex-wrap", className)} {...props}>
+    <div
+      className={cn("flex items-center gap-2.5 flex-wrap", className)}
+      data-slot="product-price"
+      {...props}
+    >
       <Price
         amount={amount}
         currencyCode={currencyCode}

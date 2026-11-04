@@ -277,3 +277,15 @@ of the 9 brands with their models (desktop), and an accordion on mobile. `MAX_CO
 `components/nav/quick-links.tsx` raised from 5 to 10 so 9 brands fit in two rows.
 `brandDisplayName` / `modelDisplayName` (lib/collections/index.ts) drop the "… Accessories" suffix
 the imported collection titles carry.
+
+## Product page (Phase 4, partial)
+
+- Buy box: stock dot, four trust chips (facts only), quantity, add to cart, Buy with Shop.
+- Description, Materials, Packing and Care as accordions. No Shipping/Returns panel and no
+  "free shipping" or "easy returns" claims until those policies exist.
+- `StickyBuyBar` reuses `BuyButtons` inside the same `ProductForm`, so both submit one cart form.
+  It appears only once `#buy-box` has scrolled off the top, which in practice means mobile:
+  the desktop buy box is `lg:sticky` and never leaves the viewport.
+- Cart lines no longer print Shopify's synthetic "Default Title" option.
+- Not built: breadcrumb (needs the product's model collection), reviews, FAQ, benefits block,
+  product video section.

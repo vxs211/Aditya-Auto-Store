@@ -8,15 +8,13 @@ import { BuyWithShopLogo } from "@/components/product-detail/buy-with-shop-logo"
 import { ComplementaryProducts } from "@/components/product-detail/complementary-products";
 import { GiftCardPurchaseForm } from "@/components/product-detail/gift-card-purchase-form";
 import { ProductOpenGraph } from "@/components/product-detail/open-graph";
+import { ProductAccordions } from "@/components/product-detail/product-accordions";
 import {
   ProductForm,
   ProductFormOptions,
   ProductFormPrice,
 } from "@/components/product-detail/product-form";
-import {
-  ProductInfoDescription,
-  ProductInfoOptions,
-} from "@/components/product-detail/product-info";
+import { ProductInfoOptions } from "@/components/product-detail/product-info";
 import {
   ColorImageCarouselItems,
   ColorImageGrid,
@@ -24,6 +22,8 @@ import {
 } from "@/components/product-detail/product-media";
 import { ProductPrice } from "@/components/product-detail/product-price";
 import { ProductSchema } from "@/components/product-detail/schema";
+import { StickyBuyBar } from "@/components/product-detail/sticky-buy-bar";
+import { StockIndicator, TrustChips } from "@/components/product-detail/trust-chips";
 import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -185,6 +185,10 @@ function ProductInfoArea({
               compareAtAmount={product.compareAtPriceRange?.minVariantPrice.amount}
             />
           ) : null}
+          <div className="mt-5 grid gap-4">
+            <StockIndicator availableForSale={allInStock} />
+            <TrustChips />
+          </div>
         </div>
 
         {singleVariant ? (
@@ -223,7 +227,7 @@ function ProductInfoArea({
         <ComplementaryProducts handle={handle} limit={4} title="Pairs Well With" />
       ) : null}
 
-      <ProductInfoDescription descriptionHtml={descriptionHtml} />
+      <ProductAccordions descriptionHtml={descriptionHtml} />
     </div>
   );
 }
@@ -269,7 +273,7 @@ function ProductInfoContent({
 
   return (
     <ProductForm product={formProduct}>
-      <div className="grid gap-10">
+      <div className="grid gap-10" id="buy-box">
         {!product.hasUniformPricing ? (
           <div data-slot="product-info-price">
             {priceSlot ?? <ProductFormPrice fallbackVariant={fallbackVariant} />}
@@ -287,6 +291,18 @@ function ProductInfoContent({
           />
         )}
       </div>
+      {!product.isGiftCard && (
+        <StickyBuyBar
+          availableForSale={product.availableForSale}
+          fallbackVariant={fallbackVariant}
+          image={
+            product.featuredImage
+              ? { altText: product.featuredImage.altText, url: product.featuredImage.url }
+              : null
+          }
+          title={product.title}
+        />
+      )}
     </ProductForm>
   );
 }
