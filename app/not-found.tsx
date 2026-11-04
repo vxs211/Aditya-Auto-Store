@@ -3,36 +3,66 @@ import { headers } from "next/headers";
 import { permanentRedirect, redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
+import { brandDisplayName } from "@/lib/collections";
+import { getFitmentBrands } from "@/lib/collections/server";
 import { shopConfig } from "@/lib/config";
 import { SHOPIFY_ROUTE_TEMPLATES } from "@/lib/shopify/routing";
 import { createRequestStorefrontClient } from "@/lib/shopify/storefront/server";
 
 export default function NotFoundError() {
   return (
-    <Page className="flex flex-1 flex-col">
+    <Page className="flex flex-1 flex-col pt-0 md:pt-0">
       {shopConfig.redirects.shopifyNotFound.isEnabled ? (
         <Suspense fallback={null}>
           <ShopifyNotFoundRedirect />
         </Suspense>
       ) : null}
-      <Container className="flex flex-1 flex-col items-center justify-center text-center">
-        <div className="flex flex-col items-center text-center gap-2.5">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl">Page Not Found</h1>
-          <p className="text-sm md:text-base text-muted-foreground max-w-xl">
-            The link may be incorrect, or the page has been removed.
+      <section className="bg-foreground text-background">
+        <Container className="grid gap-5 py-16 md:py-28">
+          <p aria-hidden className="font-heading text-display leading-none text-primary">
+            404
           </p>
-          <Link
-            href="/search"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-          >
-            Continue Shopping
-          </Link>
-        </div>
+          <h1 className="text-h1 max-w-2xl">This page is not here</h1>
+          <p className="max-w-xl text-silver">
+            The link may be wrong, or the page has been moved. Find your scooter and see what fits.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <Button render={<Link href="/collections" />}>Shop by model</Button>
+            <Button render={<Link href="/search" />} variant="inverse">
+              Search
+            </Button>
+          </div>
+        </Container>
+      </section>
+      <Container className="py-16 md:py-24">
+        <Suspense fallback={null}>
+          <PopularBrands />
+        </Suspense>
       </Container>
     </Page>
+  );
+}
+
+async function PopularBrands() {
+  const brands = await getFitmentBrands();
+  if (brands.length === 0) return null;
+  return (
+    <section className="grid gap-5">
+      <h2 className="font-heading text-h3">Shop by brand</h2>
+      <ul className="flex flex-wrap gap-3">
+        {brands.map((brand) => (
+          <li key={brand.handle}>
+            <Button render={<Link href={`/collections/${brand.handle}`} />} variant="outline">
+              {brandDisplayName(brand.title)}
+            </Button>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { shopConfig } from "@/lib/config";
+import { GUIDES } from "@/lib/guides";
 import { getShopPolicies } from "@/lib/policies/server";
 import { getShopifySitemapPage, getShopifySitemapPagesCount } from "@/lib/seo/server";
 import { type ShopifySitemapType } from "@/lib/shopify/operations/sitemap/types";
@@ -29,7 +30,16 @@ function xmlResponse(body: string): Response {
 
 async function renderStatic(): Promise<Response> {
   const policies = await getShopPolicies().catch(() => []);
-  const entries = ["/", ...policies.map(({ handle }) => `/policies/${handle}`)]
+  const entries = [
+    "/",
+    "/about",
+    "/contact",
+    "/faq",
+    "/guides",
+    ...GUIDES.map(({ slug }) => `/guides/${slug}`),
+    "/track-order",
+    ...policies.map(({ handle }) => `/policies/${handle}`),
+  ]
     .map((pathname) => `  <url><loc>${escapeXml(toAbsoluteUrl(pathname))}</loc></url>`)
     .join("\n");
   return xmlResponse(urlsetWrap(entries));

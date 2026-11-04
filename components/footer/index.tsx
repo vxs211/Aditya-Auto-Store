@@ -23,6 +23,7 @@ export async function Footer() {
       items: [
         { id: "footer-products", items: [], title: "Products", url: "/collections/all" },
         { id: "footer-models", items: [], title: "Shop by model", url: "/collections" },
+        { id: "footer-guides", items: [], title: "Guides", url: "/guides" },
       ],
       title: "Shop",
       url: "",
@@ -37,37 +38,30 @@ export async function Footer() {
       url: "",
     },
   ];
-  if (policies.length > 0) {
-    items.push({
-      id: "footer-help",
-      items: policies.map((policy) => ({
+  items.push({
+    id: "footer-help",
+    items: [
+      { id: "footer-faq", items: [], title: "FAQ", url: "/faq" },
+      { id: "footer-track", items: [], title: "Track your order", url: "/track-order" },
+      ...policies.map((policy) => ({
         id: policy.handle,
         items: [],
         title: policy.title,
         url: `/policies/${policy.handle}`,
       })),
-      title: "Help",
-      url: "",
-    });
-  }
+    ],
+    title: "Help",
+    url: "",
+  });
   const hasContact = Boolean(contact.address || contact.email || contact.phone);
 
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-foreground pb-24 text-background lg:pb-0">
       {/* pb-22 clears the fixed agent ActionBar pill when it renders */}
       <Container className={cn("pt-20 pb-10", shopConfig.agent.isEnabled && "pb-22")}>
         <Sections className="gap-16">
           <div className="grid gap-10 md:grid-cols-4">
             <div className="grid content-start gap-4">
-              <Image
-                alt={shopConfig.site.name}
-                className="-ml-3.5 h-14 w-auto"
-                height={60}
-                sizes="100vw"
-                src="/brand/aditya-logo-horizontal-orange.svg"
-                unoptimized
-                width={180}
-              />
               <p className="font-heading text-h3">Made to fit your scooter. Since 2006.</p>
               <p className="text-small text-silver">{shopConfig.site.description}</p>
               {hasContact && (
@@ -95,10 +89,6 @@ export async function Footer() {
             </div>
             <FooterMenu items={items} />
           </div>
-          {/* The name returns at full width: the close, not another row of cards. */}
-          <p aria-hidden className="font-heading text-display leading-none whitespace-nowrap">
-            Aditya Auto
-          </p>
         </Sections>
       </Container>
       <div className="border-t border-white/15 text-silver">
@@ -106,6 +96,17 @@ export async function Footer() {
           &copy; {shopConfig.site.name}. All rights reserved.
         </Container>
       </div>
+      {/* Edge to edge on small screens; held to the content grid on wide ones. */}
+      <Image
+        alt=""
+        aria-hidden
+        className="mx-auto block h-auto w-full max-w-312 lg:px-6"
+        height={226}
+        sizes="100vw"
+        src="/brand/footer-name.svg"
+        unoptimized
+        width={1610}
+      />
     </footer>
   );
 }

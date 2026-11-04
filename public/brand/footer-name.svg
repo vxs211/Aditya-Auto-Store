@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 52 1610 226">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f66101;
+        font-family: Ethnocentric-Regular, Ethnocentric;
+        font-size: 326.33px;
+      }
+
+      .cls-2 {
+        letter-spacing: -.32em;
+      }
+
+      .cls-3 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-4 {
+        letter-spacing: -.06em;
+      }
+    </style>
+  </defs>
+  <text class="cls-1" transform="translate(.72 276.55)"><tspan class="cls-4" x="0" y="0">Adit</tspan><tspan class="cls-2" x="1011.61" y="0">y</tspan><tspan class="cls-3" x="1241.99" y="0">a</tspan></text>
+</svg>
