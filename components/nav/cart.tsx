@@ -5,9 +5,16 @@ import { withFallback } from "@/lib/shopify/errors/server";
 
 import { CartIconClient } from "./cart-client";
 
-export async function CartIcon() {
+export async function CartIcon({ className, label }: { className?: string; label?: string }) {
   const cart = await withFallback(getCart(), undefined);
-  return <CartIconClient cartLabel="Cart" initialCart={cart ?? null} />;
+  return (
+    <CartIconClient
+      cartLabel="Cart"
+      className={className}
+      initialCart={cart ?? null}
+      showLabel={Boolean(label)}
+    />
+  );
 }
 
 export function CartIconFallback() {

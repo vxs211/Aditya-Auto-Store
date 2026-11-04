@@ -22,10 +22,19 @@ import { SEARCH_TERM_MAX_LENGTH } from "@/lib/search";
 import { usePredictiveSearch } from "@/lib/search/client";
 import type { PredictiveSearchProduct, SearchSuggestion } from "@/lib/search/types";
 
-export function SearchModal() {
+export function SearchModal({
+  label,
+  shortcut = true,
+  triggerClassName,
+}: {
+  label?: string;
+  shortcut?: boolean;
+  triggerClassName?: string;
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
+    if (!shortcut) return;
     function handleShortcut(event: KeyboardEvent) {
       if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
@@ -34,26 +43,29 @@ export function SearchModal() {
     }
     document.addEventListener("keydown", handleShortcut);
     return () => document.removeEventListener("keydown", handleShortcut);
-  }, []);
+  }, [shortcut]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <SearchTrigger />
+      <SearchTrigger className={triggerClassName} label={label} />
       <SearchDialogContent open={open} onClose={() => setOpen(false)} />
     </Dialog>
   );
 }
 
-function SearchTrigger() {
+function SearchTrigger({ className, label }: { className?: string; label?: string }) {
   return (
     <DialogTrigger
       render={
         <button
           type="button"
-          className="flex items-center justify-center text-foreground hover:text-foreground/80 transition-colors"
+          className={
+            className ??
+            "flex items-center justify-center text-foreground hover:text-foreground/80 transition-colors"
+          }
         >
           <Search className="size-5" />
-          <span className="sr-only">Search</span>
+          <span className={label ? undefined : "sr-only"}>{label ?? "Search"}</span>
         </button>
       }
     />

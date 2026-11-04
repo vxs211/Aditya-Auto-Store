@@ -9,7 +9,7 @@ const MAX_COLUMNS = 10;
 
 export function QuickLinks({ items }: { items: MenuItem[] }) {
   return (
-    <ul className="hidden md:flex items-center gap-5">
+    <ul className="hidden lg:flex items-center gap-5">
       {items.map((item) => (
         <NavItem key={item.id} item={item} />
       ))}

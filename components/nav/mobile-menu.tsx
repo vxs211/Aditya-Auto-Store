@@ -16,15 +16,24 @@ import type { MenuItem } from "@/lib/menu/types";
 
 import { MenuLink } from "./menu-link";
 
-export function MobileMenu({ items }: { items: MenuItem[] }) {
+export function MobileMenu({
+  items,
+  label,
+  triggerClassName,
+}: {
+  items: MenuItem[];
+  label?: string;
+  triggerClassName: string;
+}) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
         render={
-          <button type="button" className="md:hidden -ml-2 p-2" aria-label="Menu">
+          <button type="button" className={triggerClassName}>
             <Menu className="size-5" />
+            <span className={label ? undefined : "sr-only"}>{label ?? "Menu"}</span>
           </button>
         }
       />

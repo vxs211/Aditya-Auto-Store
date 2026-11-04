@@ -14,6 +14,7 @@ import { CartProviderWrapper } from "@/components/cart/context";
 import { CartStandardActionsScript } from "@/components/cart/standard-actions";
 import { Footer } from "@/components/footer";
 import { PageMotion } from "@/components/motion/page-motion";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Nav } from "@/components/nav";
 import { SiteSchema } from "@/components/schema/site-schema";
 import { WhatsAppButton } from "@/components/whatsapp-button";
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Footer />
           <WhatsAppButton />
           <PageMotion />
+          <SmoothScroll />
           <CartUI />
           <Suspense>
             <ActionBar>{shopConfig.agent.isEnabled && <AgentButton />}</ActionBar>
