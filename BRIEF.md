@@ -306,3 +306,18 @@ Applied the taste rules (its scripts were not installed; judged from browser scr
 
 Known and not fixed: the catalogue photographs carry the partner's red watermark, the scooter
 photographs show parts with a PARAGON badge, and the brand banners are the partner's red artwork.
+
+## Motion (GSAP)
+
+`components/motion/page-motion.tsx` is the whole motion layer: one client component in the root
+layout. Anything marked `data-reveal` rises 28px and fades in as it enters, staggered 80ms, via
+`ScrollTrigger.batch`.
+
+Three constraints shaped it, each learned from a failure in the browser:
+- It runs on `load`, not in a layout effect: GSAP writing inline styles while React was still
+  hydrating streamed sections produced hydration mismatches.
+- It uses `gsap.from`, never a pre-hide, so a failed or slow script leaves the page readable.
+- It skips anything in the first screen (`top > 90vh` at setup). That content is the LCP, and
+  animating it raced with hydration and left the hero stuck half-faded.
+
+`prefers-reduced-motion: reduce` skips the whole layer. Hover and focus feedback stays in CSS.

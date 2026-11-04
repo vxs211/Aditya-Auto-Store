@@ -33,7 +33,10 @@ export async function HomeHero() {
           </div>
         </div>
         {lead?.image && (
-          <div className="relative -mx-4 aspect-4/3 lg:mx-0 lg:aspect-auto lg:h-[36rem]">
+          <div
+            className="relative -mx-4 aspect-4/3 lg:mx-0 lg:aspect-auto lg:h-[36rem]"
+            data-reveal
+          >
             <Image
               alt={lead.image.altText}
               className="object-cover"
@@ -56,7 +59,7 @@ export async function ModelStrip() {
 
   return (
     <Container>
-      <section className="grid gap-6">
+      <section className="grid gap-6" data-reveal>
         <SectionHeading title="Find your scooter" />
         {/* A plain scroller: no autoplay, so it needs no motion preference handling. */}
         <ul className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2">
@@ -90,7 +93,7 @@ export async function BestSellers() {
 
   return (
     <Container>
-      <section className="grid gap-5">
+      <section className="grid gap-5" data-reveal>
         <div className="flex flex-wrap items-end justify-between gap-2">
           <SectionHeading title="Best sellers" />
           <Link className="text-sm text-link hover:underline" href="/collections/best-sellers">
@@ -116,7 +119,7 @@ export async function BestSellers() {
 export function AboutIntro() {
   return (
     <Container>
-      <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10">
+      <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10" data-reveal>
         <SectionHeading title="We make what we sell" />
         <div className="grid gap-4 text-muted-foreground">
           <p>
@@ -156,7 +159,7 @@ export async function BrandMosaic() {
 
   return (
     <Container>
-      <section className="grid gap-5">
+      <section className="grid gap-5" data-reveal>
         <SectionHeading title="Shop by brand" />
         <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2">
           <BrandTile brand={lead} className="md:row-span-2" priority />
@@ -226,7 +229,7 @@ const FACTS = [
 export function ProofBand() {
   return (
     <section className="bg-primary text-primary-foreground">
-      <Container className="grid gap-10 py-14 md:py-20">
+      <Container className="grid gap-10 py-14 md:py-20" data-reveal>
         <h2 className="text-h2 max-w-2xl">Parts from the people who press them.</h2>
         <dl className="grid gap-8 md:grid-cols-3 md:gap-10">
           {FACTS.map(({ body, title }) => (
@@ -244,7 +247,10 @@ export function ProofBand() {
 export function HomeContactBand() {
   return (
     <Container>
-      <section className="grid gap-5 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14">
+      <section
+        className="grid gap-5 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14"
+        data-reveal
+      >
         <div>
           <h2 className="text-h2">Not sure what fits?</h2>
           <p className="text-silver">Tell us your scooter and year, and we will help you choose.</p>

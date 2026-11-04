@@ -52,7 +52,7 @@ export default function ContactPage() {
 
       <Container>
         <Sections className="gap-20 py-16 md:gap-28 md:py-20">
-          <section className="grid gap-8 md:grid-cols-2 md:gap-12">
+          <section className="grid gap-8 md:grid-cols-2 md:gap-12" data-reveal>
             <div className="grid gap-5">
               <SectionHeading title="Talk to us" />
               <dl className="grid gap-5">
@@ -110,7 +110,10 @@ export default function ContactPage() {
             </div>
           </section>
 
-          <section className="grid gap-5 bg-muted p-8 md:flex md:items-center md:justify-between md:p-14">
+          <section
+            className="grid gap-5 bg-muted p-8 md:flex md:items-center md:justify-between md:p-14"
+            data-reveal
+          >
             <div>
               <h2 className="text-h3">Know the part you need?</h2>
               <p className="text-muted-foreground">Find it by your scooter model.</p>

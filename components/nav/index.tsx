@@ -2,7 +2,6 @@ import { PredictiveSearchProvider } from "@shopify/hydrogen/react";
 import Image from "next/image";
 import { Suspense } from "react";
 
-import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Link } from "@/components/ui/link";
 import { brandDisplayName, modelDisplayName } from "@/lib/collections";
@@ -80,9 +79,6 @@ export async function Nav() {
           <Suspense fallback={<CartIconFallback />}>
             <CartIcon />
           </Suspense>
-          <Button className="hidden md:inline-flex" render={<Link href="/collections" />}>
-            Shop by model
-          </Button>
         </div>
       </Container>
     </nav>

@@ -1,5 +1,4 @@
 import { cn } from "cn";
-import { CalendarDays, Factory, Ruler } from "lucide-react";
 import Image from "next/image";
 
 import { MenuLink } from "@/components/nav/menu-link";
@@ -12,16 +11,6 @@ import { getShopPolicies } from "@/lib/policies/server";
 import { SocialLinks } from "./social-links";
 import type { SocialLink } from "./social-links";
 
-const BADGES = [
-  {
-    body: "Footrests, bumpers, crash guards and fittings.",
-    icon: Factory,
-    title: "Made in our own factory",
-  },
-  { body: "Twenty years of honest dealing.", icon: CalendarDays, title: "Since 2006" },
-  { body: "Accessories made for specific scooter models.", icon: Ruler, title: "Made to fit" },
-];
-
 export async function Footer() {
   const { contact, social } = shopConfig;
   const socialLinks = (
@@ -33,7 +22,7 @@ export async function Footer() {
       id: "footer-shop",
       items: [
         { id: "footer-products", items: [], title: "Products", url: "/collections/all" },
-        { id: "footer-models", items: [], title: "By scooter model", url: "/collections" },
+        { id: "footer-models", items: [], title: "Shop by model", url: "/collections" },
       ],
       title: "Shop",
       url: "",
@@ -64,10 +53,10 @@ export async function Footer() {
   const hasContact = Boolean(contact.address || contact.email || contact.phone);
 
   return (
-    <footer className="bg-muted">
+    <footer className="bg-foreground text-background">
       {/* pb-22 clears the fixed agent ActionBar pill when it renders */}
       <Container className={cn("pt-20 pb-10", shopConfig.agent.isEnabled && "pb-22")}>
-        <Sections className="gap-10">
+        <Sections className="gap-16">
           <div className="grid gap-10 md:grid-cols-4">
             <div className="grid content-start gap-4">
               <Image
@@ -80,13 +69,13 @@ export async function Footer() {
                 width={180}
               />
               <p className="font-heading text-h3">Made to fit your scooter. Since 2006.</p>
-              <p className="text-small text-muted-foreground">{shopConfig.site.description}</p>
+              <p className="text-small text-silver">{shopConfig.site.description}</p>
               {hasContact && (
-                <div className="grid gap-1 text-small text-muted-foreground">
+                <div className="grid gap-1 text-small text-silver">
                   {contact.address && <address className="not-italic">{contact.address}</address>}
                   {contact.phone && (
                     <a
-                      className="transition-colors hover:text-foreground"
+                      className="transition-colors hover:text-background"
                       href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
                     >
                       {contact.phone}
@@ -94,7 +83,7 @@ export async function Footer() {
                   )}
                   {contact.email && (
                     <a
-                      className="transition-colors hover:text-foreground"
+                      className="transition-colors hover:text-background"
                       href={`mailto:${contact.email}`}
                     >
                       {contact.email}
@@ -106,23 +95,13 @@ export async function Footer() {
             </div>
             <FooterMenu items={items} />
           </div>
-          <ul className="grid gap-4 md:grid-cols-3">
-            {BADGES.map(({ body, icon: Icon, title }) => (
-              <li
-                key={title}
-                className="flex items-center gap-4 rounded-lg border bg-background p-4"
-              >
-                <Icon aria-hidden="true" className="size-8 shrink-0" />
-                <div>
-                  <p className="font-heading text-body font-semibold">{title}</p>
-                  <p className="text-small text-muted-foreground">{body}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+          {/* The name returns at full width: the close, not another row of cards. */}
+          <p aria-hidden className="font-heading text-display leading-none whitespace-nowrap">
+            Aditya Auto
+          </p>
         </Sections>
       </Container>
-      <div className="bg-foreground text-silver">
+      <div className="border-t border-white/15 text-silver">
         <Container className="flex min-h-12 items-center py-3 text-small">
           &copy; {shopConfig.site.name}. All rights reserved.
         </Container>
@@ -141,7 +120,7 @@ function FooterMenu({ items }: { items: MenuItem[] }) {
             <li key={leaf.id}>
               <MenuLink
                 url={leaf.url}
-                className="block text-small text-muted-foreground transition-colors hover:text-foreground"
+                className="block text-small text-silver transition-colors hover:text-background"
               >
                 {leaf.title}
               </MenuLink>

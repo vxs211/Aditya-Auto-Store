@@ -121,7 +121,7 @@ export default function AboutPage() {
 
       <Container>
         <Sections className="gap-20 py-16 md:gap-28 md:py-20">
-          <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10">
+          <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10" data-reveal>
             <SectionHeading title="What we do" />
             <div className="grid gap-4 text-muted-foreground">
               <p>
@@ -142,7 +142,7 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <section className="grid gap-8">
+          <section className="grid gap-8" data-reveal>
             <SectionHeading title="What we manufacture" />
             <Suspense fallback={null}>
               <RangePictures />
@@ -154,7 +154,7 @@ export default function AboutPage() {
             </ul>
           </section>
 
-          <section className="grid gap-5">
+          <section className="grid gap-5" data-reveal>
             <SectionHeading title="How we build" />
             <dl className="grid gap-x-16 gap-y-8 md:grid-cols-2">
               {VALUES.map(({ body, title }) => (
@@ -166,7 +166,7 @@ export default function AboutPage() {
             </dl>
           </section>
 
-          <section className="bg-muted px-6 py-12 md:px-12 md:py-16">
+          <section className="bg-muted px-6 py-12 md:px-12 md:py-16" data-reveal>
             <div className="grid gap-8 md:grid-cols-[1fr_2fr] md:gap-12">
               <SectionHeading title="What it takes to make a part" />
               <dl className="grid gap-x-12 gap-y-7 sm:grid-cols-2">
@@ -180,7 +180,10 @@ export default function AboutPage() {
             </div>
           </section>
 
-          <section className="grid gap-4 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14">
+          <section
+            className="grid gap-4 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14"
+            data-reveal
+          >
             <div>
               <h2 className="text-h2">Looking for parts for your scooter?</h2>
               <p className="text-silver">Pick your model and see what fits.</p>

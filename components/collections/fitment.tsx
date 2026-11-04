@@ -111,7 +111,7 @@ export function FitmentLayout({ children, collection, fitment }: FitmentLayoutPr
 
 function ModelTiles({ models }: { models: CollectionFitment["models"] }) {
   return (
-    <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+    <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6" data-reveal>
       {models.map(({ handle, image, productCount, title }) => (
         <li key={handle}>
           <Link className="group grid overflow-hidden bg-muted" href={`/collections/${handle}`}>
@@ -157,7 +157,7 @@ function ContentCard({ body, title }: { body: string; title: string }) {
   const paragraphs = richTextParagraphs(body);
   if (paragraphs.length === 0) return null;
   return (
-    <section className="grid gap-6 bg-muted p-6 md:grid-cols-[1fr_2fr] md:p-10">
+    <section className="grid gap-6 bg-muted p-6 md:grid-cols-[1fr_2fr] md:p-10" data-reveal>
       <h2 className="text-h3">About {title}</h2>
       <div className="grid gap-3 text-muted-foreground">
         {paragraphs.map((paragraph) => (
@@ -172,7 +172,10 @@ function ContactBand() {
   const { phone, whatsapp } = shopConfig.contact;
   if (!phone && !whatsapp) return null;
   return (
-    <section className="grid gap-5 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-12">
+    <section
+      className="grid gap-5 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-12"
+      data-reveal
+    >
       <div>
         <h2 className="text-h3">Can't find your scooter?</h2>
         <p className="text-silver">Message us the model and year and we'll help you choose.</p>
