@@ -11,11 +11,11 @@ import { CartIcon, CartIconFallback } from "./cart";
 import { MobileMenu } from "./mobile-menu";
 import { SearchModal } from "./search-modal";
 
-// Phones up to tablets: the main actions float at the bottom, within thumb reach. Desktop keeps the top bar.
+// Phones up to tablets: the main actions float in a compact dark pill at the bottom, within thumb reach. Desktop keeps the top bar.
 export function BottomBar({ items }: { items: MenuItem[] }) {
   return (
-    <div className="pointer-events-none fixed inset-x-3 bottom-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] z-50 lg:hidden">
-      <BarMotion className="pointer-events-auto relative mx-auto flex max-w-md items-center justify-between rounded-full bg-foreground p-1.5 shadow-xl">
+    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] z-50 lg:hidden">
+      <BarMotion className="pointer-events-auto relative mx-auto flex w-fit items-stretch overflow-hidden border border-white/10 bg-[#141414] px-1.5 shadow-[0_12px_32px_rgba(0,0,0,0.35)]">
         <BarLink href="/" icon="home" label="Home" />
         <BarLink href="/collections" icon="shop" label="Shop" />
         {shopConfig.search.isEnabled && (

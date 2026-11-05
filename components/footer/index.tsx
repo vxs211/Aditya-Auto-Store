@@ -33,6 +33,10 @@ export async function Footer() {
       items: [
         { id: "footer-about", items: [], title: "About", url: "/about" },
         { id: "footer-contact", items: [], title: "Contact", url: "/contact" },
+        // Shown only once Shopify customer accounts are switched on.
+        ...(shopConfig.auth.isEnabled
+          ? [{ id: "footer-account", items: [], title: "My account", url: "/account" }]
+          : []),
       ],
       title: "Company",
       url: "",
@@ -55,14 +59,22 @@ export async function Footer() {
   });
   const hasContact = Boolean(contact.address || contact.email || contact.phone);
 
+  // Below lg the footer fills the screen and sits above the sticky header, so it slides over the logo bar.
   return (
-    <footer className="bg-foreground pb-24 text-background lg:pb-0">
+    <footer className="relative z-40 flex min-h-dvh flex-col bg-foreground pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] text-background lg:z-auto lg:min-h-0 lg:pb-0">
       {/* pb-22 clears the fixed agent ActionBar pill when it renders */}
-      <Container className={cn("pt-20 pb-10", shopConfig.agent.isEnabled && "pb-22")}>
+      <Container
+        className={cn(
+          "flex-1 pt-12 pb-10 md:pt-20 lg:flex-none",
+          shopConfig.agent.isEnabled && "pb-22",
+        )}
+      >
         <Sections className="gap-16">
-          <div className="grid gap-10 md:grid-cols-4">
-            <div className="grid content-start gap-4">
-              <p className="font-heading text-h3">Made to fit your scooter. Since 2006.</p>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 md:gap-10">
+            <div className="col-span-2 grid content-start gap-4 md:col-span-1">
+              <p className="font-heading text-h3 text-balance">
+                Made to fit your scooter. Since 2006.
+              </p>
               <p className="text-small text-silver">{shopConfig.site.description}</p>
               {hasContact && (
                 <div className="grid gap-1 text-small text-silver">
@@ -121,7 +133,7 @@ function FooterMenu({ items }: { items: MenuItem[] }) {
             <li key={leaf.id}>
               <MenuLink
                 url={leaf.url}
-                className="block text-small text-silver transition-colors hover:text-background"
+                className="block py-0.5 text-small text-silver transition-colors hover:text-background"
               >
                 {leaf.title}
               </MenuLink>

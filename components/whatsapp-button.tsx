@@ -9,7 +9,7 @@ export function WhatsAppButton() {
   return (
     <a
       aria-label="Chat on WhatsApp"
-      className="fixed right-5 bottom-24 z-40 lg:bottom-5 flex size-14 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-colors outline-none hover:bg-foreground/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+      className="fixed right-5 bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] z-40 lg:bottom-5 flex size-14 items-center justify-center rounded-full bg-foreground text-background shadow-lg transition-colors outline-none hover:bg-foreground/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       href={`https://wa.me/${number.replace(/\D/g, "")}?text=${encodeURIComponent(MESSAGE)}`}
       rel="noopener noreferrer"
       target="_blank"

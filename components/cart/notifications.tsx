@@ -23,7 +23,7 @@ export function CartNotifications() {
 
   return (
     <div
-      className="fixed right-5 bottom-36 z-50 lg:bottom-20 flex max-w-sm items-center gap-2.5 rounded-lg border border-destructive/20 bg-background px-4 py-2.5 text-sm text-destructive shadow-lg"
+      className="fixed right-5 bottom-28 z-50 lg:bottom-20 flex max-w-sm items-center gap-2.5 rounded-lg border border-destructive/20 bg-background px-4 py-2.5 text-sm text-destructive shadow-lg"
       role="alert"
     >
       <span>We couldn&apos;t update your cart. Please try again.</span>
