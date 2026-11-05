@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
+import { GoogleReviews } from "@/components/home/google-reviews";
 import {
   AboutIntro,
   BestSellers,
   BrandMosaic,
   HomeContactBand,
   HomeHero,
+  InstagramFeed,
   ProofBand,
   ModelStrip,
 } from "@/components/home/sections";
@@ -45,6 +47,10 @@ export default function HomePage() {
           <BrandMosaic />
         </Suspense>
         <ProofBand />
+        <Suspense fallback={null}>
+          <InstagramFeed />
+        </Suspense>
+        <GoogleReviews />
         <HomeContactBand />
       </Sections>
     </Page>

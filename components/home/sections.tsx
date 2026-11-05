@@ -3,12 +3,14 @@ import Image from "next/image";
 import { ProductCard } from "@/components/product-card/product-card";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Highlight } from "@/components/ui/highlight";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Link } from "@/components/ui/link";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { brandDisplayName, modelDisplayName } from "@/lib/collections";
 import { getCollectionResults, getFitmentBrands } from "@/lib/collections/server";
 import type { FitmentBrand } from "@/lib/collections/types";
+import { shopConfig } from "@/lib/config";
 
 export async function HomeHero() {
   // The lead brand's own photograph: a real scooter wearing the parts, not a stock picture.
@@ -18,7 +20,9 @@ export async function HomeHero() {
     <section className="bg-foreground text-background">
       <div className="mx-auto grid max-w-312 items-center gap-8 px-4 pt-14 lg:grid-cols-2 lg:gap-10 lg:px-6 lg:pt-0">
         <div className="grid gap-7 lg:py-28">
-          <h1 className="text-display">Made to fit your scooter.</h1>
+          <h1 className="text-display">
+            Made to fit your <Highlight>scooter</Highlight>.
+          </h1>
           <p className="max-w-md text-silver">
             Footrests, bumpers, crash guards, matting and seat covers in stainless steel, for Honda,
             TVS, Suzuki, Hero, Yamaha, Bajaj Chetak and electric scooters. One piece or in bulk.
@@ -60,7 +64,13 @@ export async function ModelStrip() {
   return (
     <Container>
       <section className="grid gap-6" data-reveal>
-        <SectionHeading title="Find your scooter" />
+        <SectionHeading
+          title={
+            <>
+              Find your <Highlight>scooter</Highlight>
+            </>
+          }
+        />
         {/* A plain scroller: no autoplay, so it needs no motion preference handling. */}
         <ul className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2">
           {models.map(({ handle, image, title }) => (
@@ -116,6 +126,83 @@ export async function BestSellers() {
   );
 }
 
+// A grid of our scooter photographs that links to the Instagram page. These are catalogue pictures, not a live
+// feed of posts; a real feed would need the Instagram API.
+export async function InstagramFeed() {
+  const url = shopConfig.social.instagram;
+  if (!url) return null;
+  // Scooter photographs from the model pages, one per brand in turn so the grid stays varied.
+  const brands = await getFitmentBrands();
+  const seen = new Set<string>();
+  const pictures: { alt: string; src: string }[] = [];
+  for (let round = 0; pictures.length < 9 && round < 6; round += 1) {
+    for (const brand of brands) {
+      const model = brand.models[round];
+      if (model?.image && !seen.has(model.image.url) && pictures.length < 9) {
+        seen.add(model.image.url);
+        pictures.push({ alt: model.image.altText || model.title, src: model.image.url });
+      }
+    }
+  }
+  if (pictures.length < 9) return null;
+  // The fifth picture is the big centre tile; the rest fill the squares around it.
+  const [first, second, third, fourth, centre, ...rest] = pictures;
+  const ordered = [centre, first, second, third, fourth, ...rest];
+
+  return (
+    <Container>
+      <section className="grid gap-10" data-reveal>
+        <div className="grid justify-items-center gap-3 text-center">
+          <SectionHeading
+            align="center"
+            title={
+              <>
+                Follow us on <Highlight>Instagram</Highlight>
+              </>
+            }
+          />
+          <p className="max-w-xl text-muted-foreground">
+            New parts, fitments and how they look on the scooter.
+          </p>
+        </div>
+        <ul className="grid grid-cols-2 gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)] md:grid-rows-2 md:gap-4">
+          {ordered.map((picture, index) => (
+            <li
+              className={
+                index === 0
+                  ? "col-span-2 md:col-span-1 md:col-start-3 md:row-span-2 md:row-start-1"
+                  : undefined
+              }
+              key={picture.src}
+            >
+              <a
+                // The centre tile takes its height from the two rows beside it, so it must not also derive its width from it.
+                className={`group relative block aspect-square overflow-hidden bg-muted md:h-full${index === 0 ? " md:aspect-auto" : ""}`}
+                href={url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <Image
+                  alt={`${picture.alt} on Instagram`}
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  fill
+                  sizes="100vw"
+                  src={picture.src}
+                />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div className="flex justify-center">
+          <Button render={<a href={url} rel="noopener noreferrer" target="_blank" />} size="lg">
+            Visit Instagram
+          </Button>
+        </div>
+      </section>
+    </Container>
+  );
+}
+
 export function AboutIntro() {
   return (
     <Container>
@@ -160,7 +247,13 @@ export async function BrandMosaic() {
   return (
     <Container>
       <section className="grid gap-5" data-reveal>
-        <SectionHeading title="Shop by brand" />
+        <SectionHeading
+          title={
+            <>
+              Shop by <Highlight>brand</Highlight>
+            </>
+          }
+        />
         <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2">
           <BrandTile brand={lead} className="md:row-span-2" priority />
           {rest.slice(0, 4).map((brand) => (

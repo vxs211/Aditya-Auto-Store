@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Highlight } from "@/components/ui/highlight";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -43,7 +44,9 @@ export default function ContactPage() {
     <Page className="pt-0 md:pt-0">
       <section className="bg-foreground text-background">
         <Container className="grid gap-4 py-12 md:py-20">
-          <h1 className="text-display">We're here to help</h1>
+          <h1 className="text-display">
+            We're here to <Highlight>help</Highlight>
+          </h1>
           <p className="max-w-2xl text-silver">
             Message us about a part, a fitment, or a bulk order, and we will get back to you.
           </p>

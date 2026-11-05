@@ -4,6 +4,7 @@ import { Suspense } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Highlight } from "@/components/ui/highlight";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -47,23 +48,30 @@ const RANGE = [
   "Seat covers",
 ];
 
+// Everything below is something we do or make; there are no certifications or awards claimed.
 const VALUES = [
   {
-    body: "Jindal 202 stainless steel, with high resistance to heat and chemicals, so parts do not rust.",
-    title: "Stainless steel, not coated",
+    body: "Every part is shaped to one scooter model, so it goes on without cutting or drilling.",
+    title: "Fit first",
   },
   {
-    body: "Every part is listed under the scooter model it is made for, so it goes on without cutting or drilling.",
-    title: "Made to fit one model",
+    body: "Jindal 202 stainless steel resists heat, chemicals and rust, so parts keep their finish.",
+    title: "Built to last",
   },
   {
-    body: "Each part carries our manufacturing mark and the date it was made, so you can check what you received.",
+    body: "Each part carries our manufacturing mark and the date it was made, so you can see what you received.",
     title: "Marked and dated",
   },
   {
-    body: "Trained and experienced staff carry out every process and check the work as they go.",
+    body: "Trained staff check the work at each stage, before anything is packed.",
     title: "Checked as it is made",
   },
+];
+
+const MISSION_POINTS = [
+  "Our own manufacturing unit in Ahmedabad, Gujarat",
+  "Checks at each stage of making a part",
+  "One piece or a bulk order, with support after the sale",
 ];
 
 const INFRASTRUCTURE = [
@@ -93,15 +101,37 @@ const INFRASTRUCTURE = [
   },
 ];
 
+const REASONS = [
+  {
+    body: "We make our parts ourselves, so we know exactly how each one is built.",
+    title: "Made in our own factory",
+  },
+  {
+    body: "Listed under the scooter it is made for, so you buy the part that fits.",
+    title: "Made to fit your model",
+  },
+  {
+    body: "Stainless steel throughout, not a coating over ordinary steel.",
+    title: "Built to last",
+  },
+  {
+    body: "Call or message us Monday to Saturday, 10:00am to 6:00pm and we will help you choose.",
+    title: "Help when you need it",
+  },
+];
+
 export default function AboutPage() {
   return (
     <Page className="pt-0 md:pt-0">
       <section className="bg-foreground text-background">
         <Container className="grid gap-5 py-12 md:py-20">
-          <h1 className="text-display max-w-3xl">Made in our own factory since 2006</h1>
+          <h1 className="text-display max-w-5xl">
+            Built in Ahmedabad since <Highlight>2006</Highlight>
+          </h1>
           <p className="max-w-2xl text-silver">
-            Aditya Auto Accessories manufactures two wheeler accessories in Ahmedabad, Gujarat. Our
-            unit makes parts for scooters, motorcycles and electric vehicles.
+            From our own unit in Ahmedabad, Gujarat, we make stainless steel parts for scooters,
+            motorcycles and electric vehicles. Every part is made to fit one model and built to
+            last.
           </p>
         </Container>
       </section>
@@ -122,23 +152,49 @@ export default function AboutPage() {
       <Container>
         <Sections className="gap-20 py-16 md:gap-28 md:py-20">
           <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10" data-reveal>
-            <SectionHeading title="What we do" />
+            <SectionHeading title="Built for the ride" />
             <div className="grid gap-4 text-muted-foreground">
               <p>
-                We manufacture stainless steel accessories with high resistance to heat and
-                chemicals. Our range covers all round accessories, beading and front guard, bumpers,
-                buzzer, ladies step, side stand and leg guard, across popular scooter and motorcycle
-                models and electric scooters.
+                Aditya Auto Accessories was founded in 2006 in Ahmedabad, Gujarat, with a simple
+                aim: parts for two wheelers that fit properly and last. We make them ourselves, in
+                Jindal 202 stainless steel, so a leg guard or a bumper does not rust where a coating
+                would chip.
               </p>
               <p>
-                Our focus is consistent quality and design, with regular evaluation and improvement,
-                prompt delivery, and support after the sale. Every process is carried out by trained
-                and experienced people who check the quality of what they produce.
+                Today the range covers 44 scooter models across nine brands, from Honda, TVS and
+                Suzuki to Hero, Yamaha, Bajaj Chetak and electric scooters. Our people check the
+                work as they make it, and you can buy a single piece or order in bulk.
               </p>
-              <p>
-                You can buy a single piece here, or order in bulk. Our parts are made to be durable,
-                strong and rust free.
+            </div>
+          </section>
+
+          <section className="grid gap-5" data-reveal>
+            <SectionHeading title="What we stand for" />
+            <dl className="grid gap-x-16 gap-y-8 md:grid-cols-2">
+              {VALUES.map(({ body, title }) => (
+                <div key={title}>
+                  <dt className="text-h3">{title}</dt>
+                  <dd className="mt-1 text-muted-foreground">{body}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10" data-reveal>
+            <SectionHeading title="One part, made for one scooter" />
+            <div className="grid gap-5">
+              <p className="text-muted-foreground">
+                Our mission is simple: parts that fit your scooter the first time, made from a metal
+                that lasts, available to every rider, one piece or in bulk.
               </p>
+              <ul className="grid gap-2">
+                {MISSION_POINTS.map((point) => (
+                  <li className="flex gap-3" key={point}>
+                    <span aria-hidden className="mt-2.5 size-2 shrink-0 bg-primary" />
+                    {point}
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
 
@@ -154,19 +210,11 @@ export default function AboutPage() {
             </ul>
           </section>
 
-          <section className="grid gap-5" data-reveal>
-            <SectionHeading title="How we build" />
-            <dl className="grid gap-x-16 gap-y-8 md:grid-cols-2">
-              {VALUES.map(({ body, title }) => (
-                <div key={title}>
-                  <dt className="text-h3">{title}</dt>
-                  <dd className="mt-1 text-muted-foreground">{body}</dd>
-                </div>
-              ))}
-            </dl>
-          </section>
-
-          <section className="bg-muted px-6 py-12 md:px-12 md:py-16" data-reveal>
+          <section
+            className="scroll-mt-28 bg-muted px-6 py-12 md:px-12 md:py-16"
+            data-reveal
+            id="manufacturing"
+          >
             <div className="grid gap-8 md:grid-cols-[1fr_2fr] md:gap-12">
               <SectionHeading title="What it takes to make a part" />
               <dl className="grid gap-x-12 gap-y-7 sm:grid-cols-2">
@@ -180,16 +228,33 @@ export default function AboutPage() {
             </div>
           </section>
 
+          <section className="grid gap-8" data-reveal>
+            <div className="grid gap-2">
+              <SectionHeading title="Why choose Aditya Auto?" />
+              <p className="text-muted-foreground">
+                Stainless steel accessories made for the way you ride.
+              </p>
+            </div>
+            <dl className="grid gap-x-16 gap-y-8 md:grid-cols-2">
+              {REASONS.map(({ body, title }) => (
+                <div key={title}>
+                  <dt className="text-h3">{title}</dt>
+                  <dd className="mt-1 text-muted-foreground">{body}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
           <section
             className="grid gap-4 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14"
             data-reveal
           >
             <div>
-              <h2 className="text-h2">Looking for parts for your scooter?</h2>
-              <p className="text-silver">Pick your model and see what fits.</p>
+              <h2 className="text-h2">Ready to upgrade your ride?</h2>
+              <p className="text-silver">Pick your scooter and see the parts made for it.</p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <Button render={<Link href="/collections" />}>Shop by model</Button>
+              <Button render={<Link href="/collections/all" />}>Shop now</Button>
               <Button render={<Link href="/contact" />} variant="inverse">
                 Contact us
               </Button>

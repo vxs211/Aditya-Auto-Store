@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { TrackOrderForm } from "@/components/track-order/form";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Highlight } from "@/components/ui/highlight";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { SectionHeading } from "@/components/ui/section-heading";
@@ -49,7 +50,9 @@ export default function TrackOrderPage() {
     <Page className="pt-0 md:pt-0">
       <section className="bg-foreground text-background">
         <Container className="grid gap-4 py-12 md:py-20">
-          <h1 className="text-display max-w-3xl">Where is my order?</h1>
+          <h1 className="text-display max-w-3xl">
+            Where is my <Highlight>order</Highlight>?
+          </h1>
           <p className="max-w-2xl text-silver">
             Send us your order number and we will tell you where it is.
           </p>

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { Highlight } from "@/components/ui/highlight";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { Sections } from "@/components/ui/sections";
@@ -106,7 +107,9 @@ export default function FaqPage() {
       <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
       <section className="bg-foreground text-background">
         <Container className="grid gap-4 py-12 md:py-20">
-          <h1 className="text-display max-w-3xl">Questions, answered</h1>
+          <h1 className="text-display max-w-3xl">
+            Questions, <Highlight>answered</Highlight>
+          </h1>
           <p className="max-w-2xl text-silver">
             Fitment, material, bulk orders and support. If yours is not here, message us.
           </p>
