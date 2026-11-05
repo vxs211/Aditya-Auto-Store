@@ -336,7 +336,7 @@ function QuickShopPurchasePanel({ children, price, title }: QuickShopPurchasePan
     <div className="contents">
       <div className="sticky top-0 z-10 order-first grid min-w-0 grid-cols-[minmax(0,1fr)_1.25rem] gap-2.5 bg-background p-5 pb-2.5 sm:static sm:order-none">
         <div className="min-w-0">
-          <DialogTitle className="text-2xl leading-snug font-normal break-words">
+          <DialogTitle className="font-sans text-2xl leading-snug font-normal break-words">
             {title}
           </DialogTitle>
           {price}

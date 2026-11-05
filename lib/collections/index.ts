@@ -86,12 +86,17 @@ export function parseFilterInput(input: string): ProductFilter | undefined {
 }
 
 // Collection titles carry suffixes like "Scooter Accessories"; menus and tiles show the brand alone.
+// Some titles are typed in capitals (HONDA); those become Honda, and short acronyms such as TVS stay as they are.
 export function brandDisplayName(title: string): string {
-  return (
+  const name =
     title
       .replace(/\s*(bike and scooter|two wheeler[a-z]*|scooter|bike)?\s*accessories$/i, "")
-      .trim() || title
-  );
+      .trim() || title;
+  if (name !== name.toUpperCase()) return name;
+  return name
+    .split(" ")
+    .map((word) => (word.length <= 3 ? word : `${word.charAt(0)}${word.slice(1).toLowerCase()}`))
+    .join(" ");
 }
 
 export function modelDisplayName(title: string): string {

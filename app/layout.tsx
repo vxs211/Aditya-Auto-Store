@@ -1,6 +1,7 @@
 import { BotIdClient } from "botid/client";
 import type { Metadata, Viewport } from "next";
 import { Geist, Inter, Michroma } from "next/font/google";
+import localFont from "next/font/local";
 
 import "./globals.css";
 import { Suspense } from "react";
@@ -33,6 +34,17 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+// Origin, the Display cuts, for headings. Two static files cover the weights headings use (400 and 600).
+const origin = localFont({
+  display: "swap",
+  fallback: ["Arial", "Helvetica", "sans-serif"],
+  src: [
+    { path: "./fonts/Origin-RegularDisplay.woff2", style: "normal", weight: "400" },
+    { path: "./fonts/Origin-SemiBoldDisplay.woff2", style: "normal", weight: "600" },
+  ],
+  variable: "--font-origin",
+});
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -54,7 +66,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartStandardActionsScript />
       </head>
       <body
-        className={`${geistSans.variable} ${inter.variable} ${michroma.variable} flex min-h-dvh flex-col font-sans antialiased`}
+        className={`${geistSans.variable} ${origin.variable} ${inter.variable} ${michroma.variable} flex min-h-dvh flex-col font-sans antialiased`}
       >
         <a
           href="#main-content"

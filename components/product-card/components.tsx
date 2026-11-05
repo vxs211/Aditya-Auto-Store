@@ -100,7 +100,7 @@ function ProductCardTitle({ className, children, ...props }: ComponentProps<"h3"
   return (
     <h3
       data-slot="product-card-title"
-      className={cn("text-sm font-medium text-foreground line-clamp-1", className)}
+      className={cn("font-sans text-sm font-medium text-foreground line-clamp-1", className)}
       {...props}
     >
       {children}

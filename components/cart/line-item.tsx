@@ -112,10 +112,14 @@ function CartLineItem({ item }: CartLineItemProps) {
           <div className="grid gap-1">
             {href ? (
               <Link href={href} className="cursor-pointer transition-opacity hover:opacity-70">
-                <h3 className="line-clamp-1 text-sm font-medium text-foreground">{title}</h3>
+                <h3 className="line-clamp-1 font-sans text-sm font-medium text-foreground">
+                  {title}
+                </h3>
               </Link>
             ) : (
-              <h3 className="line-clamp-1 text-sm font-medium text-foreground">{title}</h3>
+              <h3 className="line-clamp-1 font-sans text-sm font-medium text-foreground">
+                {title}
+              </h3>
             )}
             {variantLabel ? <p className="text-xs text-muted-foreground">{variantLabel}</p> : null}
             {item.sellingPlanAllocation ? (
