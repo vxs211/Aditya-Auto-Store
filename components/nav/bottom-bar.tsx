@@ -31,14 +31,16 @@ function Sparkle() {
 export function BottomBar({ items }: { items: MenuItem[] }) {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] z-50 flex items-center justify-center gap-2 lg:hidden">
-      <BarMotion className="bar-round pointer-events-auto relative flex items-stretch bg-background p-1.5 shadow-[0_8px_28px_rgba(0,0,0,0.18)]">
-        <BarLink href="/" icon="home" label="Home" />
-        <BarLink href="/collections" icon="shop" label="Shop" />
-        <Suspense fallback={<CartIconFallback />}>
-          <CartIcon className={BAR_ITEM_CLASS} label="Cart" />
-        </Suspense>
-        <MobileMenu items={items} label="Menu" triggerClassName={BAR_ITEM_CLASS} />
-      </BarMotion>
+      <Suspense fallback={null}>
+        <BarMotion className="bar-round pointer-events-auto relative flex items-stretch bg-background p-1.5 shadow-[0_8px_28px_rgba(0,0,0,0.18)]">
+          <BarLink href="/" icon="home" label="Home" />
+          <BarLink href="/collections" icon="shop" label="Shop" />
+          <Suspense fallback={<CartIconFallback />}>
+            <CartIcon className={BAR_ITEM_CLASS} label="Cart" />
+          </Suspense>
+          <MobileMenu items={items} label="Menu" triggerClassName={BAR_ITEM_CLASS} />
+        </BarMotion>
+      </Suspense>
       {shopConfig.search.isEnabled && (
         <BarRise className="pointer-events-auto">
           <PredictiveSearchProvider

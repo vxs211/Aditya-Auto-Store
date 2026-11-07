@@ -84,7 +84,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           </main>
           <Footer />
           <WhatsAppButton />
-          <PageMotion />
+          <Suspense fallback={null}>
+            <PageMotion />
+          </Suspense>
           <SmoothScroll />
           <CartUI />
           <Suspense>
