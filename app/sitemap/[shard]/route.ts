@@ -35,6 +35,8 @@ async function renderStatic(): Promise<Response> {
     "/about",
     "/contact",
     "/faq",
+    "/return-policy",
+    "/terms",
     "/guides",
     ...GUIDES.map(({ slug }) => `/guides/${slug}`),
     "/track-order",

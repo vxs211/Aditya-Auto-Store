@@ -1,18 +1,34 @@
+import { MORE_GUIDES } from "./more";
+
+export interface GuideSection {
+  heading: string;
+  paragraphs: string[];
+  // Numbered steps shown after the paragraphs. Text may hold [label](/path) links.
+  steps?: string[];
+}
+
+export type GuideDraft = Omit<Guide, "published">;
+
 export interface Guide {
   description: string;
+  faqs?: { answer: string; question: string }[];
+  // Short text printed on the post's picture.
+  headline: string;
+  // A word that picks the scooter photo: the first model whose name contains it. Otherwise the photo cycles.
+  photo?: string;
+  // Day the post went up, as YYYY-MM-DD. Set by the schedule below, not written by hand.
   published: string;
-  sections: { heading: string; paragraphs: string[] }[];
+  sections: GuideSection[];
   slug: string;
   summary: string;
   title: string;
 }
 
 // Written for people searching before they buy. Claims stay general or come from our own range and materials.
-export const GUIDES: Guide[] = [
+const ORIGINAL_GUIDES: GuideDraft[] = [
   {
     description:
       "How to check your scooter's model and year, and find leg guards, bumpers and other stainless steel accessories made to fit it.",
-    published: "2026-11-05",
     sections: [
       {
         heading: "Start with the exact model name and year",
@@ -41,6 +57,7 @@ export const GUIDES: Guide[] = [
         ],
       },
     ],
+    headline: "Find parts that fit your scooter",
     slug: "find-accessories-for-your-scooter",
     summary: "Check the model name and year, browse by model, and read the product title.",
     title: "How to find scooter accessories that fit your model",
@@ -48,7 +65,6 @@ export const GUIDES: Guide[] = [
   {
     description:
       "Why stainless steel scooter accessories last longer than coated ones, what to look for when you buy, and how to care for them.",
-    published: "2026-11-05",
     sections: [
       {
         heading: "Where coated accessories fail",
@@ -77,6 +93,7 @@ export const GUIDES: Guide[] = [
         ],
       },
     ],
+    headline: "Stainless steel or coated?",
     slug: "stainless-steel-vs-coated-scooter-accessories",
     summary: "Why coated parts rust once chipped, and what to look for in stainless steel.",
     title: "Stainless steel vs coated scooter accessories: what lasts",
@@ -84,7 +101,6 @@ export const GUIDES: Guide[] = [
   {
     description:
       "What a leg guard, bumper, front guard, side stand and ladies step each do on a scooter, and how to choose between them.",
-    published: "2026-11-05",
     sections: [
       {
         heading: "Leg guard",
@@ -112,11 +128,30 @@ export const GUIDES: Guide[] = [
         ],
       },
     ],
+    headline: "Leg guard, bumper or front guard?",
     slug: "scooter-leg-guard-bumper-front-guard-explained",
     summary: "What each guard protects, and which one suits how you ride and park.",
     title: "Leg guard, bumper and front guard: what each one does",
   },
 ];
+
+// Four posts a month, newest first, so a new post added at the top moves every date down the schedule. November
+// 2026 has only reached the 5th, so its four fall on 5, 4, 2 and 1; earlier months use the 25th, 18th, 11th and 4th.
+const MONTH_DAYS = [25, 18, 11, 4];
+const NOVEMBER_DAYS = [5, 4, 2, 1];
+
+function scheduledDate(index: number): string {
+  const monthsBack = Math.floor(index / 4);
+  const slot = index % 4;
+  const day = (monthsBack === 0 ? NOVEMBER_DAYS : MONTH_DAYS)[slot] ?? 1;
+  const date = new Date(Date.UTC(2026, 10 - monthsBack, day));
+  return date.toISOString().slice(0, 10);
+}
+
+export const GUIDES: Guide[] = [...MORE_GUIDES, ...ORIGINAL_GUIDES].map((draft, index) => ({
+  ...draft,
+  published: scheduledDate(index),
+}));
 
 export function getGuide(slug: string): Guide | undefined {
   return GUIDES.find((guide) => guide.slug === slug);

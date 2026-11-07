@@ -55,6 +55,7 @@ export interface ShopConfig {
     address: string | null;
     email: string | null;
     phone: string | null;
+    secondaryPhone: string | null;
     whatsapp: string | null;
   };
   localization: CommerceLocale & {
@@ -95,5 +96,7 @@ export interface ShopConfig {
     name: string;
     url: string;
   };
-  social: Partial<Record<"facebook" | "instagram" | "linkedin" | "x" | "youtube", string>>;
+  social: Partial<
+    Record<"facebook" | "instagram" | "linkedin" | "pinterest" | "x" | "youtube", string>
+  >;
 }

@@ -44,11 +44,12 @@ export function BarMotion({ children, className }: { children: ReactNode; classN
       }
       const from = bar.getBoundingClientRect();
       const to = active.getBoundingClientRect();
-      // The light runs along the top edge, so only its position and width follow the item.
       gsap.to(pill, {
+        height: to.height,
         opacity: 1,
         width: to.width,
         x: to.left - from.left,
+        y: to.top - from.top,
         ...(animate && !reduced ? SLIDE : { duration: 0 }),
       });
     }
@@ -76,16 +77,34 @@ export function BarMotion({ children, className }: { children: ReactNode; classN
 
   return (
     <nav aria-label="Primary" className={className} ref={nav}>
-      {/* A thin light on the top edge with a soft glow falling from it onto the active item. */}
+      {/* The capsule behind the active item. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-y-0 left-0 opacity-0"
+        className="bar-round pointer-events-none absolute top-0 left-0 bg-primary opacity-0"
         ref={highlight}
-      >
-        <span className="absolute inset-x-[12%] top-0 h-0.5 bg-[linear-gradient(90deg,transparent,#fff,transparent)]" />
-        <span className="absolute inset-0 bg-[radial-gradient(ellipse_70%_90%_at_50%_0%,rgba(255,255,255,0.22),transparent_70%)]" />
-      </span>
+      />
       {children}
     </nav>
+  );
+}
+
+// The round search button rises in with the same motion as the bar.
+export function BarRise({ children, className }: { children: ReactNode; className?: string }) {
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const tween = gsap.fromTo(
+      box.current,
+      { opacity: 0, y: 120 },
+      { opacity: 1, y: 0, ...ENTRANCE },
+    );
+    return () => {
+      tween.kill();
+    };
+  }, []);
+  return (
+    <div className={className} ref={box}>
+      {children}
+    </div>
   );
 }

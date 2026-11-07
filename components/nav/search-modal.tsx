@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import {
   type FormEvent,
   type KeyboardEvent as ReactKeyboardEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useRef,
@@ -23,10 +24,12 @@ import { usePredictiveSearch } from "@/lib/search/client";
 import type { PredictiveSearchProduct, SearchSuggestion } from "@/lib/search/types";
 
 export function SearchModal({
+  accent,
   label,
   shortcut = true,
   triggerClassName,
 }: {
+  accent?: ReactNode;
   label?: string;
   shortcut?: boolean;
   triggerClassName?: string;
@@ -47,13 +50,21 @@ export function SearchModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <SearchTrigger className={triggerClassName} label={label} />
+      <SearchTrigger accent={accent} className={triggerClassName} label={label} />
       <SearchDialogContent open={open} onClose={() => setOpen(false)} />
     </Dialog>
   );
 }
 
-function SearchTrigger({ className, label }: { className?: string; label?: string }) {
+function SearchTrigger({
+  accent,
+  className,
+  label,
+}: {
+  accent?: ReactNode;
+  className?: string;
+  label?: string;
+}) {
   return (
     <DialogTrigger
       render={
@@ -66,6 +77,7 @@ function SearchTrigger({ className, label }: { className?: string; label?: strin
         >
           <Search className="size-5" />
           <span className={label ? undefined : "sr-only"}>{label ?? "Search"}</span>
+          {accent}
         </button>
       }
     />

@@ -245,7 +245,17 @@
   border-radius: 0;
 }
 
-/* The one rounded thing: the floating bottom bar, at the owner's request. It out-ranks the rule above. */
-nav[aria-label="Primary"] {
-  border-radius: 1.75rem;
+/* The only rounded things: the floating bottom bar, its search circle and active capsule, and the round WhatsApp
+   button, at the owner's request. A class beats the universal rule above. */
+.bar-round {
+  border-radius: 9999px;
+}
+
+/* Homepage only. Origin ships Regular (400) and SemiBold (600), so there is no Bold file: default-bold headings sit at
+   600, and the token sizes that were 600 drop to 400. Unlayered, so it beats the text-* utilities. */
+.home-type :is(h1, h2, h3, h4, h5, h6):not(.font-sans) {
+  font-weight: 600;
+}
+.home-type :is(.text-display, .text-h1, .text-h2, .text-h3, .text-h4):not(.font-sans) {
+  font-weight: 400;
 }

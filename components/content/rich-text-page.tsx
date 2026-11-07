@@ -13,7 +13,7 @@ export function RichTextPage({ body, title }: RichTextPageProps) {
     <Page>
       <Container className="max-w-2xl">
         <Prose>
-          <h1>{title}</h1>
+          <h1 className="text-center">{title}</h1>
           <div
             // oxlint-disable-next-line react/no-danger -- Page and policy bodies pass through sanitizeShopifyHtml when fetched.
             dangerouslySetInnerHTML={{ __html: body }}

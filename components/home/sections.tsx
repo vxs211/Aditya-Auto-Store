@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { BlogThumb, formatPostDate } from "@/components/blog/blog-thumb";
 import { ProductCard } from "@/components/product-card/product-card";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -11,6 +12,10 @@ import { brandDisplayName, modelDisplayName } from "@/lib/collections";
 import { getCollectionResults, getFitmentBrands } from "@/lib/collections/server";
 import type { FitmentBrand } from "@/lib/collections/types";
 import { shopConfig } from "@/lib/config";
+import { GUIDES } from "@/lib/guides";
+import { pickGuidePhotos } from "@/lib/guides/photos";
+
+import { ProofCard } from "./proof-card";
 
 export async function HomeHero() {
   // The lead brand's own photograph: a real scooter wearing the parts, not a stock picture.
@@ -126,6 +131,47 @@ export async function BestSellers() {
   );
 }
 
+// The newest posts as picture cards, the same as on the blog page.
+export async function BlogSection() {
+  const photos = pickGuidePhotos(GUIDES, await getFitmentBrands());
+  const latest = GUIDES.slice(0, 4);
+  if (latest.length === 0) return null;
+
+  return (
+    <section className="bg-muted py-14 md:py-20">
+      <Container className="grid gap-8" data-reveal>
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <SectionHeading
+            title={
+              <>
+                Our <Highlight>blog</Highlight>
+              </>
+            }
+          />
+          <Link className="text-sm text-link hover:underline" href="/guides">
+            View all
+          </Link>
+        </div>
+        <ul className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {latest.map((guide) => (
+            <li key={guide.slug}>
+              <Link className="group grid gap-3" href={`/guides/${guide.slug}`}>
+                <BlogThumb guide={guide} photo={photos.get(guide.slug)} />
+                <h3 className="font-heading text-h4 transition-colors group-hover:text-link">
+                  {guide.title}
+                </h3>
+                <p className="text-small text-muted-foreground">
+                  {formatPostDate(guide.published)}
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  );
+}
+
 // A grid of our scooter photographs that links to the Instagram page. These are catalogue pictures, not a live
 // feed of posts; a real feed would need the Instagram API.
 export async function InstagramFeed() {
@@ -205,8 +251,8 @@ export async function InstagramFeed() {
 
 export function AboutIntro() {
   return (
-    <Container>
-      <section className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10" data-reveal>
+    <section className="bg-muted py-14 md:py-20">
+      <Container className="grid gap-5 md:grid-cols-[1fr_2fr] md:gap-10" data-reveal>
         <SectionHeading title="We make what we sell" />
         <div className="grid gap-4 text-muted-foreground">
           <p>
@@ -222,8 +268,8 @@ export function AboutIntro() {
             About us
           </Button>
         </div>
-      </section>
-    </Container>
+      </Container>
+    </section>
   );
 }
 
@@ -239,7 +285,7 @@ function brandName(title: string): string {
 export async function BrandMosaic() {
   // Shopify returns collections alphabetically; lead with the brands that cover the most models.
   const brands = (await getFitmentBrands())
-    .filter((brand) => brand.image)
+    .filter((brand) => brandPicture(brand))
     .sort((a, b) => b.models.length - a.models.length);
   if (brands.length === 0) return null;
   const [lead, ...rest] = brands as [FitmentBrand, ...FitmentBrand[]];
@@ -250,11 +296,11 @@ export async function BrandMosaic() {
         <SectionHeading
           title={
             <>
-              Shop by <Highlight>brand</Highlight>
+              Shop by <Highlight>category</Highlight>
             </>
           }
         />
-        <div className="grid gap-4 md:grid-cols-3 md:grid-rows-2">
+        <div className="grid gap-4 md:auto-rows-[18rem] md:grid-cols-[3fr_2fr_2fr]">
           <BrandTile brand={lead} className="md:row-span-2" priority />
           {rest.slice(0, 4).map((brand) => (
             <BrandTile brand={brand} key={brand.handle} />
@@ -276,6 +322,14 @@ export async function BrandMosaic() {
   );
 }
 
+// The brand banner is often wide artwork with text on it, so the tile uses a clean scooter photograph from one of
+// the brand's models, and falls back to the banner only when no model has a picture.
+function brandPicture(brand: FitmentBrand) {
+  return brand.models.find((model) => model.image)?.image ?? brand.image;
+}
+
+// A photo-led tile: the brand name sits top left and the scooter stands at the bottom. Multiply makes the white of
+// the photograph take the tile colour, so there is no visible box around the scooter.
 function BrandTile({
   brand,
   className,
@@ -285,16 +339,17 @@ function BrandTile({
   className?: string;
   priority?: boolean;
 }) {
-  const { handle, image, models, title } = brand;
+  const { handle, title } = brand;
+  const image = brandPicture(brand);
   return (
     <Link
-      className={`group relative flex min-h-56 overflow-hidden rounded-lg bg-muted ${className ?? ""}`}
+      className={`group relative block min-h-72 overflow-hidden bg-muted md:min-h-0 ${className ?? ""}`}
       href={`/collections/${handle}`}
     >
       {image ? (
         <Image
           alt={image.altText}
-          className="object-cover transition-transform group-hover:scale-105"
+          className="object-contain object-bottom mix-blend-multiply transition-transform duration-700 group-hover:scale-105"
           fill
           priority={priority}
           sizes="100vw"
@@ -303,33 +358,50 @@ function BrandTile({
       ) : (
         <ImagePlaceholder className="size-full" />
       )}
-      <div className="relative z-10 flex w-full flex-col justify-end bg-linear-to-t from-foreground/80 to-transparent p-5 text-background">
-        <h3 className="text-h3 uppercase">{brandDisplayName(title)}</h3>
-        <p className="text-sm text-silver">
-          {models.length} {models.length === 1 ? "model" : "models"}
-        </p>
-      </div>
+      <h3 className="relative z-10 p-6 font-heading text-h2">{brandDisplayName(title)}</h3>
     </Link>
   );
 }
 
 const FACTS = [
-  { body: "Our own unit in Ahmedabad, since 2006.", title: "We make it" },
-  { body: "Jindal 202, which resists heat and rust.", title: "Stainless steel" },
-  { body: "Listed under the scooter it is made for.", title: "One model each" },
+  {
+    body: "Our own unit in Ahmedabad, since 2006. We make every part ourselves, start to finish.",
+    title: "We make it",
+  },
+  {
+    body: "Jindal 202, which resists heat and rust, so parts hold up in sun, rain and daily rides.",
+    title: "Stainless steel",
+  },
+  {
+    body: "Listed under the scooter it is made for. Pick your model and see only what fits.",
+    title: "One model each",
+  },
+  {
+    body: "Order a single piece or a full batch for your shop, and we will help you with the count.",
+    title: "One piece or bulk",
+  },
 ];
 
 export function ProofBand() {
   return (
-    <section className="bg-primary text-primary-foreground">
+    <section className="bg-muted text-foreground">
       <Container className="grid gap-10 py-14 md:py-20" data-reveal>
-        <h2 className="text-h2 max-w-2xl">Parts from the people who press them.</h2>
-        <dl className="grid gap-8 md:grid-cols-3 md:gap-10">
-          {FACTS.map(({ body, title }) => (
-            <div key={title}>
-              <dt className="text-h3">{title}</dt>
-              <dd className="mt-1 text-foreground/80">{body}</dd>
-            </div>
+        <div className="grid gap-6">
+          <p className="flex items-center gap-2 font-label text-xxs tracking-widest text-muted-foreground uppercase">
+            <span aria-hidden className="size-1.5 rounded-full bg-primary" />
+            Why Aditya
+          </p>
+          <div className="grid items-end gap-6 md:grid-cols-2 md:gap-12">
+            <h2 className="text-h2 max-w-xl">Parts from the people who press them.</h2>
+            <p className="max-w-md text-muted-foreground md:justify-self-end">
+              Every Aditya part is made in our own unit in Ahmedabad, so what you order is what we
+              press.
+            </p>
+          </div>
+        </div>
+        <dl className="grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {FACTS.map(({ body, title }, index) => (
+            <ProofCard body={body} index={index} key={title} title={title} />
           ))}
         </dl>
       </Container>
@@ -339,17 +411,24 @@ export function ProofBand() {
 
 export function HomeContactBand() {
   return (
-    <Container>
-      <section
-        className="grid gap-5 bg-foreground p-8 text-background md:flex md:items-center md:justify-between md:p-14"
-        data-reveal
-      >
-        <div>
-          <h2 className="text-h2">Not sure what fits?</h2>
-          <p className="text-silver">Tell us your scooter and year, and we will help you choose.</p>
-        </div>
-        <Button render={<Link href="/contact" />}>Contact us</Button>
-      </section>
-    </Container>
+    <section className="bg-background text-foreground">
+      <Container className="grid justify-items-center gap-6 py-20 text-center md:py-32" data-reveal>
+        <p className="flex items-center gap-2 font-label text-xxs tracking-widest text-muted-foreground uppercase">
+          <span aria-hidden className="size-1.5 rounded-full bg-primary" />
+          Need help?
+        </p>
+        <h2 className="text-h1 max-w-3xl">Not sure what fits?</h2>
+        <p className="max-w-md text-muted-foreground">
+          Tell us your scooter and year, and we will help you choose.
+        </p>
+        <Button
+          className="text-background hover:bg-foreground hover:text-background"
+          render={<Link href="/collections" />}
+          size="lg"
+        >
+          View collection
+        </Button>
+      </Container>
+    </section>
   );
 }

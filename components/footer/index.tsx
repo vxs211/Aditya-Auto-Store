@@ -1,15 +1,37 @@
 import { cn } from "cn";
+import { FactoryIcon, HeadphonesIcon, ShieldCheckIcon } from "lucide-react";
 import Image from "next/image";
 
 import { MenuLink } from "@/components/nav/menu-link";
 import { Container } from "@/components/ui/container";
-import { Sections } from "@/components/ui/sections";
 import { shopConfig } from "@/lib/config";
-import type { MenuItem } from "@/lib/menu/types";
 import { getShopPolicies } from "@/lib/policies/server";
 
 import { SocialLinks } from "./social-links";
 import type { SocialLink } from "./social-links";
+
+interface FooterLink {
+  title: string;
+  url: string;
+}
+
+const QUICK_LINKS: FooterLink[] = [
+  { title: "Home", url: "/" },
+  { title: "About us", url: "/about" },
+  { title: "Manufacturing", url: "/about#manufacturing" },
+  { title: "Shop by model", url: "/collections" },
+  { title: "Blog", url: "/guides" },
+  { title: "Contact us", url: "/contact" },
+];
+
+// Only claims we can back: parts are checked while they are made, in our own unit, with support in shop hours.
+const TRUST = [
+  { body: "Checked as it is made", icon: ShieldCheckIcon, title: "Quality assured" },
+  { body: "Our own unit in Ahmedabad", icon: FactoryIcon, title: "Made in India" },
+  { body: "Help when you need it", icon: HeadphonesIcon, title: "Customer support" },
+];
+
+const HEADING = "font-heading text-body font-semibold uppercase tracking-[0.12em]";
 
 export async function Footer() {
   const { contact, social } = shopConfig;
@@ -17,47 +39,21 @@ export async function Footer() {
     Object.entries(social) as [SocialLink["platform"], string | undefined][]
   ).flatMap(([platform, url]) => (url ? [{ platform, url }] : []));
   const policies = await getShopPolicies({}).catch(() => []);
-  const items: MenuItem[] = [
-    {
-      id: "footer-shop",
-      items: [
-        { id: "footer-products", items: [], title: "Products", url: "/collections/all" },
-        { id: "footer-models", items: [], title: "Shop by model", url: "/collections" },
-        { id: "footer-guides", items: [], title: "Guides", url: "/guides" },
-      ],
-      title: "Shop",
-      url: "",
-    },
-    {
-      id: "footer-company",
-      items: [
-        { id: "footer-about", items: [], title: "About", url: "/about" },
-        { id: "footer-contact", items: [], title: "Contact", url: "/contact" },
-        // Shown only once Shopify customer accounts are switched on.
-        ...(shopConfig.auth.isEnabled
-          ? [{ id: "footer-account", items: [], title: "My account", url: "/account" }]
-          : []),
-      ],
-      title: "Company",
-      url: "",
-    },
+  const helpLinks: FooterLink[] = [
+    { title: "FAQ", url: "/faq" },
+    { title: "Track your order", url: "/track-order" },
+    { title: "My account", url: "/account" },
+    { title: "Return and refund policy", url: "/return-policy" },
+    { title: "Terms of service", url: "/terms" },
+    // Terms, refund and shipping policies appear here on their own once they are written in Shopify admin.
+    ...policies
+      .filter((policy) => !/refund|return|terms/i.test(policy.handle))
+      .map((policy) => ({ title: policy.title, url: `/policies/${policy.handle}` })),
   ];
-  items.push({
-    id: "footer-help",
-    items: [
-      { id: "footer-faq", items: [], title: "FAQ", url: "/faq" },
-      { id: "footer-track", items: [], title: "Track your order", url: "/track-order" },
-      ...policies.map((policy) => ({
-        id: policy.handle,
-        items: [],
-        title: policy.title,
-        url: `/policies/${policy.handle}`,
-      })),
-    ],
-    title: "Help",
-    url: "",
-  });
-  const hasContact = Boolean(contact.address || contact.email || contact.phone);
+  const phone2Href = contact.secondaryPhone
+    ? `tel:${contact.secondaryPhone.replace(/[^\d+]/g, "")}`
+    : null;
+  const phoneHref = contact.phone ? `tel:${contact.phone.replace(/[^\d+]/g, "")}` : null;
 
   // Below lg the footer fills the screen and sits above the sticky header, so it slides over the logo bar.
   return (
@@ -69,45 +65,68 @@ export async function Footer() {
           shopConfig.agent.isEnabled && "pb-22",
         )}
       >
-        <Sections className="gap-16">
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 md:gap-10">
-            <div className="col-span-2 grid content-start gap-4 md:col-span-1">
-              <p className="font-heading text-h3 text-balance">
-                Made to fit your scooter. Since 2006.
-              </p>
-              <p className="text-small text-silver">{shopConfig.site.description}</p>
-              {hasContact && (
-                <div className="grid gap-1 text-small text-silver">
-                  {contact.address && <address className="not-italic">{contact.address}</address>}
-                  {contact.phone && (
-                    <a
-                      className="transition-colors hover:text-background"
-                      href={`tel:${contact.phone.replace(/[^\d+]/g, "")}`}
-                    >
-                      {contact.phone}
-                    </a>
-                  )}
-                  {contact.email && (
-                    <a
-                      className="transition-colors hover:text-background"
-                      href={`mailto:${contact.email}`}
-                    >
-                      {contact.email}
-                    </a>
-                  )}
-                </div>
-              )}
-              {socialLinks.length > 0 && <SocialLinks links={socialLinks} />}
-            </div>
-            <FooterMenu items={items} />
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.4fr] lg:gap-12">
+          <div className="grid content-start gap-6">
+            <Image
+              alt={shopConfig.site.name}
+              className="h-12 w-auto self-start"
+              height={48}
+              sizes="100vw"
+              src="/brand/aditya-logo-horizontal-orange-cropped.svg"
+              unoptimized
+              width={240}
+            />
+            <p className="max-w-md text-silver">{shopConfig.site.description}</p>
+            {socialLinks.length > 0 && (
+              <div className="grid gap-4 border-t border-white/15 pt-6">
+                <h3 className={HEADING}>Follow Aditya</h3>
+                <SocialLinks links={socialLinks} />
+              </div>
+            )}
           </div>
-        </Sections>
+
+          <div className="grid grid-cols-2 gap-6 lg:contents">
+            <FooterList links={QUICK_LINKS} title="Quick links" />
+            <FooterList links={helpLinks} title="Help" />
+          </div>
+
+          <div className="grid content-start gap-6 bg-white/[0.06] p-6 md:col-span-2 md:p-8 lg:col-span-1">
+            <div className="grid gap-3">
+              <h3 className={HEADING}>Address</h3>
+              <address className="text-silver not-italic">
+                {contact.address ?? "Ahmedabad, Gujarat, India"}
+              </address>
+            </div>
+          </div>
+        </div>
+
+        <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {TRUST.map(({ body, icon: Icon, title }) => (
+            <li className="flex items-center gap-4 bg-white/[0.06] p-5" key={title}>
+              <span className="flex size-11 shrink-0 items-center justify-center bg-primary/15 text-primary">
+                <Icon className="size-5" />
+              </span>
+              <div>
+                <p className="font-heading font-semibold">{title}</p>
+                <p className="text-small text-silver">{body}</p>
+              </div>
+            </li>
+          ))}
+          {contact.phone && phoneHref && (
+            <li className="grid content-center gap-1 bg-primary p-5 text-primary-foreground">
+              <p className="text-small">Need help? Call us</p>
+              <a className="font-heading text-h4 font-semibold" href={phoneHref}>
+                {contact.phone}
+              </a>
+              {contact.secondaryPhone && phone2Href && (
+                <a className="font-heading text-h4 font-semibold" href={phone2Href}>
+                  {contact.secondaryPhone}
+                </a>
+              )}
+            </li>
+          )}
+        </ul>
       </Container>
-      <div className="border-t border-white/15 text-silver">
-        <Container className="flex min-h-12 items-center py-3 text-small">
-          &copy; {shopConfig.site.name}. All rights reserved.
-        </Container>
-      </div>
       {/* Edge to edge on small screens; held to the content grid on wide ones. */}
       <Image
         alt=""
@@ -119,28 +138,32 @@ export async function Footer() {
         unoptimized
         width={1610}
       />
+      <div className="border-t border-white/15 text-silver">
+        <Container className="flex min-h-12 items-center py-3 text-small">
+          {/* shortcut: the year is typed in, change it each January */}
+          &copy; 2026 {shopConfig.site.name}. All rights reserved.
+        </Container>
+      </div>
     </footer>
   );
 }
 
-function FooterMenu({ items }: { items: MenuItem[] }) {
-  return items.slice(0, 5).map((column) => (
-    <div key={column.id} className="grid content-start gap-3">
-      <h3 className="font-heading text-body font-semibold">{column.title}</h3>
-      {column.items.length > 0 && (
-        <ul className="grid gap-2">
-          {column.items.map((leaf) => (
-            <li key={leaf.id}>
-              <MenuLink
-                url={leaf.url}
-                className="block py-0.5 text-small text-silver transition-colors hover:text-background"
-              >
-                {leaf.title}
-              </MenuLink>
-            </li>
-          ))}
-        </ul>
-      )}
+function FooterList({ links, title }: { links: FooterLink[]; title: string }) {
+  return (
+    <div className="grid content-start gap-4">
+      <h3 className={HEADING}>{title}</h3>
+      <ul className="grid gap-3">
+        {links.map((link) => (
+          <li key={link.url}>
+            <MenuLink
+              url={link.url}
+              className="block text-silver transition-colors hover:text-background"
+            >
+              {link.title}
+            </MenuLink>
+          </li>
+        ))}
+      </ul>
     </div>
-  ));
+  );
 }

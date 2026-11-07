@@ -5,6 +5,7 @@ import { GoogleReviews } from "@/components/home/google-reviews";
 import {
   AboutIntro,
   BestSellers,
+  BlogSection,
   BrandMosaic,
   HomeContactBand,
   HomeHero,
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <Page className="pt-0">
+    <Page className="home-type pt-0">
       <HomeHero />
       <Sections className="gap-20 py-16 md:gap-32 md:py-24">
         <Suspense fallback={null}>
@@ -49,6 +50,9 @@ export default function HomePage() {
         <ProofBand />
         <Suspense fallback={null}>
           <InstagramFeed />
+        </Suspense>
+        <Suspense fallback={null}>
+          <BlogSection />
         </Suspense>
         <GoogleReviews />
         <HomeContactBand />

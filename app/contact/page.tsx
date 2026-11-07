@@ -37,7 +37,7 @@ const HELP = [
 ];
 
 export default function ContactPage() {
-  const { phone, whatsapp } = shopConfig.contact;
+  const { address, phone, secondaryPhone, whatsapp } = shopConfig.contact;
   const telHref = phone ? `tel:${phone.replace(/[^\d+]/g, "")}` : null;
 
   return (
@@ -69,13 +69,26 @@ export default function ContactPage() {
                     </dd>
                   </div>
                 )}
+                {secondaryPhone && (
+                  <div className="grid gap-1">
+                    <dt className="text-small text-muted-foreground">Second number</dt>
+                    <dd>
+                      <a
+                        className="text-h3 hover:text-link"
+                        href={`tel:${secondaryPhone.replace(/[^\d+]/g, "")}`}
+                      >
+                        {secondaryPhone}
+                      </a>
+                    </dd>
+                  </div>
+                )}
                 <div className="grid gap-1">
                   <dt className="text-small text-muted-foreground">Hours</dt>
                   <dd>Monday to Saturday, 10:00am to 6:00pm</dd>
                 </div>
                 <div className="grid gap-1">
                   <dt className="text-small text-muted-foreground">Where we are</dt>
-                  <dd>Ahmedabad, Gujarat, India</dd>
+                  <dd>{address ?? "Ahmedabad, Gujarat, India"}</dd>
                 </div>
               </dl>
               {whatsapp && (
