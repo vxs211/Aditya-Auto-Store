@@ -34,12 +34,7 @@ export async function POST(request: Request) {
   const tagsInvalidated: string[] = [];
 
   if (topic.startsWith("products/")) {
-    // Product tags cascade through every surface without purging the full catalog.
-    const productTags: string[] = [];
-
-    if (topic === "products/create" || topic === "products/delete") {
-      productTags.push("products-index");
-    }
+    const productTags = ["products-index"];
 
     try {
       const payload = JSON.parse(body);
@@ -57,6 +52,7 @@ export async function POST(request: Request) {
       }
     } catch {
       console.error("[Shopify Webhook] Could not parse products payload; no tags invalidated");
+      return Response.json({ error: "Invalid products payload" }, { status: 400 });
     }
 
     for (const tag of productTags) {
@@ -88,6 +84,7 @@ export async function POST(request: Request) {
       }
     } catch {
       console.error("[Shopify Webhook] Could not parse collections payload");
+      return Response.json({ error: "Invalid collections payload" }, { status: 400 });
     }
 
     for (const tag of collectionTags) {
@@ -107,6 +104,7 @@ export async function POST(request: Request) {
       }
     } catch {
       console.error("[Shopify Webhook] Could not parse metaobjects payload");
+      return Response.json({ error: "Invalid metaobjects payload" }, { status: 400 });
     }
 
     for (const tag of metaobjectTags) {

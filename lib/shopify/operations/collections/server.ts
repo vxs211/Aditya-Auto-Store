@@ -103,6 +103,7 @@ const GET_COLLECTION_FITMENT_QUERY = gql(
               image { ${IMAGE_FIELDS} }
               products(first: 250) {
                 nodes { id }
+                pageInfo { endCursor hasNextPage }
               }
             }
           }
@@ -112,6 +113,24 @@ const GET_COLLECTION_FITMENT_QUERY = gql(
   }
 `,
 );
+
+const GET_COLLECTION_PRODUCT_COUNT_PAGE_QUERY = gql(`#graphql
+  query getCollectionProductCountPage($handle: String!, $after: String, $country: CountryCode, $language: LanguageCode) @inContext(country: $country, language: $language) {
+    collection(handle: $handle) {
+      products(first: 250, after: $after) {
+        nodes { id }
+        pageInfo { endCursor hasNextPage }
+      }
+    }
+  }
+`);
+
+async function fetchProductCountPage(handle: string, after: string, locale: CommerceLocale) {
+  return storefront.request(GET_COLLECTION_PRODUCT_COUNT_PAGE_QUERY, {
+    locale,
+    variables: { after, handle },
+  });
+}
 
 export async function fetchCollectionFitment({
   handle,
@@ -145,17 +164,32 @@ export async function fetchCollectionFitment({
 
   const brand = collection?.brand?.reference;
   const banner = collection?.banner?.reference;
-  const models = (collection?.models?.references?.nodes ?? []).flatMap((node) =>
-    node && "handle" in node
-      ? [
-          {
-            handle: node.handle,
-            image: toImage(node.image, node.title),
-            productCount: node.products.nodes.length,
-            title: node.title,
-          },
-        ]
-      : [],
+  const models = await Promise.all(
+    (collection?.models?.references?.nodes ?? []).flatMap((node) =>
+      node && "handle" in node
+        ? [
+            (async () => {
+              let productCount = node.products.nodes.length;
+              let pageInfo: { endCursor?: string | null; hasNextPage: boolean } =
+                node.products.pageInfo;
+              while (pageInfo.hasNextPage) {
+                if (!pageInfo.endCursor) throw new Error("Missing product pagination cursor");
+                const page = await fetchProductCountPage(node.handle, pageInfo.endCursor, locale);
+                assertStorefrontOk(page, "getCollectionProductCountPage");
+                if (!page.data.collection) throw new Error("Model collection no longer exists");
+                productCount += page.data.collection.products.nodes.length;
+                pageInfo = page.data.collection.products.pageInfo;
+              }
+              return {
+                handle: node.handle,
+                image: toImage(node.image, node.title),
+                productCount,
+                title: node.title,
+              };
+            })(),
+          ]
+        : [],
+    ),
   );
 
   return {
@@ -168,8 +202,9 @@ export async function fetchCollectionFitment({
 
 const GET_FITMENT_BRANDS_QUERY = gql(
   `#graphql
-  query getFitmentBrands($first: Int!, $country: CountryCode, $language: LanguageCode) @inContext(country: $country, language: $language) {
-    collections(first: $first) {
+  query getFitmentBrands($first: Int!, $after: String, $country: CountryCode, $language: LanguageCode) @inContext(country: $country, language: $language) {
+    collections(first: $first, after: $after) {
+      pageInfo { endCursor hasNextPage }
       nodes {
         handle
         title
@@ -191,16 +226,14 @@ const GET_FITMENT_BRANDS_QUERY = gql(
 `,
 );
 
+async function fetchFitmentBrandsPage(after: string | null, locale: CommerceLocale) {
+  return storefront.request(GET_FITMENT_BRANDS_QUERY, { locale, variables: { after, first: 250 } });
+}
+
 // A collection with `custom.vehicle_models` set is a brand; everything else is a model or merchandising.
 export async function fetchFitmentBrands({
   locale = shopConfig.localization,
 }: { locale?: CommerceLocale } = {}): Promise<FitmentBrand[]> {
-  const response = await storefront.request(GET_FITMENT_BRANDS_QUERY, {
-    locale,
-    variables: { first: 250 },
-  });
-  assertStorefrontOk(response, "getFitmentBrands");
-
   const toImage = (
     raw:
       | { altText?: string | null; height?: number | null; url: string; width?: number | null }
@@ -217,28 +250,41 @@ export async function fetchFitmentBrands({
         }
       : null;
 
-  return response.data.collections.nodes.flatMap((node) => {
-    const models = node.models?.references?.nodes ?? [];
-    if (models.length === 0) return [];
-    return [
-      {
-        handle: node.handle,
-        image: toImage(node.image, node.title),
-        models: models.flatMap((model) =>
-          model && "handle" in model
-            ? [
-                {
-                  handle: model.handle,
-                  image: toImage(model.image, model.title),
-                  title: model.title,
-                },
-              ]
-            : [],
-        ),
-        title: node.title,
-      },
-    ];
-  });
+  const brands: FitmentBrand[] = [];
+  let after: string | null = null;
+  do {
+    const response = await fetchFitmentBrandsPage(after, locale);
+    assertStorefrontOk(response, "getFitmentBrands");
+    brands.push(
+      ...response.data.collections.nodes.flatMap((node) => {
+        const models = node.models?.references?.nodes ?? [];
+        if (models.length === 0) return [];
+        return [
+          {
+            handle: node.handle,
+            image: toImage(node.image, node.title),
+            models: models.flatMap((model) =>
+              model && "handle" in model
+                ? [
+                    {
+                      handle: model.handle,
+                      image: toImage(model.image, model.title),
+                      title: model.title,
+                    },
+                  ]
+                : [],
+            ),
+            title: node.title,
+          },
+        ];
+      }),
+    );
+    const { endCursor, hasNextPage }: { endCursor?: string | null; hasNextPage: boolean } =
+      response.data.collections.pageInfo;
+    if (hasNextPage && !endCursor) throw new Error("Missing collection pagination cursor");
+    after = hasNextPage ? (endCursor ?? null) : null;
+  } while (after);
+  return brands;
 }
 
 export async function fetchCollection({

@@ -232,7 +232,7 @@ Phone and WhatsApp are set to `+91 95583 94079` (confirmed by the owner). Waitin
 
 ## Phase 3 build log: fitment hierarchy
 
-- `fetchCollectionFitment` (lib/shopify/operations/collections/server.ts) reads `custom.vehicle_brand`, `custom.vehicle_models`, `custom.banner_image`, `custom.seo_body`. The Storefront API has no product count on Collection, so counts come from `products(first: 250)` and cap at 250 per model.
+- `fetchCollectionFitment` (lib/shopify/operations/collections/server.ts) reads `custom.vehicle_brand`, `custom.vehicle_models`, `custom.banner_image`, `custom.seo_body`. Product counts come from paginating each model's products.
 - `app/collections/[handle]/layout.tsx` branches: brand (has models) shows model tiles; model (has brand) shows the product grid with no filters or sort; anything else keeps the template browse.
 - Not yet verified against real data: the store has no brand or model collections or metafield definitions. Owner must create them (see Phase 3 data in research/BUILD-PROMPT.md 2.1).
 - Not done: product card restyle (stars, quick add label) and pagination on model pages beyond the first page.

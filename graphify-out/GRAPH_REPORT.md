@@ -1,24 +1,24 @@
-# Graph Report - Aditya Store Shopify  (2026-11-06)
+# Graph Report - Aditya-Auto-Store  (2026-11-18)
 
 ## Corpus Check
-- 340 files · ~114,222 words
+- 341 files · ~114,757 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: (none) 3, .woff2 3, .example 1)
 
 ## Summary
-- 1958 nodes · 5736 edges · 116 communities (99 shown, 17 thin omitted)
+- 1961 nodes · 5743 edges · 103 communities (102 shown, 1 thin omitted)
 - Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 124 edges (avg confidence: 0.92)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `38af32af`
+- Built from commit: `c162a589`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - filters-client.tsx
-- react
-- search/page.tsx
+- Container
+- buildAlternates
 - product/server.ts
 - app/layout.tsx
 - [shard]/route.ts
@@ -26,15 +26,15 @@
 - representation/index.ts
 - Teardown: paragontwowheeleraccessories.com
 - @shopify/hydrogen
-- Link
-- product-detail-section.tsx
+- Button
+- buy-buttons.tsx
 - customer/server.ts
-- lib/product/index.ts
+- products/[handle]/page.tsx
 - next
-- collection-page.tsx
+- CollectionLayout
 - collections/[handle]/page.tsx
 - lib/product/types.ts
-- errors/server.ts
+- customer/server.ts
 - quick-shop.tsx
 - lib/collections/server.ts
 - Step-by-step
@@ -49,34 +49,34 @@
 - transforms/product/types.ts
 - products/server.ts
 - 3. Build phases
-- collections/index.ts
+- browse.tsx
 - link.tsx
 - [id]/page.tsx
-- catalog.ts
+- products/index.ts
 - Skeleton
 - gift-card-purchase-form.tsx
-- browse.tsx
-- customer/action.ts
+- lib/product/index.ts
+- @shopify/hydrogen
 - compilerOptions
 - cart/server.ts
 - [slug]/page.tsx
 - components.json
 - address-book.tsx
 - cart-bridge.tsx
-- lucide-react
+- auth/request.ts
 - Vercel Shop
 - bottom-bar.tsx
 - .oxlintrc.json
 - Shopify setup
 - tasks
-- money/index.ts
+- search/page.tsx
 - Enable Analytics
 - product-info.tsx
-- mcp/server.ts
+- [handle]/refine/page.tsx
 - config/types.ts
+- shopify-client.tsx
 - package.json
-- dependencies
-- update-cart.ts
+- Enable i18n (next-intl, no Markets)
 - auth/server.ts
 - operations/pages/server.ts
 - mobile-menu.tsx
@@ -89,15 +89,15 @@
 - collection-browse-provider.tsx
 - footer/index.tsx
 - audit-storefront.mjs
-- sort-select.tsx
-- bundle-components.tsx
+- collection-page.tsx
+- product-detail-section.tsx
 - Vercel Shop GraphQL Integration Reference
-- getNumericShopifyId
-- google-reviews.tsx
+- Cache Components compatibility — read this first
+- Collection and Search Routes
 - cart.tsx
 - lib/customer/types.ts
 - fetchSearchIndexProducts
-- operations/policies/server.ts
+- 11. Verification
 - Commerce Flows
 - input-group.tsx
 - scripts
@@ -109,33 +109,20 @@
 - nav/index.tsx
 - Vercel Shop
 - Product Detail Route Architecture
-- cart/page.tsx
+- cart-page.tsx
 - eve.ts
 - interface
 - Integrate Shopify GraphQL
 - shopify-dev-mcp
 - runtime
-- ai@7.0.157
-- @base-ui/react
-- class-variance-authority
-- gsap
-- @gsap/react@^2.1.2
+- 4. Configure routing
+- 8. Propagate locale through commerce
+- 10. Strategy-specific SEO and sitemap behavior
 - lenis
-- oxfmt@0.75.0
-- oxlint@1.90.0
-- sanitize-html
-- streamdown
-- @tailwindcss/turbopack@4.3.3
-- @tailwindcss/typography@0.5.20
-- turbo@2.11.10
-- @types/node@26.6.6
-- @types/react@19.3.0
-- @types/sanitize-html@2.16.2
-- @vercel/speed-insights
 
 ## God Nodes (most connected - your core abstractions)
 1. `Link()` - 110 edges
-2. `react` - 105 edges
+2. `react` - 106 edges
 3. `next` - 82 edges
 4. `@shopify/hydrogen` - 79 edges
 5. `shopConfig` - 73 edges
@@ -160,206 +147,206 @@
 ## Import Cycles
 - None detected.
 
-## Communities (116 total, 17 thin omitted)
+## Communities (103 total, 1 thin omitted)
 
 ### Community 0 - "filters-client.tsx"
-Cohesion: 0.06
-Nodes (54): BrowsePublication, BrowsePublisherProps, usePublishedFacets(), buildToggleHref(), CollectionFilterSidebar(), CollectionFilterSidebarProps, FilterBadge(), FilterBadgeProps (+46 more)
+Cohesion: 0.07
+Nodes (44): usePublishedFacets(), buildToggleHref(), CollectionFilterSidebar(), CollectionFilterSidebarProps, FilterBadge(), FilterBadgeProps, FilterOption(), FilterOptionProps (+36 more)
 
-### Community 1 - "react"
-Cohesion: 0.10
-Nodes (32): Spacing, INFRASTRUCTURE, metadata, MISSION_POINTS, RANGE, REASONS, STATS, VALUES (+24 more)
+### Community 1 - "Container"
+Cohesion: 0.14
+Nodes (31): Spacing, SignInFailedPage(), CollectionsPage(), ContactPage(), HELP, metadata, FAQ_SCHEMA, FaqPage() (+23 more)
 
-### Community 2 - "search/page.tsx"
-Cohesion: 0.10
-Nodes (40): BlogArticlePage(), BlogArticlePageContent(), generateMetadata(), BlogPage(), BlogPageContent(), generateMetadata(), generateMetadata(), generateMetadata() (+32 more)
+### Community 2 - "buildAlternates"
+Cohesion: 0.15
+Nodes (23): BlogArticlePage(), BlogArticlePageContent(), generateMetadata(), generateStaticParams(), BlogPage(), BlogPageContent(), generateMetadata(), generateMetadata() (+15 more)
 
 ### Community 3 - "product/server.ts"
-Cohesion: 0.10
-Nodes (37): generateStaticParams(), AgentProductCard(), MissingData(), ProductCard(), ProductCardContent(), ProductCardImage(), ProductCardImageContainer(), ProductCardImageProps (+29 more)
+Cohesion: 0.17
+Nodes (21): AgentProductCard(), ProductCard(), ProductCardContent(), ProductCardImage(), ProductCardImageContainer(), ProductCardImageProps, ProductCardPrice(), ProductCardPriceProps (+13 more)
 
 ### Community 4 - "app/layout.tsx"
-Cohesion: 0.07
-Nodes (31): ensureStatic, geistSans, inter, michroma, origin, RootLayout(), viewport, ActionBar() (+23 more)
+Cohesion: 0.09
+Nodes (21): ensureStatic, geistSans, inter, michroma, origin, RootLayout(), viewport, ActionBar() (+13 more)
 
 ### Community 5 - "[shard]/route.ts"
 Cohesion: 0.10
-Nodes (35): generateStaticParams(), generateStaticParams(), generateStaticParams(), escapeXml(), GET(), renderShard(), renderStatic(), toAbsoluteUrl() (+27 more)
+Nodes (33): generateStaticParams(), escapeXml(), GET(), renderShard(), renderStatic(), toAbsoluteUrl(), urlsetWrap(), xmlResponse() (+25 more)
 
 ### Community 6 - "shopping-results.tsx"
-Cohesion: 0.11
-Nodes (36): AgentCartSummaryProps, AgentProductCardProps, AgentVariantPicker(), AgentVariantPickerProps, CartConfirmation, hasCompleteVariants(), isAgentProduct(), ShoppingResults() (+28 more)
+Cohesion: 0.18
+Nodes (21): AgentCartSummaryProps, AgentVariantPicker(), CartConfirmation, hasCompleteVariants(), isAgentProduct(), ShoppingResults(), ShoppingResultsProps, wantsOptions() (+13 more)
 
 ### Community 7 - "representation/index.ts"
-Cohesion: 0.11
-Nodes (27): Step 9: Locale-aware Markdown negotiation, Markdown negotiation, GET(), GET(), GET(), GET(), describeCollection(), collectionToMarkdown() (+19 more)
+Cohesion: 0.07
+Nodes (39): Step 9: Locale-aware Markdown negotiation, Markdown negotiation, GET(), GET(), GET(), GET(), generateMetadata(), generateStaticParams() (+31 more)
 
 ### Community 8 - "Teardown: paragontwowheeleraccessories.com"
 Cohesion: 0.05
 Nodes (38): 10. Search — a centred modal, 11. Content pages, 12. Blog, 13. Apps, integrations, and tracking, 14. Design system, 15. SEO, 16. User flows, 17. What not to copy (+30 more)
 
 ### Community 9 - "@shopify/hydrogen"
-Cohesion: 0.14
-Nodes (30): AgentCartSummary(), CartPageContent(), CartPageLayout(), CartPageLayoutProps, DiscountForm(), DiscountFormProps, CartLineForm(), CartLineFormProps (+22 more)
+Cohesion: 0.10
+Nodes (38): AgentCartSummary(), MissingData(), CartDrawerContext, CartDrawerContextValue, CartDrawerProvider(), CartProviderWrapper(), CartProviderWrapperProps, useCartDrawer() (+30 more)
 
-### Community 10 - "Link"
-Cohesion: 0.21
-Nodes (32): AboutPage(), SignInFailedPage(), ContactPage(), NotFoundError(), PopularBrands(), ShopifyNotFoundRedirect(), HomePage(), metadata (+24 more)
+### Community 10 - "Button"
+Cohesion: 0.09
+Nodes (43): AboutPage(), INFRASTRUCTURE, metadata, MISSION_POINTS, RANGE, RangePictures(), REASONS, STATS (+35 more)
 
-### Community 11 - "product-detail-section.tsx"
-Cohesion: 0.14
-Nodes (28): Preserve shell coherence, Product page (Phase 4, partial), BuyButtons(), BuyButtonsProps, PurchaseOptions(), BuyWithShopLogo(), BuyButtonsFallback(), ProductDetailSkeleton() (+20 more)
+### Community 11 - "buy-buttons.tsx"
+Cohesion: 0.24
+Nodes (13): Product page (Phase 4, partial), BuyButtons(), BuyButtonsProps, PurchaseOptions(), PurchaseOptionsProps, BuyWithShopLogo(), BuyButtonsFallback(), StickyBuyBar() (+5 more)
 
 ### Community 12 - "customer/server.ts"
-Cohesion: 0.12
-Nodes (26): ADDRESS_FRAGMENT, CUSTOMER_PROFILE_FRAGMENT, ORDER_FRAGMENT, ORDER_SUMMARY_FRAGMENT, CUSTOMER_ADDRESS_CREATE_MUTATION, CUSTOMER_ADDRESS_DELETE_MUTATION, CUSTOMER_ADDRESS_UPDATE_MUTATION, CUSTOMER_UPDATE_MUTATION (+18 more)
+Cohesion: 0.19
+Nodes (15): ADDRESS_FRAGMENT, CUSTOMER_PROFILE_FRAGMENT, ORDER_FRAGMENT, ORDER_SUMMARY_FRAGMENT, transformCustomerAddress(), transformLineItem(), transformMoney(), transformOrder() (+7 more)
 
-### Community 13 - "lib/product/index.ts"
-Cohesion: 0.12
-Nodes (25): buildProductMetadata(), generateMetadata(), ProductPage(), ProductPageContent(), CollectionViewedTracker(), ProductViewedTracker(), SearchViewedTracker(), ProductDetailSection() (+17 more)
+### Community 13 - "products/[handle]/page.tsx"
+Cohesion: 0.17
+Nodes (21): Preserve shell coherence, buildProductMetadata(), generateMetadata(), generateStaticParams(), ProductPage(), ProductPageContent(), ProductCardSkeleton(), ProductDetailSection() (+13 more)
 
 ### Community 14 - "next"
 Cohesion: 0.12
-Nodes (14): metadata, FAQ_SCHEMA, FAQS, metadata, GET(), metadata, Section, SECTIONS (+6 more)
+Nodes (18): metadata, metadata, Section, SECTIONS, CollectionHeader(), ContactBand(), ContentCard(), FitmentLayout() (+10 more)
 
-### Community 15 - "collection-page.tsx"
-Cohesion: 0.14
-Nodes (23): Next.js layer, AllProductsLayout(), CollectionHandleLayout(), CollectionHandleLayoutContent(), generateStaticParams(), CollectionBrowseBoundaryProps, CollectionDetailSkeleton(), CollectionHeader() (+15 more)
+### Community 15 - "CollectionLayout"
+Cohesion: 0.21
+Nodes (11): AllProductsLayout(), generateMetadata(), generateMetadata(), GET(), CollectionLayout(), describeCollection(), SEARCH_SORT_EXCLUDE, ALL_PRODUCTS_HANDLE (+3 more)
 
 ### Community 16 - "collections/[handle]/page.tsx"
-Cohesion: 0.15
-Nodes (25): Keep the default view static, RangePictures(), AllProductsPage(), generateMetadata(), generateMetadata(), RefinedAllProductsPage(), RefinedAllProductsResults(), CollectionPage() (+17 more)
+Cohesion: 0.29
+Nodes (11): Next.js layer, Keep the default view static, AllProductsPage(), CollectionPage(), DefaultCollectionResults(), CollectionBrowseBoundary(), SearchParamsProbe(), SearchParamsRead() (+3 more)
 
 ### Community 17 - "lib/product/types.ts"
-Cohesion: 0.17
-Nodes (19): PurchaseOptionsProps, ProductOpenGraph(), ProductOpenGraphProps, RecentlyViewedRecorder(), ProductSchemaData, ProductSchemaProps, OrderLineItem, Image (+11 more)
+Cohesion: 0.23
+Nodes (11): RecentlyViewedRecorder(), AgentOptionValue, FilterValue, readRecentlyViewedProducts(), recordRecentlyViewedProduct(), OptionValueState, OptionValueSwatch, ProductFormInput (+3 more)
 
-### Community 18 - "errors/server.ts"
-Cohesion: 0.11
-Nodes (18): register(), customerAccountFetch(), isCustomerAccountUnauthorized(), CustomerAccountFetchOptions, CustomerAccountVariables, isTransientError(), TRANSIENT_ERROR_CODES, COLLECTION_FIELDS_FRAGMENT (+10 more)
+### Community 18 - "customer/server.ts"
+Cohesion: 0.12
+Nodes (24): customerAccountFetch(), isCustomerAccountUnauthorized(), CustomerAccountFetchOptions, CustomerAccountVariables, logShopifyDebug(), createCustomerAddress(), CUSTOMER_ADDRESS_CREATE_MUTATION, CUSTOMER_ADDRESS_DELETE_MUTATION (+16 more)
 
 ### Community 19 - "quick-shop.tsx"
-Cohesion: 0.13
-Nodes (25): Motion (GSAP), QuickShop(), changeOpen(), closeForCart(), load(), resolveSelection(), retrySelection(), selectVariant() (+17 more)
+Cohesion: 0.15
+Nodes (26): QuickShop(), changeOpen(), closeForCart(), resolveSelection(), retrySelection(), selectVariant(), QuickShopDetails(), QuickShopDetailsLink() (+18 more)
 
 ### Community 20 - "lib/collections/server.ts"
-Cohesion: 0.17
-Nodes (23): CollectionCardProps, FitmentLayoutProps, getCollections(), getCollectionsListing(), tagCollections(), Collection, CollectionFitment, CollectionWithThumbnail (+15 more)
+Cohesion: 0.12
+Nodes (29): POST(), verifyWebhook(), CollectionHandleLayout(), CollectionHandleLayoutContent(), generateStaticParams(), getCollection(), getCollectionFitment(), getCollections() (+21 more)
 
 ### Community 21 - "Step-by-step"
-Cohesion: 0.08
-Nodes (25): A. There must be no `app/layout.tsx` above `app/[locale]/`, B. Carry `ensureStatic` and give `locale` static params, C. Keep request reads behind Suspense, Cache Components compatibility — read this first, Create the locale source of truth, D. `setRequestLocale` is not used, E. Keep the template `Link`, Enable i18n (next-intl, no Markets) (+17 more)
+Cohesion: 0.17
+Nodes (12): Step 10: Bare `/` and unknown locales, Step 11: `generateStaticParams` on the locale layout, Step 12: Add or adapt the language selector, Step 1: Routing config, Step 2: Move routes under `app/[locale]/`, Step 3: Create `lib/params/server.ts` for Server Component root params, Step 4: `lib/i18n/request/server.ts` loads messages by resolved locale, Step 5: Extend `proxy.ts` (+4 more)
 
 ### Community 22 - "Enable Shopify Markets"
-Cohesion: 0.08
-Nodes (25): 10. Strategy-specific SEO and sitemap behavior, 11. Verification, 1. Ask for routing and locales, 2. Make regional locales the source of truth, 4. Configure routing, 5. Move page routes under `app/[locale]/`, 6. Resolve locale from the root param, 7. Extend the proxy (+17 more)
+Cohesion: 0.20
+Nodes (9): 1. Ask for routing and locales, 2. Make regional locales the source of truth, 5. Move page routes under `app/[locale]/`, 6. Resolve locale from the root param, 7. Extend the proxy, 9. Switch locale and carry the market to the cart, Before editing, Currency rule (+1 more)
 
 ### Community 23 - "product-media.tsx"
-Cohesion: 0.15
-Nodes (22): Lightbox(), LightboxContext, LightboxTrigger(), Carousel(), ColorImageGrid(), Grid(), GridItem(), LAZY_IMAGE_PROPS (+14 more)
+Cohesion: 0.11
+Nodes (29): Lightbox(), LightboxContext, LightboxTrigger(), Carousel(), ColorImageCarouselItems(), ColorImageGrid(), Grid(), GridItem() (+21 more)
 
 ### Community 24 - "proxy.ts"
-Cohesion: 0.14
-Nodes (20): createCustomerSessionManager(), createSessionManager(), decryptSession(), encryptSession(), forwardCustomerRefreshAttempt(), getCustomerRequestOrigin(), getSessionKey(), parseCookies() (+12 more)
+Cohesion: 0.20
+Nodes (13): createCustomerSessionManager(), forwardCustomerRefreshAttempt(), getCustomerRequestOrigin(), createCustomerCartHandlers(), isRefinedCollectionPath(), predictiveSearchHandlers, PRODUCT_FRAGMENT, QUERY_FRAGMENT (+5 more)
 
 ### Community 25 - "Headless Shopify Storefront — Project Brief"
-Cohesion: 0.09
-Nodes (22): 1. Open questions (need answers before build), 2. Goals, 3. Non-goals (v1), 4. Architecture, 5. The content-editing tradeoff — read this, 6. Scope — full store, v1, 7. Phases, 8. Risks (+14 more)
+Cohesion: 0.08
+Nodes (24): 1. Open questions (need answers before build), 2. Goals, 3. Non-goals (v1), 4. Architecture, 5. The content-editing tradeoff — read this, 6. Scope — full store, v1, 7. Phases, 8. Risks (+16 more)
 
 ### Community 26 - "agent-panel.tsx"
-Cohesion: 0.18
-Nodes (15): AgentButton(), AgentPanel(), AgentPanelProps, prepareAgentSession(), ChatMessage(), linkSafety, Markdown, AgentPanel (+7 more)
+Cohesion: 0.22
+Nodes (17): AgentButton(), AgentPanel(), AgentPanelProps, prepareAgentSession(), AgentPanel, CartOverlay(), FilterSheet(), Sheet() (+9 more)
 
 ### Community 27 - "blogs/server.ts"
-Cohesion: 0.19
-Nodes (15): ArticleCard(), ArticleCardProps, ArticlePageProps, BlogIndexProps, Blog, BlogArticle, ARTICLE_SUMMARY_FRAGMENT, BLOG_FRAGMENT (+7 more)
+Cohesion: 0.17
+Nodes (16): ArticleCardProps, ArticlePageProps, BlogIndexProps, Blog, BlogArticle, SearchParamsInput, SEO, ARTICLE_SUMMARY_FRAGMENT (+8 more)
 
 ### Community 28 - "search-modal.tsx"
-Cohesion: 0.13
-Nodes (18): LoadingSkeleton(), ProductResult(), SearchDialogContent(), handleKeyDown(), navigateToActiveItem(), SearchModal(), SearchTrigger(), SuggestionChip() (+10 more)
+Cohesion: 0.15
+Nodes (17): LoadingSkeleton(), ProductResult(), SearchDialogContent(), handleKeyDown(), navigateToActiveItem(), SearchTrigger(), SuggestionChip(), DialogTrigger() (+9 more)
 
 ### Community 29 - "transforms/product/index.ts"
-Cohesion: 0.15
-Nodes (22): Category, OptionValue, fetchProductRecommendations(), fetchProductWithVariants(), extractMediaFromProduct(), hasUniformPriceRange(), transformBundleComponent(), transformCategory() (+14 more)
+Cohesion: 0.16
+Nodes (21): Category, OptionValue, ProductOption, fetchProduct(), extractMediaFromProduct(), hasUniformPriceRange(), transformBundleComponent(), transformCategory() (+13 more)
 
 ### Community 30 - "transforms/product/types.ts"
 Cohesion: 0.15
 Nodes (18): BUNDLE_COMPONENT_VARIANT_FRAGMENT, BUNDLE_RELATIONSHIPS_FRAGMENT, FILTERABLE_PRODUCT_CARD_FRAGMENT, PRODUCT_CARD_FRAGMENT, PRODUCT_FRAGMENT, PRODUCT_WITH_VARIANTS_FRAGMENT, TAXONOMY_CATEGORY_FRAGMENT, PRODUCT_VARIANT_FRAGMENT (+10 more)
 
 ### Community 31 - "products/server.ts"
-Cohesion: 0.11
-Nodes (21): decodeShopifyId(), COLLECTION_PRODUCTS_QUERY, fetchProductsByIds(), GET_PRODUCT_BY_HANDLE_QUERY, GET_PRODUCT_BY_HANDLE_WITH_BUNDLES_QUERY, GET_PRODUCT_VARIANT_BY_SELECTED_OPTIONS_QUERY, GET_PRODUCT_VARIANT_QUERY, GET_PRODUCT_VARIANT_WITH_BUNDLES_QUERY (+13 more)
+Cohesion: 0.10
+Nodes (25): ProductVariant, decodeShopifyId(), COLLECTION_PRODUCTS_QUERY, fetchProductsByIds(), GET_PRODUCT_BY_HANDLE_QUERY, GET_PRODUCT_BY_HANDLE_WITH_BUNDLES_QUERY, GET_PRODUCT_VARIANT_BY_SELECTED_OPTIONS_QUERY, GET_PRODUCT_VARIANT_QUERY (+17 more)
 
 ### Community 32 - "3. Build phases"
 Cohesion: 0.09
 Nodes (22): 0.1 Brand system (binding), 0.2 Decision: retail store, single pieces or bulk, 0. Business details, 1. What makes this store work, 2.1 Brand → model hierarchy, 2.2 Editable marketing content — metaobjects, 2. Data model in Shopify, 3. Build phases (+14 more)
 
-### Community 33 - "collections/index.ts"
-Cohesion: 0.16
-Nodes (18): Collection and Search Routes, Images and pagination, One browse store for collections and search, Prefetch traffic, Reference implementation, Results and controls, InfiniteProductGrid(), InfiniteProductGridProps (+10 more)
+### Community 33 - "browse.tsx"
+Cohesion: 0.11
+Nodes (30): One browse store for collections and search, Browse(), BrowseResultsFallback(), BrowseResultsGrid(), BrowseResultsGridProps, CollectionResults(), CollectionResultsProps, StreamedResultsGrid() (+22 more)
 
 ### Community 34 - "link.tsx"
-Cohesion: 0.12
-Nodes (17): AccountError(), RootError(), AccountTab, ErrorBoundaryContent(), assignRef(), cancelSettleIntent(), canUpgrade(), Connection (+9 more)
+Cohesion: 0.10
+Nodes (26): AccountError(), RootError(), NotFoundError(), PopularBrands(), ShopifyNotFoundRedirect(), AccountTab, MobileTabsClient(), AnnouncementBar() (+18 more)
 
 ### Community 35 - "[id]/page.tsx"
 Cohesion: 0.24
 Nodes (17): OrderDetailContent(), OrderDetailPage(), OrderDetailSkeleton(), OrderLineItemRow(), SummaryRow(), OrdersContent(), OrdersPage(), OrdersSkeleton() (+9 more)
 
-### Community 36 - "catalog.ts"
-Cohesion: 0.23
-Nodes (12): matchingProducts(), productHandleSchema, productOptionsSchema, toModelProduct(), toModelProductDetails(), toModelProducts(), DESTINATIONS, toAgentProduct() (+4 more)
+### Community 36 - "products/index.ts"
+Cohesion: 0.05
+Nodes (55): cartHandlers, getCart(), getSessionCartId(), mutateCart(), formatCatalogMoney(), matchingProducts(), productHandleSchema, productOptionsSchema (+47 more)
 
 ### Community 37 - "Skeleton"
-Cohesion: 0.19
-Nodes (13): AccountGate(), AccountLabel(), AccountLabelSkeleton(), AccountLayout(), SidebarSkeleton(), ACCOUNT_LINKS, AccountMobileTabs(), MobileTabsClient() (+5 more)
+Cohesion: 0.22
+Nodes (10): AccountGate(), AccountLabelSkeleton(), AccountLayout(), SidebarSkeleton(), ACCOUNT_LINKS, AccountMobileTabs(), AccountSidebar(), AccountSidebarLink (+2 more)
 
 ### Community 38 - "gift-card-purchase-form.tsx"
-Cohesion: 0.22
-Nodes (12): ProfileForm(), ProfileFormLabels, useCartDrawer(), GiftCardPurchaseForm(), GiftCardPurchaseFormFallback(), TrackOrderForm(), Input(), Label() (+4 more)
+Cohesion: 0.25
+Nodes (11): ProfileForm(), ProfileFormLabels, GiftCardPurchaseForm(), GiftCardPurchaseFormFallback(), TrackOrderForm(), Input(), Label(), Switch() (+3 more)
 
-### Community 39 - "browse.tsx"
-Cohesion: 0.19
-Nodes (18): Browse(), BrowseProps, BrowseResultsFallback(), BrowseResultsGrid(), BrowseResultsGridProps, CollectionResultsProps, StreamedResultsGrid(), CollectionActiveFilterCountBadge() (+10 more)
+### Community 39 - "lib/product/index.ts"
+Cohesion: 0.23
+Nodes (13): ProductMediaArea(), ResolvedColorImageCarousel(), ResolvedColorImageGrid(), QUICK_SHOP_INPUT, findColorOption(), getSelectedColorImage(), getSharedImages(), hasColorImagePartitioning() (+5 more)
 
-### Community 40 - "customer/action.ts"
-Cohesion: 0.17
-Nodes (19): ADDRESS_ID, ADDRESS_INPUT, ADDRESS_VALUE, buildAddressInput(), CREATE_ADDRESS_INPUT, createAddressAction(), mapUserErrors(), PROFILE_INPUT (+11 more)
+### Community 40 - "@shopify/hydrogen"
+Cohesion: 0.21
+Nodes (8): register(), CART_FRAGMENT, configureShopifyLogging(), CONSOLE_METHODS, DEBUG_SHOPIFY, shopifyLogger, WritableLogLevel, @shopify/hydrogen
 
 ### Community 41 - "compilerOptions"
 Cohesion: 0.10
 Nodes (19): compilerOptions, allowArbitraryExtensions, allowJs, esModuleInterop, incremental, isolatedModules, jsx, lib (+11 more)
 
 ### Community 42 - "cart/server.ts"
-Cohesion: 0.22
-Nodes (14): POST(), createCustomerRequestContext(), cartHandlers, createCustomerCartHandlers(), createEmptyCart(), getCartById(), getCartData(), getCartIdFromCookie() (+6 more)
+Cohesion: 0.28
+Nodes (12): POST(), createCustomerRequestContext(), cartHandlers, createEmptyCart(), getCartById(), getCartData(), getCartIdFromCookie(), getHandlerContext() (+4 more)
 
 ### Community 43 - "[slug]/page.tsx"
-Cohesion: 0.23
-Nodes (13): GuidesPage(), metadata, Posts(), generateMetadata(), GuideContent(), GuidePage(), BlogThumb(), formatPostDate() (+5 more)
+Cohesion: 0.27
+Nodes (13): metadata, Posts(), GuideContent(), GuidePage(), BlogThumb(), formatPostDate(), InlineText(), BlogSection() (+5 more)
 
 ### Community 44 - "components.json"
 Cohesion: 0.11
 Nodes (18): aliases, components, hooks, lib, ui, utils, iconLibrary, registries (+10 more)
 
 ### Community 45 - "address-book.tsx"
-Cohesion: 0.26
-Nodes (16): AddressBook(), AddressForm(), DeleteDialog(), FormState, REQUIRED_FIELDS, TEXT_FIELDS, toFormValues(), Dialog() (+8 more)
+Cohesion: 0.14
+Nodes (29): AddressBook(), AddressForm(), DeleteDialog(), FormState, REQUIRED_FIELDS, TEXT_FIELDS, toFormValues(), Dialog() (+21 more)
 
 ### Community 46 - "cart-bridge.tsx"
-Cohesion: 0.21
-Nodes (13): AgentCartBridge(), CartRefresh, listeners, setAgentCartPending(), getCartMutationResult(), isCartMutation(), completedOutput(), isSettledToolPart() (+5 more)
+Cohesion: 0.15
+Nodes (20): AgentCartBridge(), CartRefresh, ChatMessage(), linkSafety, Markdown, AgentThinking(), Bubble(), BubbleContent() (+12 more)
 
-### Community 47 - "lucide-react"
-Cohesion: 0.25
-Nodes (14): CartUI(), CartNotifications(), CartCountBadge(), CartOverlay(), CartOverlayProps, FilterSheet(), Sheet(), SheetClose() (+6 more)
+### Community 47 - "auth/request.ts"
+Cohesion: 0.26
+Nodes (9): createSessionManager(), decryptSession(), encryptSession(), getSessionKey(), parseCookies(), readSession(), REFRESH_ATTEMPT_HEADER, REFRESH_ATTEMPT_PARAM (+1 more)
 
 ### Community 48 - "Vercel Shop"
 Cohesion: 0.12
 Nodes (16): Cart, Code Style, Comments, Customer accounts, Describe the product, not the change, Environment files, Files, GraphQL (+8 more)
 
 ### Community 49 - "bottom-bar.tsx"
-Cohesion: 0.21
+Cohesion: 0.20
 Nodes (13): BarLink(), ICONS, BarMotion(), onClick(), place(), BarRise(), ENTRANCE, SLIDE (+5 more)
 
 ### Community 50 - ".oxlintrc.json"
@@ -374,9 +361,9 @@ Nodes (16): Connection log — 2026-11-04, Getting the Storefront token, Known c
 Cohesion: 0.12
 Nodes (16): outputs, cache, persistent, cache, globalDependencies, globalEnv, $schema, cache (+8 more)
 
-### Community 53 - "money/index.ts"
-Cohesion: 0.17
-Nodes (9): formatCatalogMoney(), toCatalogCandidate(), agentProfile, agentProfileUrl(), SearchState, searchStateSchema, currencyDigits(), fromMinorUnits() (+1 more)
+### Community 53 - "search/page.tsx"
+Cohesion: 0.38
+Nodes (9): generateMetadata(), getParam(), SearchAnalyticsTracker(), SearchBrowse(), SearchPage(), SearchParams, SearchQueryLabel(), SearchResultCount() (+1 more)
 
 ### Community 54 - "Enable Analytics"
 Cohesion: 0.12
@@ -386,45 +373,45 @@ Nodes (15): 1. Do you need to add or change Vercel Analytics and/or Vercel Speed
 Cohesion: 0.23
 Nodes (11): ColorPicker(), ColorPickerProps, OptionPicker(), OptionPickerProps, ProductInfoDescriptionProps, ProductInfoOptions(), ProductInfoOptionsProps, Swatch() (+3 more)
 
-### Community 56 - "mcp/server.ts"
-Cohesion: 0.18
-Nodes (12): Eve layer, CatalogMoney, CatalogProduct, CatalogSearchResult, CatalogVariant, callShopifyMcpTool(), rpcPayload(), rpcResponseSchema (+4 more)
+### Community 56 - "[handle]/refine/page.tsx"
+Cohesion: 0.29
+Nodes (9): generateMetadata(), generateMetadata(), RefinedCollectionPage(), RefinedCollectionResults(), browseMetadata(), fetchCollectionResults(), getCollectionMetadata(), readBrowseState() (+1 more)
 
 ### Community 57 - "config/types.ts"
-Cohesion: 0.21
-Nodes (12): Shop Agent boundaries, 3. Install next-intl and migrate copy, assertRequiredEnv(), resolveConfig(), withShopConfig(), NextConfigContext, NextConfigFactory, NextConfigInput (+4 more)
+Cohesion: 0.26
+Nodes (10): Shop Agent boundaries, 3. Install next-intl and migrate copy, assertRequiredEnv(), resolveConfig(), withShopConfig(), NextConfigContext, NextConfigFactory, NextConfigInput (+2 more)
 
-### Community 58 - "package.json"
-Cohesion: 0.13
-Nodes (14): tailwindcss@4.3.3, tw-animate-css@1.4.0, typescript@7.0.2, @vercel/analytics@2.0.1, engines, node, name, packageManager (+6 more)
+### Community 58 - "shopify-client.tsx"
+Cohesion: 0.23
+Nodes (11): AnalyticsComponents(), AnalyticsReady(), CartAnalyticsTracker(), ShopifyScriptsTracker(), ShopifyScriptsTrackerProps, subscribeNoop(), PageViewedTracker(), @vercel/analytics@2.0.1 (+3 more)
 
-### Community 59 - "dependencies"
-Cohesion: 0.13
-Nodes (15): dependencies, babel-plugin-react-compiler@1.0.0, botid@1.5.12, cn@0.5.1, eve@0.87.0, lucide-react@1.65.0, next@16.4.3, react@19.3.1 (+7 more)
+### Community 59 - "package.json"
+Cohesion: 0.05
+Nodes (52): dependencies, ai@7.0.157, babel-plugin-react-compiler@1.0.0, class-variance-authority@0.7.1, cn@0.5.1, eve@0.87.0, @gsap/react@^2.1.2, lucide-react@1.65.0 (+44 more)
 
-### Community 60 - "update-cart.ts"
-Cohesion: 0.25
-Nodes (11): cartHandlers, getCart(), getSessionCartId(), mutateCart(), CartChange, changeDiscountCodes(), changeLineOptions(), changeSchema (+3 more)
+### Community 60 - "Enable i18n (next-intl, no Markets)"
+Cohesion: 0.29
+Nodes (6): Create the locale source of truth, Enable i18n (next-intl, no Markets), Inspect and preserve the installation, Introduce next-intl and migrate copy, Verifying, What this skill turns on
 
 ### Community 61 - "auth/server.ts"
-Cohesion: 0.31
-Nodes (13): Boundary rules, SendSignedInCustomerOn(), getHydrogenCustomerSession(), getCustomerAccessToken, getReadonlyCustomerSessionManager, getReadonlyRequestContext, getRequestedPath(), isCustomerLoggedIn (+5 more)
+Cohesion: 0.35
+Nodes (12): Boundary rules, AccountLabel(), getHydrogenCustomerSession(), getCustomerAccessToken, getReadonlyCustomerSessionManager, getReadonlyRequestContext, getRequestedPath(), isCustomerLoggedIn (+4 more)
 
 ### Community 62 - "operations/pages/server.ts"
-Cohesion: 0.23
-Nodes (9): Keep the Shopify boundary explicit, ContentPage, SearchParamsInput, SEO, EMBED_DOMAINS, sanitizeShopifyHtml(), SHOPIFY_HTML_OPTIONS, fetchPage() (+1 more)
+Cohesion: 0.18
+Nodes (12): Keep the Shopify boundary explicit, CommerceLocale, ContentPage, EMBED_DOMAINS, sanitizeShopifyHtml(), SHOPIFY_HTML_OPTIONS, fetchLocalizationCurrency(), GET_LOCALIZATION_CURRENCY_QUERY (+4 more)
 
 ### Community 63 - "mobile-menu.tsx"
-Cohesion: 0.38
-Nodes (11): FaqPage(), MobileMenu(), MobileMenuList(), NestedItems(), FIXED_PANELS, ProductAccordions(), Accordion(), AccordionContent() (+3 more)
+Cohesion: 0.31
+Nodes (12): MobileMenu(), MobileMenuList(), NestedItems(), FIXED_PANELS, ProductAccordions(), Accordion(), AccordionContent(), AccordionItem() (+4 more)
 
 ### Community 64 - "Enable Shopify Menus"
 Cohesion: 0.17
 Nodes (12): 1. Add the menu operation, 1. Which menus do you want to fetch from Shopify?, 2. Cache the menu, 2. What are the Shopify menu handles?, 3. Refresh menus after edits, 4. Wire the nav menu, 5. Wire the footer menu, Before you start (+4 more)
 
 ### Community 65 - "storefront/server.ts"
-Cohesion: 0.22
-Nodes (11): Documents, CommerceLocale, fetchLocalizationCurrency(), GET_LOCALIZATION_CURRENCY_QUERY, createRequestStorefrontClient(), customFetchApi(), getClient(), operationName() (+3 more)
+Cohesion: 0.43
+Nodes (6): createRequestStorefrontClient(), customFetchApi(), getClient(), operationName(), SHOPIFY_ACCESS_TOKEN, SHOPIFY_STORE_DOMAIN
 
 ### Community 66 - "mega-panel.tsx"
 Cohesion: 0.31
@@ -439,56 +426,56 @@ Cohesion: 0.17
 Nodes (11): Build with Vercel Shop, Copy and deployment defaults, Ground the work in source, Hydrogen ownership, Model the route, Organize code by domain and execution context, Prevent blocking, Route the work (+3 more)
 
 ### Community 69 - "addresses/page.tsx"
-Cohesion: 0.32
-Nodes (9): AddressesContent(), AddressesPage(), AddressesSkeleton(), ProfileContent(), ProfilePage(), ProfileSkeleton(), AccountPageHeader(), fetchCustomerAddresses() (+1 more)
+Cohesion: 0.28
+Nodes (10): AddressesContent(), AddressesPage(), AddressesSkeleton(), ProfileContent(), ProfilePage(), ProfileSkeleton(), AccountPageHeader(), fetchCustomerAddresses() (+2 more)
 
 ### Community 70 - "collection-browse-provider.tsx"
-Cohesion: 0.24
-Nodes (10): BrowsePublicationContext, BrowsePublicationStore, BrowseStore(), BrowseStoreProps, CollectionBrowseFrame(), CollectionBrowseFrameProps, CollectionBrowseProvider(), CollectionBrowseProviderProps (+2 more)
+Cohesion: 0.14
+Nodes (18): BrowseProps, BrowsePublication, BrowsePublicationContext, BrowsePublicationStore, BrowsePublisherProps, BrowseStore(), BrowseStoreProps, CollectionBrowseFrame() (+10 more)
 
 ### Community 71 - "footer/index.tsx"
-Cohesion: 0.24
+Cohesion: 0.22
 Nodes (10): Footer(), FooterLink, FooterList(), QUICK_LINKS, TRUST, PLATFORM_LABELS, SocialIcon(), SocialLink (+2 more)
 
 ### Community 72 - "audit-storefront.mjs"
 Cohesion: 0.18
 Nodes (6): files, findings, root, sharedLinkFiles, sourceRoots, walk()
 
-### Community 73 - "sort-select.tsx"
-Cohesion: 0.33
-Nodes (8): CollectionsSortSelect(), SORT_LABELS, SelectContent(), SelectItem(), SelectScrollDownButton(), SelectScrollUpButton(), SelectTrigger(), SORT_VALUES
+### Community 73 - "collection-page.tsx"
+Cohesion: 0.14
+Nodes (23): CollectionActiveFilterCountBadge(), CollectionCardProps, CollectionBrowseBoundaryProps, CollectionLayoutProps, FitmentLayoutProps, CollectionsSortSelect(), SORT_LABELS, BrowseFallback() (+15 more)
 
-### Community 74 - "bundle-components.tsx"
-Cohesion: 0.29
-Nodes (10): BundleComponents(), BundleComponentsProps, BundleListItem, BundleParents(), BundleParentsProps, BundleProductList(), BundleProductListProps, BundleRelationships() (+2 more)
+### Community 74 - "product-detail-section.tsx"
+Cohesion: 0.15
+Nodes (22): QuickShopLayout(), BundleComponents(), BundleComponentsProps, BundleListItem, BundleParents(), BundleParentsProps, BundleProductList(), BundleProductListProps (+14 more)
 
 ### Community 75 - "Vercel Shop GraphQL Integration Reference"
-Cohesion: 0.20
-Nodes (9): Choose cache behavior from the consumer, Completion checklist, Data flow, Deployment context versus copy locale, Invalidation, Key Vercel Shop files, Operation integration, Ownership boundary (+1 more)
+Cohesion: 0.18
+Nodes (10): Choose cache behavior from the consumer, Completion checklist, Data flow, Deployment context versus copy locale, Documents, Invalidation, Key Vercel Shop files, Operation integration (+2 more)
 
-### Community 76 - "getNumericShopifyId"
+### Community 76 - "Cache Components compatibility — read this first"
 Cohesion: 0.29
-Nodes (6): isAuthorized(), POST(), REVALIDATE_TAGS, POST(), verifyWebhook(), getNumericShopifyId()
+Nodes (7): A. There must be no `app/layout.tsx` above `app/[locale]/`, B. Carry `ensureStatic` and give `locale` static params, C. Keep request reads behind Suspense, Cache Components compatibility — read this first, D. `setRequestLocale` is not used, E. Keep the template `Link`, F. Keep server redirects outside client navigation
 
-### Community 77 - "google-reviews.tsx"
-Cohesion: 0.24
-Nodes (5): GoogleG(), Stars(), ReviewCarousel(), GOOGLE_REVIEWS, GoogleReview
+### Community 77 - "Collection and Search Routes"
+Cohesion: 0.33
+Nodes (5): Collection and Search Routes, Images and pagination, Prefetch traffic, Reference implementation, Results and controls
 
 ### Community 78 - "cart.tsx"
 Cohesion: 0.36
-Nodes (7): CartIcon(), CartIconClient(), CartIconClientProps, prepareCheckoutAction(), handleCheckout(), getCart(), withFallback()
+Nodes (7): CartIcon(), prepareCheckoutAction(), handleCheckout(), getCart(), isTransientError(), TRANSIENT_ERROR_CODES, withFallback()
 
 ### Community 79 - "lib/customer/types.ts"
-Cohesion: 0.27
-Nodes (8): AccountActionResult, CustomerAddress, CustomerAddressInput, CustomerOrder, CustomerOrdersPage, CustomerOrderSummary, CustomerProfile, PageInfo
+Cohesion: 0.22
+Nodes (11): ProductOpenGraph(), ProductOpenGraphProps, AccountActionResult, CustomerAddress, CustomerAddressInput, CustomerOrder, CustomerOrdersPage, CustomerOrderSummary (+3 more)
 
 ### Community 80 - "fetchSearchIndexProducts"
-Cohesion: 0.31
-Nodes (9): fetchSearchResults(), buildSearchQuery(), fetchCollectionProducts(), fetchSearchFacets(), fetchSearchIndexProducts(), toCollectionSort(), toSearchSort(), toStorefrontFilters() (+1 more)
+Cohesion: 0.30
+Nodes (10): RefinedAllProductsPage(), RefinedAllProductsResults(), fetchSearchResults(), buildSearchQuery(), fetchCollectionProducts(), fetchSearchFacets(), fetchSearchIndexProducts(), toStorefrontFilters() (+2 more)
 
-### Community 81 - "operations/policies/server.ts"
-Cohesion: 0.33
-Nodes (5): ShopPolicy, SHOP_POLICY_FRAGMENT, fetchPolicyAnswers(), GET_SHOP_POLICIES_QUERY, POLICY_TYPES
+### Community 81 - "11. Verification"
+Cohesion: 0.40
+Nodes (5): 11. Verification, All strategies, Invisible cookie, Locale sub-path, Per-domain
 
 ### Community 82 - "Commerce Flows"
 Cohesion: 0.22
@@ -523,8 +510,8 @@ Cohesion: 0.29
 Nodes (5): Authenticate, Connect an existing Shopify store, Fallback, Reuse or create a token, Initialize Vercel Shop
 
 ### Community 90 - "nav/index.tsx"
-Cohesion: 0.57
-Nodes (5): Navigation, NavAccount(), NavAccountFallback(), Nav(), modelDisplayName()
+Cohesion: 0.50
+Nodes (6): Navigation, NavAccount(), NavAccountFallback(), CartIconFallback(), Nav(), modelDisplayName()
 
 ### Community 91 - "Vercel Shop"
 Cohesion: 0.29
@@ -534,13 +521,13 @@ Nodes (6): Documentation, Features, Getting Started, License, Skills, Vercel Sho
 Cohesion: 0.33
 Nodes (5): Primary media, Product Detail Route Architecture, Recommendations and secondary content, Reference implementation, Variant interaction
 
-### Community 93 - "cart/page.tsx"
-Cohesion: 0.47
-Nodes (4): CartPage(), CartViewedTracker(), isAnalyticsCart(), CartPageSkeleton()
+### Community 93 - "cart-page.tsx"
+Cohesion: 0.20
+Nodes (12): CartPage(), CartViewedTracker(), CollectionViewedTracker(), isAnalyticsCart(), ProductViewedTracker(), SearchViewedTracker(), CartPageContent(), CartPageLayoutProps (+4 more)
 
 ### Community 94 - "eve.ts"
-Cohesion: 0.60
-Nodes (3): anonymous, browserAuth(), isAgentInfoRequest()
+Cohesion: 0.38
+Nodes (5): anonymous, browserAuth(), isAgentInfoRequest(), botid@1.5.12, botid
 
 ### Community 95 - "interface"
 Cohesion: 0.40
@@ -558,25 +545,37 @@ Nodes (4): OPT_OUT_INSTRUMENTATION, npx, shopify-dev-mcp, @shopify/dev-mcp
 Cohesion: 0.40
 Nodes (5): devEngines, runtime, name, onFail, version
 
+### Community 99 - "4. Configure routing"
+Cohesion: 0.50
+Nodes (4): 4. Configure routing, Invisible cookie routing, Locale sub-path, Per-domain routing
+
+### Community 100 - "8. Propagate locale through commerce"
+Cohesion: 0.50
+Nodes (4): 8. Propagate locale through commerce, Chat and agent API, Customer Account auth, Menus
+
+### Community 101 - "10. Strategy-specific SEO and sitemap behavior"
+Cohesion: 0.67
+Nodes (3): 10. Strategy-specific SEO and sitemap behavior, Invisible cookie, Locale sub-path or per-domain
+
 ## Knowledge Gaps
 - **3 isolated node(s):** `npx`, `@shopify/dev-mcp`, `OPT_OUT_INSTRUMENTATION`
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 559 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 560 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react` connect `react` to `filters-client.tsx`, `search/page.tsx`, `product/server.ts`, `app/layout.tsx`, `shopping-results.tsx`, `@shopify/hydrogen`, `Link`, `product-detail-section.tsx`, `customer/server.ts`, `lib/product/index.ts`, `next`, `collection-page.tsx`, `lib/product/types.ts`, `quick-shop.tsx`, `product-media.tsx`, `agent-panel.tsx`, `search-modal.tsx`, `collections/index.ts`, `link.tsx`, `[id]/page.tsx`, `Skeleton`, `gift-card-purchase-form.tsx`, `browse.tsx`, `cart/server.ts`, `[slug]/page.tsx`, `address-book.tsx`, `cart-bridge.tsx`, `lucide-react`, `bottom-bar.tsx`, `product-info.tsx`, `package.json`, `dependencies`, `auth/server.ts`, `mobile-menu.tsx`, `mega-panel.tsx`, `addresses/page.tsx`, `collection-browse-provider.tsx`, `sort-select.tsx`, `google-reviews.tsx`, `input-group.tsx`, `nav/index.tsx`, `cart/page.tsx`?**
-  _High betweenness centrality (0.122) - this node is a cross-community bridge._
+- **Why does `@shopify/hydrogen` connect `@shopify/hydrogen` to `filters-client.tsx`, `[shard]/route.ts`, `representation/index.ts`, `@shopify/hydrogen`, `buy-buttons.tsx`, `customer/server.ts`, `products/[handle]/page.tsx`, `lib/product/types.ts`, `customer/server.ts`, `quick-shop.tsx`, `lib/collections/server.ts`, `proxy.ts`, `blogs/server.ts`, `search-modal.tsx`, `transforms/product/index.ts`, `transforms/product/types.ts`, `products/server.ts`, `browse.tsx`, `link.tsx`, `products/index.ts`, `lib/product/index.ts`, `cart/server.ts`, `auth/request.ts`, `bottom-bar.tsx`, `config/types.ts`, `shopify-client.tsx`, `package.json`, `auth/server.ts`, `operations/pages/server.ts`, `storefront/server.ts`, `collection-browse-provider.tsx`, `collection-page.tsx`, `cart.tsx`, `lib/customer/types.ts`, `nav/index.tsx`, `cart-page.tsx`, `eve.ts`?**
+  _High betweenness centrality (0.114) - this node is a cross-community bridge._
 - **Are the 8 inferred relationships involving `Link()` (e.g. with `Next.js layer` and `Prefetch traffic`) actually correct?**
   _`Link()` has 8 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `npx`, `@shopify/dev-mcp`, `OPT_OUT_INSTRUMENTATION` to the rest of the system?**
   _3 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `filters-client.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.060814383923849816 - nodes in this community are weakly interconnected._
-- **Why does `@shopify/hydrogen` connect `@shopify/hydrogen` to `filters-client.tsx`, `product/server.ts`, `app/layout.tsx`, `[shard]/route.ts`, `representation/index.ts`, `Link`, `customer/server.ts`, `lib/product/index.ts`, `lib/product/types.ts`, `errors/server.ts`, `quick-shop.tsx`, `lib/collections/server.ts`, `proxy.ts`, `blogs/server.ts`, `search-modal.tsx`, `transforms/product/index.ts`, `transforms/product/types.ts`, `products/server.ts`, `collections/index.ts`, `catalog.ts`, `cart/server.ts`, `bottom-bar.tsx`, `money/index.ts`, `config/types.ts`, `package.json`, `dependencies`, `update-cart.ts`, `auth/server.ts`, `operations/pages/server.ts`, `storefront/server.ts`, `collection-browse-provider.tsx`, `sort-select.tsx`, `lib/customer/types.ts`, `operations/policies/server.ts`, `nav/index.tsx`, `eve.ts`?**
-  _High betweenness centrality (0.119) - this node is a cross-community bridge._
-- **Should `react` be split into smaller, more focused modules?**
-  _Cohesion score 0.10106382978723404 - nodes in this community are weakly interconnected._
-- **Why does `next` connect `next` to `react`, `search/page.tsx`, `product/server.ts`, `app/layout.tsx`, `[shard]/route.ts`, `shopping-results.tsx`, `@shopify/hydrogen`, `Link`, `product-detail-section.tsx`, `lib/product/index.ts`, `collection-page.tsx`, `collections/[handle]/page.tsx`, `quick-shop.tsx`, `lib/collections/server.ts`, `product-media.tsx`, `proxy.ts`, `agent-panel.tsx`, `blogs/server.ts`, `search-modal.tsx`, `link.tsx`, `[id]/page.tsx`, `Skeleton`, `customer/action.ts`, `cart/server.ts`, `[slug]/page.tsx`, `lucide-react`, `bottom-bar.tsx`, `product-info.tsx`, `config/types.ts`, `package.json`, `dependencies`, `auth/server.ts`, `operations/pages/server.ts`, `mega-panel.tsx`, `collection-browse-provider.tsx`, `footer/index.tsx`, `bundle-components.tsx`, `getNumericShopifyId`, `nav/index.tsx`, `cart/page.tsx`?**
-  _High betweenness centrality (0.088) - this node is a cross-community bridge._
+  _Cohesion score 0.07215686274509804 - nodes in this community are weakly interconnected._
+- **Why does `react` connect `product/server.ts` to `filters-client.tsx`, `Container`, `buildAlternates`, `app/layout.tsx`, `shopping-results.tsx`, `representation/index.ts`, `@shopify/hydrogen`, `Button`, `buy-buttons.tsx`, `products/[handle]/page.tsx`, `next`, `lib/product/types.ts`, `customer/server.ts`, `quick-shop.tsx`, `lib/collections/server.ts`, `product-media.tsx`, `agent-panel.tsx`, `search-modal.tsx`, `browse.tsx`, `link.tsx`, `[id]/page.tsx`, `Skeleton`, `gift-card-purchase-form.tsx`, `cart/server.ts`, `[slug]/page.tsx`, `address-book.tsx`, `cart-bridge.tsx`, `bottom-bar.tsx`, `search/page.tsx`, `product-info.tsx`, `shopify-client.tsx`, `package.json`, `auth/server.ts`, `mobile-menu.tsx`, `mega-panel.tsx`, `addresses/page.tsx`, `collection-browse-provider.tsx`, `footer/index.tsx`, `collection-page.tsx`, `product-detail-section.tsx`, `input-group.tsx`, `nav/index.tsx`, `cart-page.tsx`?**
+  _High betweenness centrality (0.110) - this node is a cross-community bridge._
+- **Should `Container` be split into smaller, more focused modules?**
+  _Cohesion score 0.1402439024390244 - nodes in this community are weakly interconnected._
+- **Why does `next` connect `next` to `Container`, `buildAlternates`, `product/server.ts`, `app/layout.tsx`, `[shard]/route.ts`, `shopping-results.tsx`, `representation/index.ts`, `@shopify/hydrogen`, `Button`, `buy-buttons.tsx`, `products/[handle]/page.tsx`, `collections/[handle]/page.tsx`, `quick-shop.tsx`, `lib/collections/server.ts`, `product-media.tsx`, `proxy.ts`, `agent-panel.tsx`, `blogs/server.ts`, `search-modal.tsx`, `link.tsx`, `[id]/page.tsx`, `products/index.ts`, `Skeleton`, `cart/server.ts`, `[slug]/page.tsx`, `address-book.tsx`, `bottom-bar.tsx`, `search/page.tsx`, `product-info.tsx`, `[handle]/refine/page.tsx`, `config/types.ts`, `shopify-client.tsx`, `package.json`, `auth/server.ts`, `operations/pages/server.ts`, `mega-panel.tsx`, `collection-browse-provider.tsx`, `footer/index.tsx`, `product-detail-section.tsx`, `fetchSearchIndexProducts`, `nav/index.tsx`, `cart-page.tsx`?**
+  _High betweenness centrality (0.086) - this node is a cross-community bridge._
