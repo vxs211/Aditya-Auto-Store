@@ -1,6 +1,7 @@
 import { cn } from "cn";
-import { ImageIcon } from "lucide-react";
 import type { ComponentProps } from "react";
+
+import { ImageIcon } from "@/components/ui/icon";
 
 interface ImagePlaceholderProps extends ComponentProps<"div"> {
   iconClassName?: string;

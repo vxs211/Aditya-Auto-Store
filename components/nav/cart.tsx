@@ -1,5 +1,4 @@
-import { HandbagIcon } from "lucide-react";
-
+import { BagIcon as HandbagIcon } from "@/components/ui/icon";
 import { getCart } from "@/lib/cart/server";
 import { withFallback } from "@/lib/shopify/errors/server";
 

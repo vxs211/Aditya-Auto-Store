@@ -1,9 +1,12 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Container } from "@/components/ui/container";
+import {
+  ChevronLeftIcon as ChevronLeft,
+  ChevronRightIcon as ChevronRight,
+} from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 
 interface Announcement {
@@ -34,7 +37,7 @@ export function AnnouncementRotator({ items }: { items: Announcement[] }) {
     <div
       aria-label="Announcements"
       aria-roledescription="carousel"
-      className="bg-foreground text-background"
+      className="bg-muted text-foreground"
       onBlur={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onMouseEnter={() => setPaused(true)}

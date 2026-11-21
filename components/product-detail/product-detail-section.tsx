@@ -1,5 +1,4 @@
 import { cn } from "cn";
-import { MinusIcon, PlusIcon } from "lucide-react";
 import { type ReactNode, Suspense } from "react";
 
 import { BundleComponents, BundleParents } from "@/components/product-detail/bundle-components";
@@ -25,6 +24,7 @@ import { ProductSchema } from "@/components/product-detail/schema";
 import { StickyBuyBar } from "@/components/product-detail/sticky-buy-bar";
 import { StockIndicator, TrustChips } from "@/components/product-detail/trust-chips";
 import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
+import { MinusIcon, PlusIcon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";

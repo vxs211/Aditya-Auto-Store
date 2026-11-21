@@ -1,9 +1,13 @@
 import { cn } from "cn";
-import { FactoryIcon, HeadphonesIcon, ShieldCheckIcon } from "lucide-react";
 import Image from "next/image";
 
 import { MenuLink } from "@/components/nav/menu-link";
 import { Container } from "@/components/ui/container";
+import {
+  PhoneIcon as HeadphonesIcon,
+  ShieldCheckIcon,
+  WorkflowIcon as FactoryIcon,
+} from "@/components/ui/icon";
 import { shopConfig } from "@/lib/config";
 import { getShopPolicies } from "@/lib/policies/server";
 
@@ -31,7 +35,7 @@ const TRUST = [
   { body: "Help when you need it", icon: HeadphonesIcon, title: "Customer support" },
 ];
 
-const HEADING = "font-heading text-body font-semibold uppercase tracking-[0.12em]";
+const HEADING = "text-label font-medium text-black/55";
 
 export async function Footer() {
   const { contact, social } = shopConfig;
@@ -57,7 +61,7 @@ export async function Footer() {
 
   // Below lg the footer fills the screen and sits above the sticky header, so it slides over the logo bar.
   return (
-    <footer className="relative z-40 flex min-h-dvh flex-col bg-foreground pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] text-background lg:z-auto lg:min-h-0 lg:pb-0">
+    <footer className="relative z-40 flex min-h-dvh flex-col border-t border-hairline bg-background pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] text-foreground lg:z-auto lg:min-h-0 lg:pb-0">
       {/* pb-22 clears the fixed agent ActionBar pill when it renders */}
       <Container
         className={cn(
@@ -76,9 +80,11 @@ export async function Footer() {
               unoptimized
               width={240}
             />
-            <p className="max-w-md text-silver">{shopConfig.site.description}</p>
+            <p className="max-w-md font-serif text-[1.125rem] leading-[1.55] text-muted-foreground">
+              {shopConfig.site.description}
+            </p>
             {socialLinks.length > 0 && (
-              <div className="grid gap-4 border-t border-white/15 pt-6">
+              <div className="grid gap-4 border-t border-hairline pt-6">
                 <h3 className={HEADING}>Follow Aditya</h3>
                 <SocialLinks links={socialLinks} />
               </div>
@@ -90,10 +96,10 @@ export async function Footer() {
             <FooterList links={helpLinks} title="Help" />
           </div>
 
-          <div className="grid content-start gap-6 bg-white/[0.06] p-6 md:col-span-2 md:p-8 lg:col-span-1">
+          <div className="grid content-start gap-6 rounded-xl bg-muted p-6 md:col-span-2 md:p-8 lg:col-span-1">
             <div className="grid gap-3">
               <h3 className={HEADING}>Address</h3>
-              <address className="text-silver not-italic">
+              <address className="text-muted-foreground not-italic">
                 {contact.address ?? "Ahmedabad, Gujarat, India"}
               </address>
             </div>
@@ -102,24 +108,27 @@ export async function Footer() {
 
         <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {TRUST.map(({ body, icon: Icon, title }) => (
-            <li className="flex items-center gap-4 bg-white/[0.06] p-5" key={title}>
-              <span className="flex size-11 shrink-0 items-center justify-center bg-primary/15 text-primary">
+            <li
+              className="flex items-center gap-4 rounded-xl border border-hairline p-5"
+              key={title}
+            >
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-tint text-primary-hover">
                 <Icon className="size-5" />
               </span>
               <div>
-                <p className="font-heading font-semibold">{title}</p>
-                <p className="text-small text-silver">{body}</p>
+                <p className="font-semibold">{title}</p>
+                <p className="text-small text-muted-foreground">{body}</p>
               </div>
             </li>
           ))}
           {contact.phone && phoneHref && (
-            <li className="grid content-center gap-1 bg-primary p-5 text-primary-foreground">
+            <li className="grid content-center gap-1 rounded-xl bg-primary p-5 text-primary-foreground">
               <p className="text-small">Need help? Call us</p>
-              <a className="font-heading text-h4 font-semibold" href={phoneHref}>
+              <a className="text-h4" href={phoneHref}>
                 {contact.phone}
               </a>
               {contact.secondaryPhone && phone2Href && (
-                <a className="font-heading text-h4 font-semibold" href={phone2Href}>
+                <a className="text-h4" href={phone2Href}>
                   {contact.secondaryPhone}
                 </a>
               )}
@@ -138,7 +147,7 @@ export async function Footer() {
         unoptimized
         width={1610}
       />
-      <div className="border-t border-white/15 text-silver">
+      <div className="border-t border-hairline text-muted-foreground">
         <Container className="flex min-h-12 items-center py-3 text-small">
           {/* shortcut: the year is typed in, change it each January */}
           &copy; 2026 {shopConfig.site.name}. All rights reserved.
@@ -157,7 +166,7 @@ function FooterList({ links, title }: { links: FooterLink[]; title: string }) {
           <li key={link.url}>
             <MenuLink
               url={link.url}
-              className="block text-silver transition-colors hover:text-background"
+              className="block text-ink-soft transition-colors hover:text-foreground hover:underline"
             >
               {link.title}
             </MenuLink>

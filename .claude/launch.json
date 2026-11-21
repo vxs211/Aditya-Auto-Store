@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "aditya-storefront",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["dev"],
+      "runtimeExecutable": "/Users/vxs/.nvm/versions/node/v26.13.0/bin/node",
+      "runtimeArgs": ["node_modules/next/dist/bin/next", "dev", "--port", "3100"],
       "port": 3100
     }
   ]

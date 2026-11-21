@@ -1,10 +1,10 @@
 "use client";
 
 import { useCollection } from "@shopify/hydrogen/react";
-import { LoaderCircleIcon } from "lucide-react";
 import { type ReactNode, useEffect, useEffectEvent, useRef, useState } from "react";
 
 import { ProductCard } from "@/components/product-card/product-card";
+import { LoaderIcon as LoaderCircleIcon } from "@/components/ui/icon";
 import { getBrowseSearch } from "@/lib/collections";
 import { loadMoreBrowseProductsAction } from "@/lib/collections/action";
 import type { BrowseSource } from "@/lib/collections/types";

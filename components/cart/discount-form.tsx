@@ -2,10 +2,10 @@
 
 import type { CartData } from "@shopify/hydrogen";
 import { cn } from "cn";
-import { Loader2, X } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { LoaderIcon as Loader2, XIcon as X } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { useCart, useCartForm } from "@/lib/cart/client";
 

@@ -1,6 +1,6 @@
 import { cn } from "cn";
-import { ChevronDown } from "lucide-react";
 
+import { ChevronDownIcon as ChevronDown } from "@/components/ui/icon";
 import type { MenuItem } from "@/lib/menu/types";
 
 import { MegaPanel, type MegaDetail } from "./mega-panel";
@@ -30,7 +30,7 @@ export function QuickLinks({
 
 // Origin Regular, to match the links inside the shop menu.
 const TRIGGER_CLASS =
-  "flex items-center gap-1 font-heading text-sm font-normal uppercase tracking-[0.04em] hover:opacity-70 xl:text-base transition-opacity";
+  "flex items-center gap-1 rounded-sm px-2.5 py-1 text-base font-normal text-ink-soft hover:bg-wash transition-colors";
 
 function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
   if (item.items.length === 0) {
@@ -65,7 +65,7 @@ function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
             <li key={entry.id}>
               <MenuLink
                 url={entry.url}
-                className="block px-6 py-3 font-heading text-[0.9375rem] font-normal uppercase tracking-[0.04em] transition-colors hover:text-link"
+                className="block px-6 py-3 text-base font-normal transition-colors hover:bg-wash"
               >
                 {entry.title}
               </MenuLink>

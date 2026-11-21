@@ -1,7 +1,7 @@
-import { ChevronDownIcon, SlidersHorizontalIcon } from "lucide-react";
 import type { ReactNode } from "react";
 
 import { ProductsGridSkeleton } from "@/components/product/products-grid";
+import { ChevronDownIcon, SlidersHorizontalIcon } from "@/components/ui/icon";
 import { PRODUCTS_PER_PAGE } from "@/lib/collections";
 import type { SortValue } from "@/lib/collections/types";
 

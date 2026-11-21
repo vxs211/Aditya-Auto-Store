@@ -3,18 +3,16 @@ import { Suspense } from "react";
 
 import { GoogleReviews } from "@/components/home/google-reviews";
 import {
-  AboutIntro,
   BestSellers,
   BlogSection,
-  BrandMosaic,
   HomeContactBand,
   HomeHero,
-  InstagramFeed,
-  ProofBand,
-  ModelStrip,
+  PartsTour,
+  ShopByBrand,
+  VehicleLineup,
+  WhyAditya,
 } from "@/components/home/sections";
 import { Page } from "@/components/ui/page";
-import { Sections } from "@/components/ui/sections";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
@@ -34,29 +32,28 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <Page className="home-type pt-0">
-      <HomeHero />
-      <Sections className="gap-20 py-16 md:gap-32 md:py-24">
-        <Suspense fallback={null}>
-          <ModelStrip />
-        </Suspense>
-        <Suspense fallback={null}>
-          <BestSellers />
-        </Suspense>
-        <AboutIntro />
-        <Suspense fallback={null}>
-          <BrandMosaic />
-        </Suspense>
-        <ProofBand />
-        <Suspense fallback={null}>
-          <InstagramFeed />
-        </Suspense>
-        <Suspense fallback={null}>
-          <BlogSection />
-        </Suspense>
-        <GoogleReviews />
-        <HomeContactBand />
-      </Sections>
+    <Page className="gap-0 pt-0">
+      <Suspense fallback={null}>
+        <HomeHero />
+      </Suspense>
+      <ShopByBrand />
+      <Suspense fallback={null}>
+        <VehicleLineup />
+      </Suspense>
+      <Suspense fallback={null}>
+        <PartsTour />
+      </Suspense>
+      <Suspense fallback={null}>
+        <BestSellers />
+      </Suspense>
+      <Suspense fallback={null}>
+        <WhyAditya />
+      </Suspense>
+      <GoogleReviews />
+      <Suspense fallback={null}>
+        <BlogSection />
+      </Suspense>
+      <HomeContactBand />
     </Page>
   );
 }

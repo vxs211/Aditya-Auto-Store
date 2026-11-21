@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Highlight } from "@/components/ui/highlight";
+import { StarIcon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { GOOGLE_REVIEWS } from "@/lib/reviews";
 
@@ -33,15 +34,11 @@ function Stars({ rating }: { rating: number }) {
   return (
     <span aria-label={`${rating} out of 5 stars`} className="flex gap-0.5" role="img">
       {[1, 2, 3, 4, 5].map((star) => (
-        <svg
-          aria-hidden
-          className={star <= Math.round(rating) ? "size-5 text-[#FBBC04]" : "size-5 text-border"}
+        <StarIcon
+          className={star <= Math.round(rating) ? "size-5 text-primary" : "size-5 text-border"}
           fill="currentColor"
           key={star}
-          viewBox="0 0 24 24"
-        >
-          <path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-        </svg>
+        />
       ))}
     </span>
   );

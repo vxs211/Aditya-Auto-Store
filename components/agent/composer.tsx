@@ -1,8 +1,8 @@
 "use client";
 
-import { CornerDownLeftIcon, SquareIcon } from "lucide-react";
 import type { KeyboardEvent } from "react";
 
+import { CornerDownLeftIcon, SquareIcon } from "@/components/ui/icon";
 import { InputGroup, InputGroupButton, InputGroupTextarea } from "@/components/ui/input-group";
 
 type AgentStatus = "busy" | "idle" | "resuming";

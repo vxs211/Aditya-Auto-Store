@@ -1,5 +1,7 @@
-import { UserRoundCheckIcon, UserRoundIcon } from "lucide-react";
-
+import {
+  UserCheckIcon as UserRoundCheckIcon,
+  UserIcon as UserRoundIcon,
+} from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 import { isCustomerLoggedIn } from "@/lib/auth/server";
 

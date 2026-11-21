@@ -1,9 +1,9 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
 import { type FormEvent, useState, useTransition } from "react";
 
 import { Button } from "@/components/ui/button";
+import { LoaderIcon as Loader2 } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { updateProfileAction } from "@/lib/customer/action";

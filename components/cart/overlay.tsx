@@ -1,9 +1,9 @@
 "use client";
 
-import { Loader2, XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
+import { LoaderIcon as Loader2, XIcon } from "@/components/ui/icon";
 import {
   Sheet,
   SheetClose,

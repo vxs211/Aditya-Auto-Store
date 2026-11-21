@@ -1,10 +1,10 @@
 "use client";
 
 import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
-import { XIcon } from "lucide-react";
 import Image from "next/image";
 import { createContext, useCallback, useContext, useState, type ReactNode } from "react";
 
+import { XIcon } from "@/components/ui/icon";
 import type { Image as ImageType } from "@/lib/media/types";
 
 const LightboxContext = createContext<((image: ImageType) => void) | null>(null);

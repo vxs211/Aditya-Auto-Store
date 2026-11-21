@@ -1,6 +1,5 @@
 "use client";
 
-import { Menu } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -10,6 +9,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { MenuIcon as Menu } from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import type { MenuItem } from "@/lib/menu/types";

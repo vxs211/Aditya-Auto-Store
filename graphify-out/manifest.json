@@ -12,9 +12,9 @@
     "semantic_hash": ""
   },
   ".claude/launch.json": {
-    "mtime": 1793783459.856233,
-    "seen": 1793944851.910603,
-    "ast_hash": "e052f450da58b2fb489eb2284be920a4",
+    "mtime": 1795169239.1138127,
+    "seen": 1795169353.586895,
+    "ast_hash": "abd1c9c089638fa1c816c84280cafc0d",
     "semantic_hash": ""
   },
   ".mcp.json": {
@@ -210,9 +210,9 @@
     "semantic_hash": ""
   },
   "app/api/webhooks/shopify/route.ts": {
-    "mtime": 1793568653.0,
-    "seen": 1793944851.910626,
-    "ast_hash": "1c21c9e2a0d69f5c9e1cd628f640002e",
+    "mtime": 1794950334.5032227,
+    "seen": 1795169353.586926,
+    "ast_hash": "3a39b7c773f7e551808cf7b621635d5f",
     "semantic_hash": ""
   },
   "app/blogs/[blogHandle]/[articleHandle]/page.tsx": {
@@ -312,9 +312,9 @@
     "semantic_hash": ""
   },
   "app/layout.tsx": {
-    "mtime": 1794051753.6494834,
-    "seen": 1794950045.740788,
-    "ast_hash": "252769b907a3cece16912925d7ad9153",
+    "mtime": 1795169072.78677,
+    "seen": 1795169353.586941,
+    "ast_hash": "0ac167928569754cedf1c6548c282a7b",
     "semantic_hash": ""
   },
   "app/llms.txt/route.ts": {
@@ -360,9 +360,9 @@
     "semantic_hash": ""
   },
   "app/page.tsx": {
-    "mtime": 1794040427.68757,
-    "seen": 1794950045.7407942,
-    "ast_hash": "7fe8966d824d770fe7cf619131a49db3",
+    "mtime": 1795169221.1717036,
+    "seen": 1795169353.5869482,
+    "ast_hash": "3914d0b9e8b0d60e32fdd8bb283a0b94",
     "semantic_hash": ""
   },
   "app/pages/[handle]/page.tsx": {
@@ -570,9 +570,9 @@
     "semantic_hash": ""
   },
   "components/announcement-bar/rotator.tsx": {
-    "mtime": 1793783928.6070864,
-    "seen": 1793944851.910666,
-    "ast_hash": "f82cad1dcdf65865a9c7be99bdb54382",
+    "mtime": 1795169324.0192912,
+    "seen": 1795169353.586978,
+    "ast_hash": "b25b236ee8d3f72bfbdc1de4ee244ba7",
     "semantic_hash": ""
   },
   "components/blog/article-card.tsx": {
@@ -744,15 +744,15 @@
     "semantic_hash": ""
   },
   "components/footer/index.tsx": {
-    "mtime": 1793859507.495647,
-    "seen": 1793944851.9106848,
-    "ast_hash": "a3e94886f7959031ce9593c0f4628fd2",
+    "mtime": 1795169351.86305,
+    "seen": 1795169353.587003,
+    "ast_hash": "1c89753878ec166da182902b5c97abdb",
     "semantic_hash": ""
   },
   "components/footer/social-links.tsx": {
-    "mtime": 1793856395.6170807,
-    "seen": 1793944851.9106848,
-    "ast_hash": "98be0854a3f456d486676c3d710cd29b",
+    "mtime": 1795169329.132135,
+    "seen": 1795169353.587004,
+    "ast_hash": "c673cf3af0f603c44347365fe16463ae",
     "semantic_hash": ""
   },
   "components/home/google-reviews.tsx": {
@@ -768,9 +768,9 @@
     "semantic_hash": ""
   },
   "components/home/sections.tsx": {
-    "mtime": 1794040718.6690373,
-    "seen": 1794950045.74085,
-    "ast_hash": "0d30927cf89ea990d91464e1e5e3c2fb",
+    "mtime": 1795169351.863308,
+    "seen": 1795169353.587009,
+    "ast_hash": "a7dc766af2d678d3b2ba1b240105109e",
     "semantic_hash": ""
   },
   "components/motion/page-motion.tsx": {
@@ -852,9 +852,9 @@
     "semantic_hash": ""
   },
   "components/nav/quick-links.tsx": {
-    "mtime": 1793821460.350731,
-    "seen": 1794950045.740862,
-    "ast_hash": "4835af38a948f8a286b9536512da914e",
+    "mtime": 1795169320.114994,
+    "seen": 1795169353.587022,
+    "ast_hash": "40ba063e3da81ad6eef0c9e2e2912800",
     "semantic_hash": ""
   },
   "components/nav/search-modal.tsx": {
@@ -1068,9 +1068,9 @@
     "semantic_hash": ""
   },
   "components/ui/button.tsx": {
-    "mtime": 1793783496.289517,
-    "seen": 1794950045.740892,
-    "ast_hash": "38ab38c8437c2b5e64ea82fb274e788b",
+    "mtime": 1795169351.862585,
+    "seen": 1795169353.587053,
+    "ast_hash": "9a46910316a0b1c5e1ba487d5c06a97e",
     "semantic_hash": ""
   },
   "components/ui/container.tsx": {
@@ -1086,9 +1086,9 @@
     "semantic_hash": ""
   },
   "components/ui/highlight.tsx": {
-    "mtime": 1793819115.6775432,
-    "seen": 1793944851.910722,
-    "ast_hash": "d967b0b110856fa2cb45e05acb212e6f",
+    "mtime": 1795169072.787308,
+    "seen": 1795169353.5870562,
+    "ast_hash": "d8bedc2a3e369392e9d4761f4f1a4f49",
     "semantic_hash": ""
   },
   "components/ui/image-placeholder.tsx": {
@@ -1728,9 +1728,9 @@
     "semantic_hash": ""
   },
   "lib/shopify/operations/collections/server.ts": {
-    "mtime": 1793792114.521424,
-    "seen": 1793944851.9107919,
-    "ast_hash": "e40ec7738e4e6ef4bb5c45277f024cde",
+    "mtime": 1794950297.6373637,
+    "seen": 1795169353.587148,
+    "ast_hash": "9f18f9a6d12f508c59ccfe7315a5ad02",
     "semantic_hash": ""
   },
   "lib/shopify/operations/customer/server.ts": {
@@ -2010,9 +2010,9 @@
     "semantic_hash": ""
   },
   "BRIEF.md": {
-    "mtime": 1793808815.9678147,
-    "seen": 1793944851.9108229,
-    "ast_hash": "af457506e9f5145c5869257eac92d36e",
+    "mtime": 1794950334.5044253,
+    "seen": 1795169353.587203,
+    "ast_hash": "e6b78c87f065b63032d6c4285355a155",
     "semantic_hash": ""
   },
   "README.md": {
@@ -2153,10 +2153,160 @@
     "ast_hash": "a51c11ff28ea59068605541909afc732",
     "semantic_hash": ""
   },
-  "components/home/proof-card.tsx": {
-    "mtime": 1794039793.1732047,
-    "seen": 1794950045.740848,
-    "ast_hash": "82791b2b5195969e2804df170b137a94",
+  "components/home/feature-carousel.tsx": {
+    "mtime": 1795169178.6761246,
+    "seen": 1795169353.587005,
+    "ast_hash": "020825ad2847c6944881151991561549",
+    "semantic_hash": ""
+  },
+  "components/home/part-hotspots.tsx": {
+    "mtime": 1795169178.643657,
+    "seen": 1795169353.587007,
+    "ast_hash": "63fcff8ef2cdaa220f8d6a88601e5461",
+    "semantic_hash": ""
+  },
+  "components/home/vehicle-scroll.tsx": {
+    "mtime": 1795169292.7679193,
+    "seen": 1795169353.587009,
+    "ast_hash": "58a37b73b76b2f82ab0af7803341b5f5",
+    "semantic_hash": ""
+  },
+  "shopify-import/build-csv.mjs": {
+    "mtime": 1795164216.1783092,
+    "seen": 1795169353.587172,
+    "ast_hash": "e21e08d6ecdcc173af7ae51ff5e237fd",
+    "semantic_hash": ""
+  },
+  "shopify-import/images/access-crash-guard.png": {
+    "mtime": 1795164647.1973853,
+    "seen": 1795169353.5872252,
+    "ast_hash": "7cab80b037ac09bd06630c971928fa60",
+    "semantic_hash": ""
+  },
+  "shopify-import/images/activa-6g-crash-guard.png": {
+    "mtime": 1795164647.2010043,
+    "seen": 1795169353.5872262,
+    "ast_hash": "6c7777b50b9e667b20aacdcac8c0122d",
+    "semantic_hash": ""
+  },
+  "shopify-import/images/activa-6g-footrest-1-front.png": {
+    "mtime": 1795164647.2045147,
+    "seen": 1795169353.5872262,
+    "ast_hash": "4ac4405051ecb10546738f863ae2f64c",
+    "semantic_hash": ""
+  },
+  "shopify-import/images/activa-6g-footrest-2-left.png": {
+    "mtime": 1795164647.2076423,
+    "seen": 1795169353.5872269,
+    "ast_hash": "d634049c395178df080ae5cc068ae08d",
+    "semantic_hash": ""
+  },
+  "shopify-import/images/activa-6g-footrest-3-right.png": {
+    "mtime": 1795164647.211512,
+    "seen": 1795169353.5872278,
+    "ast_hash": "eeba275f2e37d0371e51a8ea46b00479",
+    "semantic_hash": ""
+  },
+  "shopify-import/images/activa-6g-footrest-4-top.png": {
+    "mtime": 1795164647.2148166,
+    "seen": 1795169353.587229,
+    "ast_hash": "70510c4c1b029954abac480d80636ad4",
+    "semantic_hash": ""
+  },
+  "store inspiration/Horizontal scroll- Vehicle moving animation section/rivian-1-r1s-centered.png": {
+    "mtime": 1795166689.2618253,
+    "seen": 1795169353.587229,
+    "ast_hash": "d838c2ba5de95afde1eefa11a5517b37",
+    "semantic_hash": ""
+  },
+  "store inspiration/Horizontal scroll- Vehicle moving animation section/rivian-2-r1s-to-r2-transition.png": {
+    "mtime": 1795166699.1898835,
+    "seen": 1795169353.58723,
+    "ast_hash": "600634bbdd14caf4a9a4519f6b0b27ff",
+    "semantic_hash": ""
+  },
+  "store inspiration/Horizontal scroll- Vehicle moving animation section/rivian-3-r2-centered.png": {
+    "mtime": 1795166706.3416154,
+    "seen": 1795169353.587231,
+    "ast_hash": "500f775258b73fa3ffa8341e3d96f39a",
+    "semantic_hash": ""
+  },
+  "store inspiration/Horizontal scroll- Vehicle moving animation section/rivian-4-r2-to-r1t-transition.png": {
+    "mtime": 1795166712.8885555,
+    "seen": 1795169353.587232,
+    "ast_hash": "1bb3a18e64395cc707a3e599300c459e",
+    "semantic_hash": ""
+  },
+  "store inspiration/Horizontal scroll- Vehicle moving animation section/rivian-5-r1t-centered.png": {
+    "mtime": 1795166719.4553432,
+    "seen": 1795169353.587233,
+    "ast_hash": "305a7bf691bf927f3ef02b77b6c05cfe",
+    "semantic_hash": ""
+  },
+  "store inspiration/review-section-1.png": {
+    "mtime": 1795167389.2402327,
+    "seen": 1795169353.587233,
+    "ast_hash": "e2ed8112fac4160fa1ecc7c5cefa5355",
+    "semantic_hash": ""
+  },
+  "store inspiration/review-section-2.png": {
+    "mtime": 1795167402.2611513,
+    "seen": 1795169353.587234,
+    "ast_hash": "c3fe2b5d0c5eba3e44cbe162da532665",
+    "semantic_hash": ""
+  },
+  "store inspiration/rivian-hero-fullscreen-video-cta.png": {
+    "mtime": 1795166830.5923924,
+    "seen": 1795169353.587235,
+    "ast_hash": "a6e25f953d78ef4e6f33570aa5903a7f",
+    "semantic_hash": ""
+  },
+  "store inspiration/second-ride-hotspot-product-battery.png": {
+    "mtime": 1795167336.643413,
+    "seen": 1795169353.5872362,
+    "ast_hash": "ce0466109a6cb8da1ace7952eba4a776",
+    "semantic_hash": ""
+  },
+  "store inspiration/second-ride-hotspot-product-drive-module.png": {
+    "mtime": 1795167356.0221894,
+    "seen": 1795169353.5872362,
+    "ast_hash": "c70c0b2d072ad373f9705a22ac1b3998",
+    "semantic_hash": ""
+  },
+  "store inspiration/second-ride-hotspot-product-tank.png": {
+    "mtime": 1795167348.0902526,
+    "seen": 1795169353.5872371,
+    "ast_hash": "b1d97d991f55565e16ae68a8a62fd589",
+    "semantic_hash": ""
+  },
+  "store inspiration/second-ride-lifestyle-carousel-more-power.png": {
+    "mtime": 1795167322.524642,
+    "seen": 1795169353.5872378,
+    "ast_hash": "d28bcdec25f4e8c3f4b0a95871b4ef59",
+    "semantic_hash": ""
+  },
+  "store inspiration/second-ride-lifestyle-carousel-removable-battery.png": {
+    "mtime": 1795167303.4778252,
+    "seen": 1795169353.5872378,
+    "ast_hash": "c0fe6b6a97763f137debd5823c12c0d0",
+    "semantic_hash": ""
+  },
+  "store inspiration/second-ride-vehicle-slider-simson-s51.png": {
+    "mtime": 1795167257.9736874,
+    "seen": 1795169353.587239,
+    "ast_hash": "ed0bc603152e605ea65a9b396e8bd81c",
+    "semantic_hash": ""
+  },
+  "store inspiration/second-ride-vehicle-slider-simson-schwalbe.png": {
+    "mtime": 1795167245.0599425,
+    "seen": 1795169353.58724,
+    "ast_hash": "912cb113b088e05268635be449260f8a",
+    "semantic_hash": ""
+  },
+  "store inspiration/shop-by-brand.png": {
+    "mtime": 1795168193.7935007,
+    "seen": 1795169353.58724,
+    "ast_hash": "38c1faba5db4d416e90de403c13c253d",
     "semantic_hash": ""
   },
   "pnpm-lock.yaml": {

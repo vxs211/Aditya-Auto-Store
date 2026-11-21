@@ -2,7 +2,8 @@
 
 import { Accordion as AccordionPrimitive } from "@base-ui/react/accordion";
 import { cn } from "cn";
-import { ChevronDownIcon } from "lucide-react";
+
+import { ChevronDownIcon } from "@/components/ui/icon";
 
 function Accordion({ ...props }: AccordionPrimitive.Root.Props) {
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />;

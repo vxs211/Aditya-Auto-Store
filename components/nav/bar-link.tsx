@@ -1,8 +1,8 @@
 "use client";
 
-import { HomeIcon, LayoutGridIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 
+import { HouseIcon as HomeIcon, LayoutGridIcon } from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 
 import { BAR_ITEM_CLASS } from "./bar-styles";

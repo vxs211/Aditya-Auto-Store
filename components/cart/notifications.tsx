@@ -1,8 +1,8 @@
 "use client";
 
-import { XIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 
+import { XIcon } from "@/components/ui/icon";
 import { useCart } from "@/lib/cart/client";
 
 const DISMISS_AFTER_MS = 5000;

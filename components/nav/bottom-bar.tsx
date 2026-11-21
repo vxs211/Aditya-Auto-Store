@@ -1,6 +1,7 @@
 import { PredictiveSearchProvider } from "@shopify/hydrogen/react";
 import { Suspense } from "react";
 
+import { SparklesIcon } from "@/components/ui/icon";
 import { shopConfig } from "@/lib/config";
 import type { MenuItem } from "@/lib/menu/types";
 
@@ -10,21 +11,6 @@ import { BAR_ITEM_CLASS, BAR_SEARCH_CLASS } from "./bar-styles";
 import { CartIcon, CartIconFallback } from "./cart";
 import { MobileMenu } from "./mobile-menu";
 import { SearchModal } from "./search-modal";
-
-// A small orange four-point star, the sparkle that sits on the search icon.
-function Sparkle() {
-  return (
-    <svg
-      aria-hidden
-      className="absolute top-2.5 right-2.5 size-3.5 text-primary"
-      data-accent
-      fill="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path d="M12 0c.8 6.2 5.8 11.2 12 12-6.2.8-11.2 5.8-12 12-.8-6.2-5.8-11.2-12-12 6.2-.8 11.2-5.8 12-12z" />
-    </svg>
-  );
-}
 
 // Phones up to tablets: a light pill with the main links, and a round search button beside it, floating at the
 // bottom within thumb reach. Desktop keeps the top bar.
@@ -49,7 +35,12 @@ export function BottomBar({ items }: { items: MenuItem[] }) {
             types={["PRODUCT", "COLLECTION", "QUERY"]}
           >
             <SearchModal
-              accent={<Sparkle />}
+              accent={
+                <SparklesIcon
+                  className="absolute top-2.5 right-2.5 size-3.5 text-primary"
+                  data-accent
+                />
+              }
               shortcut={false}
               triggerClassName={BAR_SEARCH_CLASS}
             />

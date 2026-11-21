@@ -1,4 +1,9 @@
-import { BadgeCheck, Factory, Ruler, ShieldCheck } from "lucide-react";
+import {
+  AwardIcon as BadgeCheck,
+  RulerIcon as Ruler,
+  ShieldCheckIcon as ShieldCheck,
+  WorkflowIcon as Factory,
+} from "@/components/ui/icon";
 
 const CHIPS = [
   { Icon: Factory, label: "Made in our own factory" },

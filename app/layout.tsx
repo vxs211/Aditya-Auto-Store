@@ -1,7 +1,6 @@
 import { BotIdClient } from "botid/client";
 import type { Metadata, Viewport } from "next";
-import { Geist, Inter, Michroma } from "next/font/google";
-import localFont from "next/font/local";
+import { Geist, Inter, Michroma, Newsreader } from "next/font/google";
 
 import "./globals.css";
 import { Suspense } from "react";
@@ -29,30 +28,26 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-// Origin, the Display cuts, for headings. Two static files cover the weights headings use (400 and 600).
-const origin = localFont({
-  display: "swap",
-  fallback: ["Arial", "Helvetica", "sans-serif"],
-  src: [
-    { path: "./fonts/Origin-RegularDisplay.woff2", style: "normal", weight: "400" },
-    { path: "./fonts/Origin-SemiBoldDisplay.woff2", style: "normal", weight: "600" },
-  ],
-  variable: "--font-origin",
-});
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const michroma = Michroma({
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
+});
+
+const michroma = Michroma({
   variable: "--font-michroma",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+// Stand-in for Lyon Text (DESIGN.md): testimonial quotes and the footer's editorial line only.
+const serif = Newsreader({
+  variable: "--font-serif-quote",
+  subsets: ["latin"],
   weight: "400",
 });
 
@@ -66,7 +61,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartStandardActionsScript />
       </head>
       <body
-        className={`${geistSans.variable} ${origin.variable} ${inter.variable} ${michroma.variable} flex min-h-dvh flex-col font-sans antialiased`}
+        className={`${geist.variable} ${inter.variable} ${michroma.variable} ${serif.variable} flex min-h-dvh flex-col font-sans antialiased`}
       >
         <a
           href="#main-content"

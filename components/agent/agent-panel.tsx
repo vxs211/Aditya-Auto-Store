@@ -2,9 +2,9 @@
 
 import { activeTurn, idle, openInteractions } from "eve/events";
 import { useEveAgent } from "eve/react";
-import { Trash2Icon, XIcon } from "lucide-react";
 import { type RefObject, useCallback, useEffect, useRef, useState } from "react";
 
+import { TrashIcon as Trash2Icon, XIcon } from "@/components/ui/icon";
 import {
   Sheet,
   SheetClose,

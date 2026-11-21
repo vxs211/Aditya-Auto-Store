@@ -1,6 +1,6 @@
 "use client";
 
-import { AlertCircleIcon } from "lucide-react";
+import { AlertCircleIcon } from "@/components/ui/icon";
 
 import "./globals.css";
 

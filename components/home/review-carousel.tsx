@@ -1,7 +1,11 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type ReactNode, useRef } from "react";
+
+import {
+  ChevronLeftIcon as ChevronLeft,
+  ChevronRightIcon as ChevronRight,
+} from "@/components/ui/icon";
 
 // A row of review cards that snaps card by card, with arrows to step through it.
 export function ReviewCarousel({ children }: { children: ReactNode }) {

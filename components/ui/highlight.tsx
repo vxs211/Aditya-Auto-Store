@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 
-// The key word in a headline, set in the Michroma label font. Michroma is wide and has one weight, so it is
-// scaled down and kept at normal weight rather than being faux-bolded by the heading around it.
+// DESIGN.md allows no third typeface and no accent-colored text, so the key word is simply part of the headline.
 export function Highlight({ children }: { children: ReactNode }) {
-  return <span className="font-label text-[0.8em] font-normal">{children}</span>;
+  return <>{children}</>;
 }

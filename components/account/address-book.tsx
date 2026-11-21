@@ -1,6 +1,5 @@
 "use client";
 
-import { Loader2, Pencil, Plus, Trash2 } from "lucide-react";
 import { type FormEvent, useState, useTransition } from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -13,6 +12,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  LoaderIcon as Loader2,
+  PencilIcon as Pencil,
+  PlusIcon as Plus,
+  TrashIcon as Trash2,
+} from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";

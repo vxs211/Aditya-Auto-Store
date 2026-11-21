@@ -1,8 +1,8 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { MessageCircleIcon as MessageCircle } from "@/components/ui/icon";
 import { readStoredChat } from "@/lib/agent/chat/client";
 
 import { AgentPanel } from "./client";

@@ -8,7 +8,6 @@ import {
   serializeCollectionParams,
 } from "@shopify/hydrogen";
 import { useCollection, useCollectionActions } from "@shopify/hydrogen/react";
-import { CheckIcon, LoaderCircleIcon, XIcon } from "lucide-react";
 import {
   type KeyboardEvent,
   type MouseEventHandler,
@@ -17,6 +16,7 @@ import {
   useState,
 } from "react";
 
+import { CheckIcon, LoaderIcon as LoaderCircleIcon, XIcon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Link } from "@/components/ui/link";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";

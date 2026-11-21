@@ -1,8 +1,7 @@
 "use client";
 
-import { HandbagIcon } from "lucide-react";
-
 import { useCartDrawer } from "@/components/cart/context";
+import { BagIcon as HandbagIcon } from "@/components/ui/icon";
 import { useCart } from "@/lib/cart/client";
 
 interface CartIconClientProps {
