@@ -1,3 +1,4 @@
+import localFont from "next/font/local";
 import Image from "next/image";
 
 import { BlogThumb, formatPostDate } from "@/components/blog/blog-thumb";
@@ -12,8 +13,14 @@ import { GUIDES } from "@/lib/guides";
 import { pickGuidePhotos } from "@/lib/guides/photos";
 
 import { FeatureCarousel } from "./feature-carousel";
+import { HeroReveal } from "./hero-reveal";
 import { PartHotspots } from "./part-hotspots";
 import { VehicleScroll } from "./vehicle-scroll";
+
+const might = localFont({
+  src: "../../app/fonts/Might.ttf",
+  display: "swap",
+});
 
 // shortcut: home imagery is the scooter photos already on the Shopify model collections; swap in the owner's own
 // shots (lifestyle, workshop, close-ups) when they arrive.
@@ -31,58 +38,45 @@ function Eyebrow({ children }: { children: string }) {
   );
 }
 
-export async function HomeHero() {
-  const [left, right] = await Promise.all([
-    collectionImage("activa-6g"),
-    collectionImage("tvs-iqube-accessories"),
-  ]);
-
+export function HomeHero() {
   return (
-    <section className="flex min-h-screen min-h-dvh flex-col overflow-hidden bg-background text-foreground">
-      <div className="grid min-h-[40dvh] w-full shrink-0 content-center justify-items-center gap-4 bg-foreground px-4 py-8 text-center text-background lg:px-6">
-        <p className="max-w-full rounded-sm border border-background/30 px-3 py-2 font-label text-[0.625rem] leading-relaxed tracking-wide uppercase sm:text-label">
-          Made in Ahmedabad since 2006
-        </p>
-        <h1 className="text-h1 max-w-4xl font-heading font-bold">Made to fit your scooter</h1>
-        <p className="max-w-2xl text-base leading-relaxed text-background/75 md:text-xl">
-          Footrests, crash guards, bumpers and fitting kits we press in stainless steel, plus
-          matting and seat covers for every popular Indian scooter.
-        </p>
-        <div className="flex w-full flex-col justify-center gap-2 sm:w-auto sm:flex-row">
-          <Button render={<Link href="/collections" />} size="lg">
-            Shop by scooter
-          </Button>
-          <Button
-            className="border border-foreground bg-background text-foreground hover:bg-foreground hover:text-background"
-            render={<Link href="/collections/all" />}
-            size="lg"
-            variant="outline"
-          >
-            See all parts
-          </Button>
+    <section className="relative h-[calc(100dvh-5rem)] min-h-[32rem] overflow-hidden bg-[linear-gradient(180deg,#F66101_0%,#ffffff_100%)]">
+      <HeroReveal>
+        <div
+          aria-hidden="true"
+          data-hero-text
+          className={`${might.className} pointer-events-none absolute inset-x-0 top-[max(1.5rem,calc(50%-35vw))] lg:landscape:top-6 lg:landscape:bottom-auto grid justify-items-center text-white select-none`}
+        >
+          <p className="flex w-2/3 items-center justify-center gap-4 text-[min(8vw,9dvh)] leading-none">
+            <span className="h-0.5 flex-1 bg-white" />
+            <span className="shrink-0">2 WHEELER</span>
+            <span className="h-0.5 flex-1 bg-white" />
+          </p>
+          <p className="text-[30.44vw] leading-[0.85] tracking-[-0.02em]">ACCESSORIES</p>
         </div>
-      </div>
-      <div className="grid min-h-[40dvh] w-full flex-1 border-b-[10dvh] border-primary bg-background px-4 py-4 md:px-6 md:py-6">
-        <div className="mx-auto grid w-full max-w-6xl grid-cols-2 gap-4 md:gap-6">
-          {[left, right].map(
-            (image, index) =>
-              image && (
-                <div
-                  className="relative min-h-40 overflow-hidden rounded-sm bg-background"
-                  key={image.url}
-                >
-                  <Image
-                    alt={image.alt}
-                    className="object-contain mix-blend-multiply"
-                    fill
-                    preload={index === 0}
-                    sizes="100vw"
-                    src={image.url}
-                  />
-                </div>
-              ),
-          )}
+        <div className="absolute inset-0" data-hero-vehicles>
+          <Image
+            alt=""
+            className="object-contain object-center lg:landscape:translate-y-24 lg:landscape:object-bottom"
+            fill
+            preload
+            sizes="100vw"
+            src="/finalbg.png"
+          />
         </div>
+      </HeroReveal>
+      <div className="absolute inset-x-0 bottom-44 z-10 mx-auto grid w-full max-w-md grid-cols-2 gap-3 px-4 lg:landscape:bottom-8">
+        <Button className="h-12 px-3 text-sm" render={<Link href="/collections" />} size="lg">
+          Shop by scooter
+        </Button>
+        <Button
+          className="h-12 border border-foreground bg-background px-3 text-sm text-foreground hover:bg-foreground hover:text-background"
+          render={<Link href="/collections/all" />}
+          size="lg"
+          variant="outline"
+        >
+          See all parts
+        </Button>
       </div>
     </section>
   );
@@ -327,18 +321,30 @@ export async function BlogSection() {
 
 export function HomeContactBand() {
   return (
-    <Container className="grid justify-items-center gap-6 py-24 text-center">
-      <Eyebrow>Need help?</Eyebrow>
-      <h2 className="text-h2 max-w-3xl">Not sure what fits?</h2>
-      <p className="max-w-md text-muted-foreground">
-        Tell us your scooter and year, and we will help you choose.
-      </p>
-      <div className="flex flex-wrap justify-center gap-2">
-        <Button render={<Link href="/contact" />}>Contact us</Button>
-        <Button render={<Link href="/collections" />} variant="outline">
-          Browse scooters
-        </Button>
-      </div>
-    </Container>
+    <section className="w-full bg-foreground text-background">
+      <Container className="grid justify-items-center gap-6 py-24 text-center">
+        <p className="max-w-full rounded-sm border border-background/30 px-3 py-2 font-label text-[0.625rem] leading-relaxed tracking-wide uppercase sm:text-label">
+          Made in Ahmedabad since 2006
+        </p>
+        <h1 className="text-h1 max-w-4xl font-heading font-bold">Made to fit your scooter</h1>
+        <p className="max-w-2xl text-base leading-relaxed text-background/75 md:text-xl">
+          Footrests, crash guards, bumpers and fitting kits we press in stainless steel, plus
+          matting and seat covers for every popular Indian scooter.
+        </p>
+        <div className="flex w-full flex-col justify-center gap-2 sm:w-auto sm:flex-row">
+          <Button render={<Link href="/collections" />} size="lg">
+            Shop by scooter
+          </Button>
+          <Button
+            className="border border-foreground bg-background text-foreground hover:bg-foreground hover:text-background"
+            render={<Link href="/collections/all" />}
+            size="lg"
+            variant="outline"
+          >
+            See all parts
+          </Button>
+        </div>
+      </Container>
+    </section>
   );
 }
