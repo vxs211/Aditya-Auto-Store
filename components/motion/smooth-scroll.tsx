@@ -12,7 +12,11 @@ export function SmoothScroll() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const lenis = new Lenis({ allowNestedScroll: true, anchors: true, lerp: 0.2 });
+    const lenis = new Lenis({
+      allowNestedScroll: true,
+      anchors: { duration: 2, easing: gsap.parseEase("sine.inOut"), lerp: 0 },
+      lerp: 0.2,
+    });
     const update = (time: number) => lenis.raf(time * 1000);
 
     lenis.on("scroll", ScrollTrigger.update);

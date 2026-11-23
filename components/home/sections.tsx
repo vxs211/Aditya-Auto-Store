@@ -65,17 +65,16 @@ export function HomeHero() {
           />
         </div>
       </HeroReveal>
-      <div className="absolute inset-x-0 bottom-44 z-10 mx-auto grid w-full max-w-md grid-cols-2 gap-3 px-4 lg:landscape:bottom-8">
-        <Button className="h-12 px-3 text-sm" render={<Link href="/collections" />} size="lg">
-          Shop by scooter
-        </Button>
+      <div className="absolute inset-x-0 bottom-44 z-10 mx-auto flex w-full max-w-lg flex-wrap items-center justify-center gap-3 px-4 lg:landscape:bottom-8">
         <Button
-          className="h-12 border border-foreground bg-background px-3 text-sm text-foreground hover:bg-foreground hover:text-background"
-          render={<Link href="/collections/all" />}
+          className="group h-14 gap-4 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-5 pr-2 text-sm text-white shadow-lg ring-1 ring-inset ring-white/25 hover:shadow-xl"
+          render={<Link href="#shop-by-brand" />}
           size="lg"
-          variant="outline"
         >
-          See all parts
+          Shop by brand
+          <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-foreground shadow-md transition-transform group-hover:translate-x-0.5">
+            <ArrowRIcon aria-hidden="true" className="size-5" />
+          </span>
         </Button>
       </div>
     </section>
@@ -86,18 +85,13 @@ const BRANDS = [
   { handle: "honda", name: "Honda" },
   { handle: "tvs-accessories", name: "TVS" },
   { handle: "suzuki-accessories", name: "Suzuki" },
-  { handle: "hero-two-wheeler-accessories", name: "Hero" },
   { handle: "yamaha-accessories", name: "Yamaha" },
   { handle: "bajaj-chetak-accessories", name: "Bajaj Chetak" },
-  { handle: "ola-s1-steel", name: "Ola Electric" },
-  { handle: "vida", name: "Vida" },
-  { handle: "ampere", name: "Ampere" },
-  { handle: "mahindra-two-wheeler-accessories", name: "Mahindra" },
 ];
 
 export function ShopByBrand() {
   return (
-    <Container className="grid gap-10 py-24">
+    <Container className="grid scroll-mt-20 gap-10 py-24" id="shop-by-brand">
       <div className="grid justify-items-center gap-3 text-center">
         <SectionHeading align="center" title="Scooter and EV accessories" />
         <p className="text-muted-foreground">Shop by brand</p>
