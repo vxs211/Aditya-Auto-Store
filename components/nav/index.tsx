@@ -12,6 +12,7 @@ import type { MenuItem } from "@/lib/menu/types";
 import { NavAccount, NavAccountFallback } from "./account";
 import { BottomBar } from "./bottom-bar";
 import { CartIcon, CartIconFallback } from "./cart";
+import { FooterAvoidance } from "./footer-avoidance";
 import { QuickLinks, type MegaMenu } from "./quick-links";
 import { SearchModal } from "./search-modal";
 
@@ -69,6 +70,7 @@ export async function Nav() {
   }
   return (
     <>
+      <FooterAvoidance />
       <nav className="sticky top-0 z-30 w-full pt-[env(safe-area-inset-top,0px)]" id="nav-outer">
         <Container className="nav-entrance relative flex h-18 lg:h-20 items-center justify-center gap-2.5 rounded-b-3xl bg-white text-black md:gap-4 lg:max-w-fit lg:justify-center lg:gap-8 lg:px-8 lg:before:pointer-events-none lg:before:absolute lg:before:top-0 lg:before:-left-8 lg:before:size-8 lg:before:bg-[radial-gradient(circle_at_bottom_left,transparent_32px,white_32.5px)] lg:before:content-[''] lg:after:pointer-events-none lg:after:absolute lg:after:top-0 lg:after:-right-8 lg:after:size-8 lg:after:bg-[radial-gradient(circle_at_bottom_right,transparent_32px,white_32.5px)] lg:after:content-[''] motion-safe:animate-[nav-reveal_1.2s_cubic-bezier(0.22,1,0.36,1)_backwards]">
           <Link className="flex items-center shrink-0" href="/">

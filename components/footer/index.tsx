@@ -61,7 +61,7 @@ export async function Footer() {
 
   // Below lg the footer fills the screen and sits above the sticky header, so it slides over the logo bar.
   return (
-    <footer className="relative z-40 flex min-h-dvh flex-col border-t border-hairline bg-background pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] text-foreground lg:z-auto lg:min-h-0 lg:pb-0">
+    <footer className="relative z-40 flex min-h-dvh flex-col bg-[linear-gradient(180deg,#ffffff_0%,#F66101_100%)] pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] text-foreground lg:z-auto lg:min-h-0 lg:pb-0">
       {/* pb-22 clears the fixed agent ActionBar pill when it renders */}
       <Container
         className={cn(
@@ -136,17 +136,17 @@ export async function Footer() {
           )}
         </ul>
       </Container>
-      {/* Edge to edge on small screens; held to the content grid on wide ones. */}
-      <Image
-        alt=""
-        aria-hidden
-        className="mx-auto block h-auto w-full max-w-312 lg:px-6"
-        height={226}
-        sizes="100vw"
-        src="/brand/footer-name.svg"
-        unoptimized
-        width={1610}
-      />
+      <div className="relative aspect-[1338/185] w-full overflow-hidden" aria-hidden="true">
+        <Image
+          alt=""
+          className="absolute top-1/2 left-1/2 h-auto w-[224.22%] max-w-none -translate-x-1/2 -translate-y-[48.85%]"
+          height={1000}
+          sizes="100vw"
+          src="/btmArtboard 1.png"
+          unoptimized
+          width={3000}
+        />
+      </div>
       <div className="border-t border-hairline text-muted-foreground">
         <Container className="flex min-h-12 items-center py-3 text-small">
           {/* shortcut: the year is typed in, change it each January */}

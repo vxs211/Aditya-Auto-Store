@@ -20,8 +20,6 @@
   --font-heading: var(--font-geist);
   --font-label: var(--font-michroma);
   --text-xxs: 0.75rem;
-  /* hero-display 96px/600/-4.6px, display-lg 72px/500/-2px, display-md 54px/700/-1.875px, title-md 22px/700,
-     title-sm 20px/600. Tracking kept as the same ratio of size so fluid sizes stay calibrated. */
   --text-display: clamp(3rem, 7.5vw, 6rem);
   --text-display--line-height: 1.05;
   --text-display--letter-spacing: -0.048em;
@@ -111,7 +109,7 @@
 
   .prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     letter-spacing: -0.02em;
-    font-weight: 700;
+    font-weight: 600;
   }
 }
 
@@ -133,7 +131,7 @@
   h4,
   h5,
   h6 {
-    @apply font-heading;
+    @apply font-heading font-semibold;
   }
   button,
   [role="button"] {
@@ -146,6 +144,24 @@
 }
 
 @layer utilities {
+  .font-heading { font-weight: 600; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-display { font-size: clamp(3.052rem, 7.5vw, 4.768rem); line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h1 { font-size: clamp(2.441rem, 5.5vw, 3.815rem); line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h2 { font-size: clamp(1.953rem, 4.2vw, 3.052rem); line-height: 1.1; font-weight: 600; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h3 { font-size: 1.563rem; line-height: 1.25; font-weight: 600; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h4 { font-size: 1.25rem; line-height: 1.45; }
+
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-xs { font-size: 0.64rem; line-height: 1.5; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-sm { font-size: 0.8rem; line-height: 1.5; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-base { font-size: 1rem; line-height: 1.45; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-lg { font-size: 1.25rem; line-height: 1.45; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-xl { font-size: 1.563rem; line-height: 1.25; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-2xl { font-size: 1.953rem; line-height: 1.25; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-3xl { font-size: 2.441rem; line-height: 1.25; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-4xl { font-size: 3.052rem; line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-5xl { font-size: 3.815rem; line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-6xl { font-size: 4.768rem; line-height: 1.1; }
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
@@ -274,3 +290,18 @@
     transform: translateY(0);
   }
 }
+
+@keyframes hotspot-reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@theme {
+  --animate-review-up: review-flow 180s linear infinite;
+  --animate-review-down: review-flow 180s linear infinite reverse;
+
+  @keyframes review-flow {
+    to { transform: translateY(calc(-50% - 0.375rem)); }
+  }
+}
+

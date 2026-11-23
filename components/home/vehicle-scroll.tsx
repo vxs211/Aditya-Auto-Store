@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRef } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ArrowRIcon } from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -22,7 +23,13 @@ export interface ScrollVehicle {
 
 // Rivian-style line-up: the section pins and the scooters slide past, each over its own oversized name. Without
 // motion (reduced motion or small screens) it falls back to a plain snap scroller.
-export function VehicleScroll({ vehicles }: { vehicles: ScrollVehicle[] }) {
+export function VehicleScroll({
+  nameFontClassName,
+  vehicles,
+}: {
+  nameFontClassName: string;
+  vehicles: ScrollVehicle[];
+}) {
   const section = useRef<HTMLElement>(null);
   const track = useRef<HTMLUListElement>(null);
 
@@ -65,12 +72,12 @@ export function VehicleScroll({ vehicles }: { vehicles: ScrollVehicle[] }) {
             <div className="relative grid w-full max-w-5xl justify-items-center">
               <p
                 aria-hidden
-                className="pointer-events-none absolute top-0 text-[clamp(4.5rem,15vw,13rem)] leading-none font-semibold tracking-[-0.048em] whitespace-nowrap select-none"
+                className={`${nameFontClassName} pointer-events-none absolute inset-x-0 -top-[10%] z-0 bg-linear-to-b from-[#F66101] to-white bg-clip-text text-center text-[clamp(6rem,29vw,26rem)] leading-none tracking-[-0.02em] whitespace-nowrap text-transparent uppercase select-none`}
               >
                 {vehicle.name}
               </p>
               {vehicle.image ? (
-                <div className="relative mt-[clamp(2.5rem,7vw,6rem)] aspect-4/3 w-full max-w-2xl">
+                <div className="relative z-10 mt-4 aspect-4/3 w-full max-w-2xl">
                   <Image
                     alt={vehicle.image.alt}
                     className="object-contain mix-blend-multiply"
@@ -80,7 +87,7 @@ export function VehicleScroll({ vehicles }: { vehicles: ScrollVehicle[] }) {
                   />
                 </div>
               ) : (
-                <div className="mt-[clamp(2.5rem,7vw,6rem)] aspect-4/3 w-full max-w-2xl" />
+                <div className="mt-4 aspect-4/3 w-full max-w-2xl" />
               )}
             </div>
             <div className="grid max-w-xl justify-items-center gap-2 text-center">
@@ -89,9 +96,15 @@ export function VehicleScroll({ vehicles }: { vehicles: ScrollVehicle[] }) {
                 {vehicle.brand} {vehicle.name} · {vehicle.parts}
               </p>
               <div className="mt-4 flex flex-wrap justify-center gap-2">
-                <Button render={<Link href={vehicle.href} />}>Shop parts</Button>
-                <Button render={<Link href="/collections" />} variant="outline">
-                  All scooters
+                <Button
+                  className="group h-14 gap-4 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-5 pr-2 text-sm text-white shadow-lg ring-1 ring-inset ring-white/25 hover:shadow-xl"
+                  render={<Link href={vehicle.href} />}
+                  size="lg"
+                >
+                  Shop parts
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-foreground shadow-md transition-transform group-hover:translate-x-0.5">
+                    <ArrowRIcon aria-hidden="true" className="size-5" />
+                  </span>
                 </Button>
               </div>
             </div>

@@ -85,7 +85,7 @@ export function MegaPanel({
               url={entry.url}
               // A plain string, not cn(): tailwind-merge reads text-link (a colour) and text-h4 (a size) as the same
               // group and would drop the size on the active link, shrinking it.
-              className={`block py-3 font-heading text-h4 font-normal transition-colors hover:text-link${entry.id === current ? " text-link" : ""}`}
+              className={`block py-3 font-heading text-h4 font-semibold transition-colors hover:text-link${entry.id === current ? " text-link" : ""}`}
             >
               {entry.title}
             </MenuLink>

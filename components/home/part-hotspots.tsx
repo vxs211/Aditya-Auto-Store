@@ -3,11 +3,13 @@
 import Image from "next/image";
 import { useState } from "react";
 
-import { PlusIcon as Plus, XIcon as X } from "@/components/ui/icon";
+import { XIcon as X } from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 
 export interface Hotspot {
   body: string;
+  dotX: number;
+  dotY: number;
   href: string;
   label: string;
   // Position on the photo, in percent of its width and height.
@@ -15,7 +17,6 @@ export interface Hotspot {
   y: number;
 }
 
-// Second Ride-style hotspots: dots on the scooter, one labelled at a time; its "+" opens a short note on the part.
 export function PartHotspots({
   hotspots,
   image,
@@ -23,56 +24,65 @@ export function PartHotspots({
   hotspots: Hotspot[];
   image: { alt: string; url: string };
 }) {
-  const [active, setActive] = useState(0);
-  const [open, setOpen] = useState(false);
-  const current = hotspots[active];
+  const [active, setActive] = useState<number | null>(null);
+  const current = active === null ? null : hotspots[active];
 
   return (
-    <div className="relative mx-auto aspect-4/3 w-full max-w-4xl">
+    <div className="relative mx-auto aspect-4/3 h-full max-h-full w-auto max-w-full">
       <Image
         alt={image.alt}
-        className="object-contain mix-blend-multiply"
+        className="object-contain"
         fill
         sizes="(min-width: 896px) 56rem, 100vw"
         src={image.url}
       />
-      {hotspots.map((spot, index) =>
-        index === active ? (
-          <div
-            className="absolute z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-1 rounded-lg bg-foreground/85 p-1 pl-3 text-small font-medium text-background shadow-soft backdrop-blur-md"
+      <svg
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 size-full"
+        preserveAspectRatio="none"
+        viewBox="0 0 100 100"
+      >
+        {hotspots.map((spot) => (
+          <polyline
             key={spot.label}
-            style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
-          >
-            {spot.label}
-            <button
-              aria-expanded={open}
-              aria-label={open ? `Close ${spot.label}` : `About the ${spot.label}`}
-              className="grid size-8 place-items-center rounded-sm bg-background/10 hover:bg-background/20"
-              onClick={() => setOpen(!open)}
-              type="button"
-            >
-              {open ? <X className="size-4" /> : <Plus className="size-4" />}
-            </button>
-          </div>
-        ) : (
+            points={`${spot.dotX},${spot.dotY} ${(spot.dotX + spot.x) / 2},${spot.dotY} ${spot.x},${spot.y}`}
+            fill="none"
+            stroke="#F66101"
+            strokeWidth="1.5"
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+      </svg>
+      {hotspots.map((spot, index) => (
+        <button
+          aria-label={`About ${spot.label}`}
+          aria-expanded={index === active}
+          className="absolute z-10 grid size-11 -translate-x-1/2 -translate-y-1/2 cursor-pointer place-items-center rounded-full"
+          key={spot.label}
+          onClick={() => setActive(index === active ? null : index)}
+          style={{ left: `${spot.dotX}%`, top: `${spot.dotY}%` }}
+          type="button"
+        >
+          <span className="absolute size-7 rounded-full bg-primary/30 motion-safe:animate-ping" />
+          <span className="relative size-3.5 rounded-full bg-primary ring-4 ring-white/70" />
+        </button>
+      ))}
+      {current && (
+        <div
+          key={current.label}
+          className={`absolute z-20 grid w-[min(14rem,70vw)] gap-2 rounded-xl border border-hairline bg-background p-5 shadow-deep motion-safe:animate-[hotspot-reveal_0.45s_ease-out_both] ${current.dotX < 50 ? "left-0 md:left-auto md:right-[calc(93%+1rem)]" : "right-0 md:right-auto md:left-[calc(93%+1rem)]"}`}
+          style={{
+            top: `${Math.min(current.dotY + 6, 65)}%`,
+          }}
+        >
           <button
-            aria-label={`Show ${spot.label}`}
-            className="absolute grid size-11 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full"
-            key={spot.label}
-            onClick={() => {
-              setActive(index);
-              setOpen(false);
-            }}
-            style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
             type="button"
+            aria-label="Close part details"
+            onClick={() => setActive(null)}
+            className="absolute top-4 right-4 cursor-pointer"
           >
-            <span className="absolute size-7 rounded-full bg-primary/25 motion-safe:animate-ping" />
-            <span className="relative size-3.5 rounded-full bg-primary ring-4 ring-primary/30" />
+            <X className="size-4" />
           </button>
-        ),
-      )}
-      {open && current && (
-        <div className="absolute inset-x-4 bottom-4 z-20 grid gap-2 rounded-xl border border-hairline bg-background p-6 shadow-soft sm:inset-x-auto sm:right-4 sm:w-80">
           <p className="text-h4">{current.label}</p>
           <p className="text-small text-muted-foreground">{current.body}</p>
           <Link className="text-small font-medium text-link hover:underline" href={current.href}>

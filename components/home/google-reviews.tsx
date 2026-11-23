@@ -1,11 +1,11 @@
+import Image from "next/image";
+
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Highlight } from "@/components/ui/highlight";
 import { StarIcon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { GOOGLE_REVIEWS } from "@/lib/reviews";
-
-import { ReviewCarousel } from "./review-carousel";
 
 function GoogleG({ className }: { className?: string }) {
   return (
@@ -44,23 +44,127 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-// Reviews come from lib/reviews, copied from the Google Business Profile. Nothing is shown without them.
+const SAMPLE_REVIEWS = [
+  {
+    author: "Amit P.",
+    rating: 5,
+    text: "The guard fits my Activa neatly and feels solid on everyday rides.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-1.svg",
+    photo: "/vehicles/activa.png",
+  },
+  {
+    author: "Priya S.",
+    rating: 5,
+    text: "The footrest arrived well packed and looks great on my scooter.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-2.svg",
+  },
+  {
+    author: "Rahul M.",
+    rating: 5,
+    text: "Good finish on the stainless steel bumper and a straightforward fit.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-3.svg",
+  },
+  {
+    author: "Neha K.",
+    rating: 4,
+    text: "The team helped me find the right accessories for my Access.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-4.svg",
+    photo: "/vehicles/Access.png",
+  },
+  {
+    author: "Vikram R.",
+    rating: 5,
+    text: "Sturdy parts and a clean look on my daily commute.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-5.svg",
+    photo: "/vehicles/Chetak.png",
+  },
+  {
+    author: "Pooja D.",
+    rating: 5,
+    text: "The fitting kit matched my scooter and installation was simple.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-6.svg",
+  },
+  {
+    author: "Rohan B.",
+    rating: 5,
+    text: "The scooter guard feels sturdy and fits the mounting points well.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-1.svg",
+  },
+  {
+    author: "Anjali N.",
+    rating: 5,
+    text: "The floor mat fits neatly and is easy to clean after a rainy ride.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-2.svg",
+    photo: "/vehicles/activa.png",
+  },
+  {
+    author: "Manish J.",
+    rating: 4,
+    text: "Helpful guidance when I was choosing accessories for my Chetak.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-3.svg",
+  },
+  {
+    author: "Kavita R.",
+    rating: 5,
+    text: "The finish looks neat and the parts suit my scooter nicely.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-4.svg",
+  },
+  {
+    author: "Arjun S.",
+    rating: 5,
+    text: "The bumper was packed securely and fitted without trouble.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-5.svg",
+    photo: "/vehicles/Access.png",
+  },
+  {
+    author: "Sneha M.",
+    rating: 4,
+    text: "A useful selection of accessories for daily scooter use.",
+    time: "Sample review",
+    avatar: "/review-avatars/sample-6.svg",
+  },
+];
+
 export function GoogleReviews() {
-  const { count, items, rating, writeReviewUrl } = GOOGLE_REVIEWS;
-  if (items.length === 0) return null;
+  const { count, rating, writeReviewUrl } = GOOGLE_REVIEWS;
+  const isSample = GOOGLE_REVIEWS.items.length === 0;
+  const items = isSample ? SAMPLE_REVIEWS : GOOGLE_REVIEWS.items;
 
   return (
     <Container>
-      <section className="grid gap-10" data-reveal>
+      <section
+        className="grid gap-10 rounded-3xl bg-[linear-gradient(180deg,#fff4ec_0%,#fffaf6_55%,#ffffff_100%)] px-4 py-16 sm:px-8"
+        data-reveal
+      >
         <div className="grid justify-items-center gap-5 text-center">
           <SectionHeading
             align="center"
             title={
-              <>
-                What customers say on <Highlight>Google</Highlight>
-              </>
+              isSample ? (
+                "Customer reviews preview"
+              ) : (
+                <>
+                  What customers say on <Highlight>Google</Highlight>
+                </>
+              )
             }
           />
+          {isSample && (
+            <p className="text-sm text-muted-foreground">
+              Sample reviews and illustrated profiles for preview only.
+            </p>
+          )}
           {rating !== null && count !== null && (
             <div className="flex flex-wrap items-center justify-center gap-3 bg-muted px-5 py-3">
               <GoogleG className="size-6" />
@@ -72,30 +176,97 @@ export function GoogleReviews() {
           )}
         </div>
 
-        <ReviewCarousel>
-          {items.map((review) => (
-            <li
-              className="flex w-[85%] shrink-0 snap-start flex-col gap-4 bg-muted p-6 sm:w-[calc(50%-0.5rem)] lg:w-[calc(25%-0.75rem)]"
-              key={`${review.author}-${review.time}`}
-            >
-              <div className="flex items-center gap-3">
-                <span
-                  aria-hidden
-                  className="flex size-11 shrink-0 items-center justify-center bg-foreground font-heading text-lg text-background"
-                >
-                  {review.author.charAt(0).toUpperCase()}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate font-heading text-h4">{review.author}</p>
-                  <p className="text-small text-muted-foreground">{review.time}</p>
-                </div>
-                <GoogleG className="size-6 shrink-0" />
-              </div>
-              <Stars rating={review.rating} />
-              <p className="text-muted-foreground">{review.text}</p>
-            </li>
-          ))}
-        </ReviewCarousel>
+        {items.length === 0 ? (
+          <div className="mx-auto grid max-w-md justify-items-center gap-3 rounded-2xl bg-white p-8 text-center shadow-soft">
+            <GoogleG className="size-8" />
+            <p className="text-base text-muted-foreground">
+              Customer reviews will appear here soon.
+            </p>
+          </div>
+        ) : (
+          <div className="relative h-[32rem] overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,black_14%,black_86%,transparent)]">
+            <div className="grid h-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: Math.min(3, items.length) }, (_, column) => {
+                const reviews = [...items.slice(column), ...items.slice(0, column)];
+                return (
+                  <div
+                    key={column}
+                    aria-hidden={column > 0 ? true : undefined}
+                    className={`overflow-hidden motion-reduce:overflow-y-auto ${column === 1 ? "hidden sm:block" : column === 2 ? "hidden lg:block" : ""}`}
+                  >
+                    <div
+                      className="grid gap-3 focus-within:[animation-play-state:paused] motion-reduce:![animation:none]"
+                      style={{
+                        animation: `review-flow 180s linear infinite ${column === 1 ? "reverse" : "normal"}`,
+                      }}
+                    >
+                      {[0, 1].map((copy) => (
+                        <ul
+                          key={copy}
+                          aria-hidden={copy === 1 ? true : undefined}
+                          className="grid gap-3"
+                        >
+                          {reviews.map((review) => (
+                            <li
+                              key={`${review.author}-${review.time}`}
+                              className="grid gap-4 rounded-2xl bg-white p-6 shadow-soft"
+                            >
+                              <Stars rating={review.rating} />
+                              <p className="text-base leading-relaxed text-foreground">
+                                {review.text}
+                              </p>
+                              {"photo" in review && typeof review.photo === "string" && (
+                                <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-muted">
+                                  <Image
+                                    alt="Sample scooter image"
+                                    className="object-contain"
+                                    fill
+                                    sizes="100vw"
+                                    src={review.photo}
+                                  />
+                                  <span className="absolute right-2 bottom-2 rounded-full bg-white/90 px-2 py-1 text-xs text-foreground">
+                                    Sample image
+                                  </span>
+                                </div>
+                              )}
+                              <div className="flex items-center gap-3">
+                                <span
+                                  aria-hidden="true"
+                                  className="grid size-9 shrink-0 place-items-center rounded-full bg-primary/15 text-sm font-semibold text-foreground"
+                                >
+                                  {"avatar" in review && typeof review.avatar === "string" ? (
+                                    <Image
+                                      alt=""
+                                      className="size-full rounded-full"
+                                      height={36}
+                                      sizes="100vw"
+                                      src={review.avatar}
+                                      width={36}
+                                    />
+                                  ) : (
+                                    review.author.charAt(0).toUpperCase()
+                                  )}
+                                </span>
+                                <span className="grid gap-0.5">
+                                  <span className="text-sm font-semibold text-foreground">
+                                    {review.author}
+                                  </span>
+                                  <span className="text-xs text-muted-foreground">
+                                    {review.time}
+                                  </span>
+                                </span>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {writeReviewUrl && (
           <div className="flex justify-center">
