@@ -19,7 +19,6 @@
   --font-sans: var(--font-inter);
   --font-heading: var(--font-geist);
   --font-label: var(--font-michroma);
-  --font-serif: var(--font-serif-quote), Georgia, serif;
   --text-xxs: 0.75rem;
   /* hero-display 96px/600/-4.6px, display-lg 72px/500/-2px, display-md 54px/700/-1.875px, title-md 22px/700,
      title-sm 20px/600. Tracking kept as the same ratio of size so fluid sizes stay calibrated. */
@@ -241,4 +240,37 @@
 /* The floating bottom bar, its search circle and active capsule, and the round WhatsApp button stay pills. */
 .bar-round {
   border-radius: 9999px;
+}
+
+
+@keyframes nav-reveal {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  body:has([data-hero-text]) .nav-entrance {
+    animation-delay: 2.8s;
+  }
+
+  .hero-button-entrance {
+    animation: hero-button-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) 2.8s backwards;
+  }
+}
+
+@keyframes hero-button-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

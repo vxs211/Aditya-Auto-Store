@@ -20,7 +20,7 @@ export function QuickLinks({
   mega?: Record<string, MegaMenu>;
 }) {
   return (
-    <ul className="hidden lg:flex items-center gap-4 xl:gap-8">
+    <ul className="hidden lg:flex items-center gap-1 xl:gap-3">
       {items.map((item) => (
         <NavItem key={item.id} item={item} mega={mega[item.id]} />
       ))}
@@ -30,7 +30,7 @@ export function QuickLinks({
 
 // Origin Regular, to match the links inside the shop menu.
 const TRIGGER_CLASS =
-  "flex items-center gap-1 rounded-sm px-2.5 py-1 text-base font-normal text-ink-soft hover:bg-wash transition-colors";
+  "flex items-center gap-1 rounded-sm px-2.5 py-1 text-base font-normal text-black/70 hover:bg-black/5 hover:text-black transition-colors";
 
 function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
   if (item.items.length === 0) {

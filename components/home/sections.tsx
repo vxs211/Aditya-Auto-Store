@@ -65,7 +65,7 @@ export function HomeHero() {
           />
         </div>
       </HeroReveal>
-      <div className="absolute inset-x-0 bottom-44 z-10 mx-auto flex w-full max-w-lg flex-wrap items-center justify-center gap-3 px-4 lg:landscape:bottom-8">
+      <div className="hero-button-entrance absolute inset-x-0 bottom-44 z-10 mx-auto flex w-full max-w-lg flex-wrap items-center justify-center gap-3 px-4 lg:landscape:bottom-8">
         <Button
           className="group h-14 gap-4 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-5 pr-2 text-sm text-white shadow-lg ring-1 ring-inset ring-white/25 hover:shadow-xl"
           render={<Link href="#shop-by-brand" />}

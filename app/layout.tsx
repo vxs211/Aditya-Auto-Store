@@ -1,6 +1,6 @@
 import { BotIdClient } from "botid/client";
 import type { Metadata, Viewport } from "next";
-import { Geist, Inter, Michroma, Newsreader } from "next/font/google";
+import { Geist, Inter, Michroma } from "next/font/google";
 
 import "./globals.css";
 import { Suspense } from "react";
@@ -13,9 +13,11 @@ import { CartUI } from "@/components/cart/cart-ui";
 import { CartProviderWrapper } from "@/components/cart/context";
 import { CartStandardActionsScript } from "@/components/cart/standard-actions";
 import { Footer } from "@/components/footer";
+import { CursorFollower } from "@/components/motion/cursor-follower";
 import { PageMotion } from "@/components/motion/page-motion";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { Nav } from "@/components/nav";
+import { PrivacyNotice } from "@/components/privacy-notice";
 import { SiteSchema } from "@/components/schema/site-schema";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { botIdProtectedRoutes } from "@/lib/botid";
@@ -44,13 +46,6 @@ const michroma = Michroma({
   weight: "400",
 });
 
-// Stand-in for Lyon Text (DESIGN.md): testimonial quotes and the footer's editorial line only.
-const serif = Newsreader({
-  variable: "--font-serif-quote",
-  subsets: ["latin"],
-  weight: "400",
-});
-
 export default function RootLayout({ children }: LayoutProps<"/">) {
   // Un-awaited: the promise streams to the client provider; never block the shell on it.
   const cartData = seedCartData();
@@ -61,7 +56,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <CartStandardActionsScript />
       </head>
       <body
-        className={`${geist.variable} ${inter.variable} ${michroma.variable} ${serif.variable} flex min-h-dvh flex-col font-sans antialiased`}
+        className={`${geist.variable} ${inter.variable} ${michroma.variable} flex min-h-dvh flex-col font-sans antialiased`}
       >
         <a
           href="#main-content"
@@ -78,7 +73,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             {children}
           </main>
           <Footer />
+          <CursorFollower />
           <WhatsAppButton />
+          <PrivacyNotice />
           <Suspense fallback={null}>
             <PageMotion />
           </Suspense>

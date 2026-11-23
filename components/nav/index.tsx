@@ -35,18 +35,6 @@ export async function Nav() {
       title: "Shop",
       url: "/collections",
     },
-    { id: "nav-blog", items: [], title: "Blog", url: "/guides" },
-    {
-      id: "nav-connect",
-      items: [
-        { id: "nav-about", items: [], title: "About", url: "/about" },
-        { id: "nav-contact", items: [], title: "Contact us", url: "/contact" },
-        // The manufacturing story lives on the About page.
-        { id: "nav-manufacturing", items: [], title: "Manufacturing", url: "/about#manufacturing" },
-      ],
-      title: "Connect",
-      url: "/contact",
-    },
     { id: "nav-account", items: [], title: "My account", url: "/account" },
     { id: "nav-track", items: [], title: "Track order", url: "/track-order" },
   ];
@@ -81,15 +69,12 @@ export async function Nav() {
   }
   return (
     <>
-      <nav
-        className="sticky top-0 z-30 w-full border-b bg-background pt-[env(safe-area-inset-top,0px)] transition-shadow duration-250"
-        id="nav-outer"
-      >
-        <Container className="relative flex h-18 lg:h-20 items-center justify-center gap-2.5 md:gap-8 lg:static lg:justify-between">
+      <nav className="sticky top-0 z-30 w-full pt-[env(safe-area-inset-top,0px)]" id="nav-outer">
+        <Container className="nav-entrance relative flex h-18 lg:h-20 items-center justify-center gap-2.5 rounded-b-3xl bg-white text-black md:gap-4 lg:max-w-fit lg:justify-center lg:gap-8 lg:px-8 lg:before:pointer-events-none lg:before:absolute lg:before:top-0 lg:before:-left-8 lg:before:size-8 lg:before:bg-[radial-gradient(circle_at_bottom_left,transparent_32px,white_32.5px)] lg:before:content-[''] lg:after:pointer-events-none lg:after:absolute lg:after:top-0 lg:after:-right-8 lg:after:size-8 lg:after:bg-[radial-gradient(circle_at_bottom_right,transparent_32px,white_32.5px)] lg:after:content-[''] motion-safe:animate-[nav-reveal_1.2s_cubic-bezier(0.22,1,0.36,1)_backwards]">
           <Link className="flex items-center shrink-0" href="/">
             <Image
               alt={shopConfig.site.name}
-              className="h-10 w-auto md:h-12 lg:h-14 xl:h-16"
+              className="h-10 w-auto md:h-12 lg:h-12"
               height={48}
               priority
               sizes="100vw"
@@ -101,7 +86,7 @@ export async function Nav() {
 
           <QuickLinks items={items} mega={{ "nav-models": mega }} />
 
-          <div className="absolute right-4 flex items-center gap-5 lg:static lg:gap-7">
+          <div className="absolute right-4 flex items-center gap-5 text-black [&_button]:text-black lg:static lg:gap-5">
             {shopConfig.search.isEnabled && (
               <div className="hidden lg:block">
                 <PredictiveSearchProvider

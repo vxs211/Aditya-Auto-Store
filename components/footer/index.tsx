@@ -80,7 +80,7 @@ export async function Footer() {
               unoptimized
               width={240}
             />
-            <p className="max-w-md font-serif text-[1.125rem] leading-[1.55] text-muted-foreground">
+            <p className="max-w-md text-[1.125rem] leading-[1.55] text-muted-foreground">
               {shopConfig.site.description}
             </p>
             {socialLinks.length > 0 && (
