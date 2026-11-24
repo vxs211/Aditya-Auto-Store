@@ -48,19 +48,19 @@ export function HomeHero() {
         <div
           aria-hidden="true"
           data-hero-text
-          className={`${might.className} pointer-events-none absolute inset-x-0 top-[max(1.5rem,calc(50%-35vw))] lg:landscape:top-6 lg:landscape:bottom-auto grid justify-items-center text-white select-none`}
+          className={`${might.className} pointer-events-none absolute inset-x-0 top-[25%] sm:top-[max(1.5rem,calc(50%-35vw))] lg:landscape:top-6 lg:landscape:bottom-auto grid justify-items-center text-white select-none`}
         >
-          <p className="flex w-2/3 items-center justify-center gap-4 text-[min(8vw,9dvh)] leading-none">
+          <p className="flex w-[90%] items-center justify-center gap-4 text-[min(10vw,9dvh)] leading-none lg:w-2/3 lg:text-[min(8vw,9dvh)]">
             <span className="h-0.5 flex-1 bg-white" />
             <span className="shrink-0">2 WHEELER</span>
             <span className="h-0.5 flex-1 bg-white" />
           </p>
-          <p className="text-[30.44vw] leading-[0.85] tracking-[-0.02em]">ACCESSORIES</p>
+          <p className="whitespace-nowrap text-[34.25vw] leading-[0.85] tracking-[-0.02em] lg:text-[30.44vw]">ACCESSORIES</p>
         </div>
         <div className="absolute inset-0" data-hero-vehicles>
           <Image
             alt=""
-            className="object-contain object-center lg:landscape:translate-y-24 lg:landscape:object-bottom"
+            className="scale-[1.2825] object-contain object-center sm:scale-100 lg:landscape:translate-y-24 lg:landscape:object-bottom"
             fill
             preload
             sizes="100vw"
@@ -72,7 +72,7 @@ export function HomeHero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-linear-to-b from-transparent via-white/45 to-white sm:h-40"
       />
-      <div className="hero-button-entrance absolute inset-x-0 bottom-44 z-10 mx-auto flex w-full max-w-lg flex-wrap items-center justify-center gap-3 px-4 lg:landscape:bottom-8">
+      <div className="hero-button-entrance absolute inset-x-0 bottom-20 z-10 sm:bottom-44 mx-auto flex w-full max-w-lg flex-wrap items-center justify-center gap-3 px-4 lg:landscape:bottom-8">
         <Button
           className="group h-14 gap-4 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-5 pr-2 text-sm text-white shadow-lg ring-1 ring-inset ring-white/25 hover:shadow-xl"
           render={<Link href="#shop-by-brand" />}
@@ -275,8 +275,8 @@ export function PartsTour() {
         aria-hidden="true"
         className="pointer-events-none h-40 bg-[linear-gradient(180deg,#fff_0%,#fff8f3_15%,#ffe3d1_35%,#ffb98c_60%,#fb7930_82%,#F66101_100%)] sm:h-64"
       />
-      <section className="h-dvh overflow-y-auto bg-[linear-gradient(180deg,#F66101_0%,#ffad79_30%,#fff1e8_75%,#ffffff_100%)] py-6 sm:py-8">
-        <Container className="grid h-full min-h-0 grid-rows-[auto_minmax(0,1fr)_auto] gap-4 sm:gap-6">
+      <section className="bg-[linear-gradient(180deg,#F66101_0%,#ffad79_30%,#fff1e8_75%,#ffffff_100%)] py-8 xl:h-dvh xl:overflow-y-auto">
+        <Container className="grid gap-6 xl:h-full xl:min-h-0 xl:grid-rows-[auto_minmax(0,1fr)_auto]">
           <div className="grid justify-items-center gap-3 text-center text-white [&_p]:text-white">
             <Eyebrow>What we make</Eyebrow>
             <SectionHeading align="center" title="Four parts, one fit" />
@@ -285,8 +285,8 @@ export function PartsTour() {
             hotspots={HOTSPOTS}
             image={{ alt: "Honda Activa 6G", url: "/vehicles/activa.png" }}
           />
-          <div className="grid items-start gap-3 md:grid-cols-[2fr_1fr_1fr] md:gap-8">
-            <p className="max-w-lg text-black">
+          <div className="grid items-start gap-3 sm:grid-cols-2 md:gap-6 xl:grid-cols-[2fr_1fr_1fr] xl:gap-8">
+            <p className="max-w-lg text-black sm:col-span-2 xl:col-span-1">
               Every part is cut, bent and polished in our Ahmedabad unit for one model only, so it
               bolts onto the holes your scooter already has.
             </p>
@@ -406,8 +406,8 @@ export async function BlogSection() {
   if (latest.length === 0) return null;
 
   return (
-    <section className="bg-muted py-24">
-      <Container className="grid gap-8">
+    <section className="bg-muted py-12 sm:py-16 lg:py-24">
+      <Container className="grid gap-6 sm:gap-8">
         <div className="grid justify-items-center gap-3 text-center">
           <SectionHeading title="From the blog" />
           <Button
@@ -421,27 +421,27 @@ export async function BlogSection() {
             </span>
           </Button>
         </div>
-        <ul className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
+        <ul className="mx-auto flex w-full max-w-6xl snap-x snap-mandatory gap-3 overflow-x-auto pb-3 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
           {latest.map((guide, index) => {
             const photo = photos.get(guide.slug);
             const isCollection = guide.slug === "how-to-install-a-scooter-guard-at-home";
             return (
               <li
                 key={guide.slug}
-                className={
+                className={`w-[85%] shrink-0 snap-start sm:w-auto ${
                   index === 0
                     ? "sm:col-span-2 lg:col-span-1 lg:row-span-2"
                     : index === 3
                       ? "sm:col-span-2 lg:col-span-2"
                       : ""
-                }
+                }`}
               >
                 <Link
                   className={`group flex h-full overflow-hidden rounded-2xl bg-white p-3 sm:p-4 transition-shadow hover:shadow-lg ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
                   href={isCollection ? "/collections/all" : `/guides/${guide.slug}`}
                 >
                   <span
-                    className={`relative block shrink-0 overflow-hidden rounded-lg bg-[#fff1e8] ${index === 0 ? "aspect-[16/10] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : guide.slug === "how-to-install-a-scooter-guard-at-home" ? "aspect-[21/9]" : "aspect-[16/9]"}`}
+                    className={`relative block shrink-0 overflow-hidden rounded-lg bg-[#fff1e8] ${index === 0 ? "aspect-[16/9] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : guide.slug === "how-to-install-a-scooter-guard-at-home" ? "aspect-[21/9]" : "aspect-[16/9]"}`}
                   >
                     {photo && (
                       <Image
@@ -454,7 +454,7 @@ export async function BlogSection() {
                     )}
                   </span>
                   <span
-                    className={`grid flex-1 content-start ${guide.slug === "how-to-install-a-scooter-guard-at-home" ? "gap-1 p-2" : "gap-3 p-3 sm:p-4"}`}
+                    className={`grid flex-1 content-start ${guide.slug === "how-to-install-a-scooter-guard-at-home" ? "gap-2 p-3 sm:p-4" : "gap-3 p-3 sm:p-4"}`}
                   >
                     {!isCollection && (
                       <span className="text-xs font-medium text-link">
@@ -465,7 +465,7 @@ export async function BlogSection() {
                       {isCollection ? "Explore our collection" : guide.headline}
                     </h3>
                     <span
-                      className={`${interTight.className} line-clamp-2 text-base leading-relaxed font-normal text-muted-foreground`}
+                      className={`${interTight.className} line-clamp-3 sm:line-clamp-2 text-base leading-relaxed font-normal text-muted-foreground`}
                     >
                       {isCollection
                         ? "Discover scooter accessories made for a precise fit."
@@ -494,10 +494,10 @@ export async function BlogSection() {
 export function HomeContactBand() {
   return (
     <section className="bg-white">
-      <div className="relative isolate h-dvh overflow-hidden bg-foreground text-white">
+      <div className="relative isolate h-[70svh] min-h-[30rem] overflow-hidden bg-foreground text-white sm:h-[80svh] sm:min-h-[36rem] lg:h-dvh">
         <Image
           alt="Two people riding a scooter along a road at sunset"
-          className="object-cover object-[65%_center]"
+          className="object-cover object-[62%_center] sm:object-[65%_center] lg:object-[65%_center]"
           fill
           sizes="100vw"
           src="/Sunset Highway Scooter Journey.png"
@@ -510,12 +510,12 @@ export function HomeContactBand() {
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-linear-to-b from-transparent via-white/30 to-white sm:h-40"
         />
-        <Container className="relative pt-24 pb-10 md:pt-36 md:pb-16">
+        <Container className="relative pt-20 pb-10 sm:pt-24 md:pt-36 md:pb-16">
           <div className="mx-auto grid max-w-xl justify-items-center gap-4 text-center">
-            <p className="text-label font-medium tracking-[0.2em] text-white uppercase">
+            <p className="text-xs font-medium tracking-[0.16em] text-white uppercase sm:text-label sm:tracking-[0.2em]">
               Made in Ahmedabad since 2006
             </p>
-            <h2 className="text-h1 font-heading font-semibold text-white">
+            <h2 className="font-heading text-[clamp(2.5rem,10vw,4rem)] leading-[1.05] font-semibold text-white md:text-h1">
               Made to fit your scooter
             </h2>
           </div>
@@ -527,7 +527,7 @@ export function HomeContactBand() {
             Footrests, crash guards, bumpers and fitting kits we press in stainless steel, plus
             matting and seat covers for popular Indian scooters.
           </p>
-          <div className="flex flex-wrap justify-center gap-3">
+          <div className="flex w-full flex-col items-center justify-center gap-3 min-[400px]:flex-row min-[400px]:flex-wrap">
             <Button
               className="group h-14 gap-4 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-5 pr-2 text-sm text-white shadow-lg ring-1 ring-inset ring-white/25 hover:shadow-xl"
               render={<Link href="/collections" />}

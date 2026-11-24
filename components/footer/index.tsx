@@ -109,10 +109,10 @@ export async function Footer() {
         <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {TRUST.map(({ body, icon: Icon, title }) => (
             <li
-              className="flex items-center gap-4 rounded-xl border border-hairline p-5"
+              className="hidden items-center gap-4 rounded-xl border border-hairline p-5 md:flex"
               key={title}
             >
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-tint text-primary-hover">
+              <span className="hidden size-11 shrink-0 items-center justify-center rounded-lg bg-primary-tint text-primary-hover md:flex">
                 <Icon className="size-5" />
               </span>
               <div>

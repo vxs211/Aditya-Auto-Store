@@ -28,12 +28,12 @@ export function PartHotspots({
   const current = active === null ? null : hotspots[active];
 
   return (
-    <div className="relative mx-auto aspect-4/3 h-full max-h-full w-auto max-w-full">
+    <div className="relative mx-auto aspect-4/3 w-full max-w-3xl xl:h-full xl:max-h-full xl:w-auto">
       <Image
         alt={image.alt}
         className="object-contain"
         fill
-        sizes="(min-width: 896px) 56rem, 100vw"
+        sizes="100vw"
         src={image.url}
       />
       <svg
@@ -70,7 +70,7 @@ export function PartHotspots({
       {current && (
         <div
           key={current.label}
-          className={`absolute z-20 grid w-[min(14rem,70vw)] gap-2 rounded-xl border border-hairline bg-background p-5 shadow-deep motion-safe:animate-[hotspot-reveal_0.45s_ease-out_both] ${current.dotX < 50 ? "left-0 md:left-auto md:right-[calc(93%+1rem)]" : "right-0 md:right-auto md:left-[calc(93%+1rem)]"}`}
+          className={`absolute z-20 grid w-[min(14rem,70vw)] gap-2 rounded-xl border border-hairline bg-background p-5 shadow-deep motion-safe:animate-[hotspot-reveal_0.45s_ease-out_both] ${current.dotX < 50 ? "left-0 xl:left-auto xl:right-[calc(93%+1rem)]" : "right-0 xl:right-auto xl:left-[calc(93%+1rem)]"}`}
           style={{
             top: `${Math.min(current.dotY + 6, 65)}%`,
           }}
