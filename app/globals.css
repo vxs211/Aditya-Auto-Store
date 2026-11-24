@@ -296,9 +296,9 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@theme {
-  --animate-review-up: review-flow 180s linear infinite;
-  --animate-review-down: review-flow 180s linear infinite reverse;
+@theme static {
+  --animate-review-up: review-flow 120s linear infinite;
+  --animate-review-down: review-flow 120s linear infinite reverse;
 
   @keyframes review-flow {
     to { transform: translateY(calc(-50% - 0.375rem)); }

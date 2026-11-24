@@ -197,7 +197,7 @@ export function GoogleReviews() {
                     <div
                       className="grid gap-3 focus-within:[animation-play-state:paused] motion-reduce:![animation:none]"
                       style={{
-                        animation: `review-flow 180s linear infinite ${column === 1 ? "reverse" : "normal"}`,
+                        animation: `review-flow 120s linear infinite ${column === 1 ? "reverse" : "normal"}`,
                       }}
                     >
                       {[0, 1].map((copy) => (

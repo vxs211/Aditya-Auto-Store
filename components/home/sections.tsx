@@ -18,7 +18,7 @@ import { HeroReveal } from "./hero-reveal";
 import { PartHotspots } from "./part-hotspots";
 import { VehicleScroll } from "./vehicle-scroll";
 
-const interTight = Inter_Tight({ subsets: ["latin"], weight: "400" });
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 const might = localFont({
   src: "../../app/fonts/Might.ttf",
@@ -410,13 +410,21 @@ export async function BlogSection() {
       <Container className="grid gap-8">
         <div className="grid justify-items-center gap-3 text-center">
           <SectionHeading title="From the blog" />
-          <Link className="text-small font-medium text-link hover:underline" href="/guides">
+          <Button
+            className="group h-14 gap-4 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-5 pr-2 text-sm text-white shadow-lg ring-1 ring-inset ring-white/25 hover:shadow-xl"
+            render={<Link href="/guides" />}
+            size="lg"
+          >
             View all
-          </Link>
+            <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-white text-foreground shadow-md transition-transform group-hover:translate-x-0.5">
+              <ArrowRIcon aria-hidden="true" className="size-5" />
+            </span>
+          </Button>
         </div>
-        <ul className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
+        <ul className="mx-auto grid w-full max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
           {latest.map((guide, index) => {
             const photo = photos.get(guide.slug);
+            const isCollection = guide.slug === "how-to-install-a-scooter-guard-at-home";
             return (
               <li
                 key={guide.slug}
@@ -430,10 +438,10 @@ export async function BlogSection() {
               >
                 <Link
                   className={`group flex h-full overflow-hidden rounded-2xl bg-white p-3 sm:p-4 transition-shadow hover:shadow-lg ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
-                  href={`/guides/${guide.slug}`}
+                  href={isCollection ? "/collections/all" : `/guides/${guide.slug}`}
                 >
                   <span
-                    className={`relative block shrink-0 overflow-hidden rounded-lg bg-[#fff1e8] ${index === 0 ? "aspect-[16/10] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : "aspect-[16/9]"}`}
+                    className={`relative block shrink-0 overflow-hidden rounded-lg bg-[#fff1e8] ${index === 0 ? "aspect-[16/10] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : guide.slug === "how-to-install-a-scooter-guard-at-home" ? "aspect-[21/9]" : "aspect-[16/9]"}`}
                   >
                     {photo && (
                       <Image
@@ -445,24 +453,32 @@ export async function BlogSection() {
                       />
                     )}
                   </span>
-                  <span className="grid flex-1 content-end gap-3 p-3 sm:p-4">
-                    <span className="text-xs font-medium text-link">
-                      {formatPostDate(guide.published)}
-                    </span>
-                    <h3 className="font-heading text-lg font-semibold leading-tight sm:text-xl text-foreground group-hover:text-link">
-                      {guide.headline}
+                  <span
+                    className={`grid flex-1 content-start ${guide.slug === "how-to-install-a-scooter-guard-at-home" ? "gap-1 p-2" : "gap-3 p-3 sm:p-4"}`}
+                  >
+                    {!isCollection && (
+                      <span className="text-xs font-medium text-link">
+                        {formatPostDate(guide.published)}
+                      </span>
+                    )}
+                    <h3 className={`${interTight.className} text-xl font-semibold leading-tight sm:text-2xl text-foreground group-hover:text-link`}>
+                      {isCollection ? "Explore our collection" : guide.headline}
                     </h3>
                     <span
-                      className={`${interTight.className} line-clamp-2 text-sm leading-relaxed font-normal text-muted-foreground`}
+                      className={`${interTight.className} line-clamp-2 text-base leading-relaxed font-normal text-muted-foreground`}
                     >
-                      {guide.description}
+                      {isCollection
+                        ? "Discover scooter accessories made for a precise fit."
+                        : guide.description}
                     </span>
-                    <span className="flex items-center gap-2 text-sm font-medium text-link">
-                      Read article{" "}
-                      <ArrowRIcon
-                        aria-hidden="true"
-                        className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
-                      />
+                    <span className="inline-flex w-fit items-center gap-3 rounded-full bg-[#F66101] py-1 pl-4 pr-1 text-sm font-medium text-white">
+                      {isCollection ? "View collection" : "Read article"}{" "}
+                      <span className="flex size-8 items-center justify-center rounded-full bg-white text-black">
+                        <ArrowRIcon
+                          aria-hidden="true"
+                          className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
+                        />
+                      </span>
                     </span>
                   </span>
                 </Link>
