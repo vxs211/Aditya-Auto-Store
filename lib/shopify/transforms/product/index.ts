@@ -176,6 +176,7 @@ function transformProductCard(
     handle: product.handle,
     title: product.title,
     featuredImage: transformImage(matchedVariant?.image ?? product.featuredImage),
+    images: product.images.nodes.map(transformImage).filter((image): image is Image => image !== null),
     price: product.priceRange.minVariantPrice,
     maxPrice: product.priceRange.maxVariantPrice,
     compareAtPrice: product.compareAtPriceRange.minVariantPrice,

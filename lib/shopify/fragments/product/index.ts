@@ -154,6 +154,14 @@ export const PRODUCT_CARD_FRAGMENT = gql(
         width
         height
     }
+    images(first: 5) {
+      nodes {
+        url
+        altText
+        width
+        height
+      }
+    }
     priceRange {
       minVariantPrice {
         amount

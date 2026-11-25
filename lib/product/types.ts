@@ -60,6 +60,8 @@ export interface ProductCard {
   compareAtPrice?: Money;
   defaultVariantSelectedOptions?: SelectedOption[];
   featuredImage: Image | null;
+  /** Extra product photos for the card carousel; empty when the product has a single image. */
+  images?: Image[];
   handle: string;
   id: string;
   isGiftCard: boolean;

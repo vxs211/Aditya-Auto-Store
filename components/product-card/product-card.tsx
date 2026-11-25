@@ -4,13 +4,13 @@ import type { ProductCard as ProductCardType } from "@/lib/product/types";
 
 import {
   ProductCardContent,
-  ProductCardImage,
   ProductCardImageContainer,
   ProductCardPrice,
   ProductCard as ProductCardRoot,
   ProductCardSkeleton,
   ProductCardTitle,
 } from "./components";
+import { ProductImageCarousel } from "./image-carousel";
 import { QuickShop } from "./quick-shop";
 import { ProductCardRating } from "./rating";
 
@@ -23,18 +23,23 @@ export interface ProductCardProps {
 
 export function ProductCard({ loading, outOfStockText, product, quickShopText }: ProductCardProps) {
   const href = buildProductUrl(product.handle, product.defaultVariantSelectedOptions ?? []);
+  const images =
+    product.images && product.images.length > 0
+      ? product.images
+      : product.featuredImage
+        ? [product.featuredImage]
+        : [];
+  const alt = product.featuredImage?.altText || product.title;
   // The link is stretched rather than wrapping the card so Quick Shop isn't a button inside an anchor.
   return (
     <ProductCardRoot>
       <ProductCardImageContainer>
-        <ProductCardImage
-          src={product.featuredImage?.url}
-          alt={product.featuredImage?.altText || product.title}
-          height={product.featuredImage?.height}
+        <ProductImageCarousel
+          alt={alt}
+          images={images}
           loading={loading}
           outOfStock={!product.availableForSale}
           outOfStockText={outOfStockText}
-          width={product.featuredImage?.width}
         >
           {quickShopText && product.availableForSale && !product.isGiftCard ? (
             <QuickShop
@@ -45,7 +50,7 @@ export function ProductCard({ loading, outOfStockText, product, quickShopText }:
               title={product.title}
             />
           ) : null}
-        </ProductCardImage>
+        </ProductImageCarousel>
         <ProductCardContent>
           <ProductCardRating productId={product.id} />
           <ProductCardTitle>
