@@ -70,10 +70,11 @@ export function CollectionCard({
         </h2>
         <span
           aria-hidden="true"
-          className="mt-auto flex h-10 w-full items-center justify-between gap-2 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-4 pr-1 text-xs font-medium text-white shadow-md ring-1 ring-inset ring-white/25 sm:w-auto sm:justify-center sm:pl-3"
+          className="mx-auto mt-auto flex h-8 w-fit max-w-full items-center justify-between gap-1.5 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-3 pr-0.5 text-[11px] font-medium text-white shadow-md ring-1 ring-inset ring-white/25 sm:h-10 sm:justify-center sm:gap-2 sm:pl-3 sm:pr-1 sm:text-xs"
         >
-          <span className="min-w-0 truncate">{viewCollectionLabel === "View this collection" ? "View collection" : viewCollectionLabel}</span>
-          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-white text-foreground shadow-sm transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none">
+          <span className="hidden sm:inline">{viewCollectionLabel === "View this collection" ? "View collection" : viewCollectionLabel}</span>
+          <span className="sm:hidden">View</span>
+          <span className="grid size-6 shrink-0 place-items-center rounded-full bg-white text-foreground shadow-sm transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none sm:size-7">
             <ArrowRIcon className="size-4" />
           </span>
         </span>
