@@ -176,7 +176,7 @@ function Rail({
           ) : item.type === "placeholder" ? (
             <ImagePlaceholder className="size-full" />
           ) : (
-            <MediaImage item={item} title={title} idx={idx} priority={false} />
+            <MediaImage fit="contain" item={item} title={title} idx={idx} priority={false} />
           )}
         </button>
       ))}
