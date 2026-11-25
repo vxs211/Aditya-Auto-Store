@@ -19,7 +19,7 @@ import { ProductMedia } from "@/components/product-detail/product-media";
 import { ProductPrice } from "@/components/product-detail/product-price";
 import { ProductSchema } from "@/components/product-detail/schema";
 import { StickyBuyBar } from "@/components/product-detail/sticky-buy-bar";
-import { StockIndicator, TrustChips } from "@/components/product-detail/trust-chips";
+import { ServiceGuarantees, StockIndicator, TrustChips } from "@/components/product-detail/trust-chips";
 import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
 import { MinusIcon, PlusIcon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
@@ -275,12 +275,15 @@ function ProductInfoContent({
         {product.isGiftCard ? (
           <GiftCardPurchaseForm />
         ) : (
-          <BuyButtons
-            fallbackVariant={fallbackVariant}
-            availableForSale={product.availableForSale}
-            buyWithShop={shopConfig.pdp.buyWithShop.isEnabled}
-            quantityPicker={shopConfig.pdp.quantityPicker.isEnabled}
-          />
+          <>
+            <BuyButtons
+              fallbackVariant={fallbackVariant}
+              availableForSale={product.availableForSale}
+              buyWithShop={shopConfig.pdp.buyWithShop.isEnabled}
+              quantityPicker={shopConfig.pdp.quantityPicker.isEnabled}
+            />
+            <ServiceGuarantees />
+          </>
         )}
       </div>
       {!product.isGiftCard && (

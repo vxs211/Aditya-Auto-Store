@@ -1,8 +1,11 @@
 import {
   AwardIcon,
   CheckIcon,
+  LockIcon,
   RulerIcon,
   ShieldCheckIcon,
+  TruckIcon,
+  UndoIcon,
 } from "@/components/ui/icon";
 
 const CHIPS = [
@@ -12,6 +15,12 @@ const CHIPS = [
   { Icon: RulerIcon, label: "Precision\nFit" },
 ];
 
+const GUARANTEES = [
+  { Icon: TruckIcon, label: "Free\nshipping" },
+  { Icon: UndoIcon, label: "Easy 3-day\nreturns" },
+  { Icon: LockIcon, label: "100% Secure\nPayment" },
+];
+
 export function TrustChips() {
   return (
     <ul
@@ -19,6 +28,27 @@ export function TrustChips() {
       data-slot="product-trust-chips"
     >
       {CHIPS.map(({ Icon, label }) => (
+        <li
+          className="flex flex-col items-center gap-1.5 text-center"
+          key={label}
+        >
+          <span className="flex size-10 items-center justify-center rounded-full border border-border">
+            <Icon aria-hidden className="size-4 text-primary" />
+          </span>
+          <span className="whitespace-pre-line text-xs leading-tight text-muted-foreground">{label}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+export function ServiceGuarantees() {
+  return (
+    <ul
+      className="grid grid-cols-3 gap-3"
+      data-slot="product-service-guarantees"
+    >
+      {GUARANTEES.map(({ Icon, label }) => (
         <li
           className="flex flex-col items-center gap-1.5 text-center"
           key={label}

@@ -382,6 +382,36 @@ export function WorkflowIcon(props: ComponentProps<"svg">) {
   );
 }
 
+export function TruckIcon(props: ComponentProps<"svg">) {
+  return (
+    <Icon {...props}>
+      <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" />
+      <path d="M15 18H9" />
+      <path d="M19 18h2a1 1 0 0 0 1-1v-3.28a1 1 0 0 0-.22-.62l-3.28-3.28a1 1 0 0 0-.62-.22H16" />
+      <circle cx="17" cy="18" r="2" />
+      <circle cx="7" cy="18" r="2" />
+    </Icon>
+  );
+}
+
+export function UndoIcon(props: ComponentProps<"svg">) {
+  return (
+    <Icon {...props}>
+      <path d="M9 14 4 9l5-5" />
+      <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5 5.5 5.5 0 0 1-5.5 5.5H11" />
+    </Icon>
+  );
+}
+
+export function LockIcon(props: ComponentProps<"svg">) {
+  return (
+    <Icon {...props}>
+      <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+    </Icon>
+  );
+}
+
 export function XIcon(props: ComponentProps<"svg">) {
   return (
     <Icon {...props}>
