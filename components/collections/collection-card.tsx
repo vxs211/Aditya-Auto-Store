@@ -61,19 +61,19 @@ export function CollectionCard({
           className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-linear-to-b from-transparent to-white"
         />
       </div>
-      <div className="grid grid-rows-[2.5rem_auto] items-center justify-items-center gap-2 px-3 py-4 text-center">
+      <div className="flex flex-1 flex-col items-center gap-2 px-3 py-4 text-center">
         <h2
           data-slot="collection-card-title"
-          className={`${interTight.className} flex min-w-0 items-center justify-center text-xl leading-tight font-normal text-foreground`}
+          className={`${interTight.className} flex min-w-0 items-center justify-center text-base leading-tight font-normal text-foreground sm:text-xl`}
         >
-          <span className="line-clamp-1">{title}</span>
+          <span className="line-clamp-2">{title}</span>
         </h2>
         <span
           aria-hidden="true"
-          className="flex h-10 items-center gap-2 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-3 pr-1 text-xs font-medium text-white shadow-md ring-1 ring-inset ring-white/25"
+          className="mt-auto flex h-10 w-full items-center justify-between gap-2 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] pl-4 pr-1 text-xs font-medium text-white shadow-md ring-1 ring-inset ring-white/25 sm:w-auto sm:justify-center sm:pl-3"
         >
-          {viewCollectionLabel === "View this collection" ? "View collection" : viewCollectionLabel}
-          <span className="grid size-7 place-items-center rounded-full bg-white text-foreground shadow-sm transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none">
+          <span className="min-w-0 truncate">{viewCollectionLabel === "View this collection" ? "View collection" : viewCollectionLabel}</span>
+          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-white text-foreground shadow-sm transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none motion-reduce:transition-none">
             <ArrowRIcon className="size-4" />
           </span>
         </span>
