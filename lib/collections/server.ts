@@ -18,6 +18,7 @@ import { getNumericShopifyId } from "@/lib/shopify/id/server";
 import {
   fetchCollection,
   fetchCollectionFitment,
+  fetchCollectionProductCount,
   fetchFitmentBrands,
   fetchCollections,
   fetchCollectionsListing,
@@ -63,6 +64,17 @@ export async function getCollection(params: {
   const collection = await fetchCollection(params);
   if (collection) tagCollections([collection]);
   return collection;
+}
+
+export async function getCollectionProductCount(params: {
+  handle: string;
+  locale?: CommerceLocale;
+}): Promise<number> {
+  "use cache: remote";
+  cacheLife("max");
+  cacheTag("collections", `collection-${params.handle}`, "products-index");
+
+  return fetchCollectionProductCount(params);
 }
 
 export async function getCollectionFitment(params: {

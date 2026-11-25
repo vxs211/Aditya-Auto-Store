@@ -182,6 +182,7 @@ function transformProductCard(
     vendor: product.vendor || undefined,
     availableForSale: product.availableForSale,
     isGiftCard: product.isGiftCard,
+    tags: product.tags,
     defaultVariantSelectedOptions: cardVariant?.selectedOptions ?? [],
   };
 }

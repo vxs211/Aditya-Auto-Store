@@ -147,6 +147,7 @@ export const PRODUCT_CARD_FRAGMENT = gql(
     vendor
     availableForSale
     isGiftCard
+    tags
     featuredImage {
       url
         altText

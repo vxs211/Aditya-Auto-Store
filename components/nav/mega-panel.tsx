@@ -1,14 +1,19 @@
 "use client";
 
 import { cn } from "cn";
+import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { Container } from "@/components/ui/container";
+import { ArrowRIcon } from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 import type { MenuItem } from "@/lib/menu/types";
 
 import { MenuLink } from "./menu-link";
+
+// The site's display face, so the menu reads with the rest of the nav.
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 // Slow, soft entrance; each piece sets its own delay so they arrive one after another.
 const ENTER =
@@ -85,7 +90,7 @@ export function MegaPanel({
               url={entry.url}
               // A plain string, not cn(): tailwind-merge reads text-link (a colour) and text-h4 (a size) as the same
               // group and would drop the size on the active link, shrinking it.
-              className={`block py-3 font-heading text-h4 font-semibold transition-colors hover:text-link${entry.id === current ? " text-link" : ""}`}
+              className={`block py-3 text-h4 font-semibold transition-colors hover:text-link ${interTight.className}${entry.id === current ? " text-link" : ""}`}
             >
               {entry.title}
             </MenuLink>
@@ -114,7 +119,7 @@ export function MegaPanel({
                   className={cn("flex items-baseline justify-between gap-4", entering && ENTER)}
                   style={entering ? { animationDelay: "120ms" } : undefined}
                 >
-                  <p className="font-heading text-h3">{detail.heading}</p>
+                  <p className={`text-h3 ${interTight.className}`}>{detail.heading}</p>
                   <p className="text-small text-muted-foreground">{detail.caption}</p>
                 </div>
                 <ul className="grid grid-cols-3 gap-4">
@@ -125,7 +130,7 @@ export function MegaPanel({
                       style={entering ? { animationDelay: `${180 + cardIndex * 90}ms` } : undefined}
                     >
                       <Link
-                        className="group/card relative block aspect-4/5 overflow-hidden rounded-2xl bg-muted"
+                        className="group/card relative block aspect-4/5 overflow-hidden rounded-[1.15rem] bg-[linear-gradient(135deg,#fff4ed_0%,#ffe6d7_48%,#ff9d6c_100%)] ring-1 ring-black/10 transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none"
                         href={card.url}
                       >
                         <Image
@@ -142,8 +147,16 @@ export function MegaPanel({
                             entering ? { animationDelay: `${180 + cardIndex * 90}ms` } : undefined
                           }
                         />
-                        <span className="absolute bottom-3 left-3 rounded-full bg-background px-3.5 py-1.5 text-small font-medium">
+                        <span
+                          className={`absolute right-3 bottom-3 left-3 flex items-center justify-between rounded-2xl bg-white/90 px-3.5 py-2 text-small font-medium text-foreground shadow-soft backdrop-blur-sm ${interTight.className}`}
+                        >
                           {card.title}
+                          <span
+                            aria-hidden="true"
+                            className="grid size-6 shrink-0 place-items-center rounded-full bg-primary text-white transition-transform group-hover/card:translate-x-0.5 motion-reduce:transform-none"
+                          >
+                            <ArrowRIcon className="size-3.5" />
+                          </span>
                         </span>
                       </Link>
                     </li>

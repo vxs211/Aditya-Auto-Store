@@ -14,11 +14,19 @@ const CHIPS = [
 
 export function TrustChips() {
   return (
-    <ul className="grid grid-cols-2 gap-3" data-slot="product-trust-chips">
+    <ul
+      className="grid grid-cols-4 gap-x-4 gap-y-3"
+      data-slot="product-trust-chips"
+    >
       {CHIPS.map(({ Icon, label }) => (
-        <li className="flex items-center gap-2 text-sm text-muted-foreground" key={label}>
-          <Icon aria-hidden className="size-4 shrink-0 text-primary" />
-          {label}
+        <li
+          className="flex flex-col items-center gap-1.5 text-center"
+          key={label}
+        >
+          <span className="flex size-10 items-center justify-center rounded-full border border-border">
+            <Icon aria-hidden className="size-4 text-primary" />
+          </span>
+          <span className="text-xs leading-tight text-muted-foreground">{label}</span>
         </li>
       ))}
     </ul>

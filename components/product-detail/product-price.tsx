@@ -39,6 +39,7 @@ export function ProductPrice({
         />
       )}
       {discountPercent !== null ? <DiscountBadge percent={discountPercent} /> : null}
+      <span className="block w-full text-xs text-muted-foreground">Taxes included.</span>
     </div>
   );
 }

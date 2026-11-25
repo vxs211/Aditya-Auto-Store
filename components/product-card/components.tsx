@@ -1,4 +1,5 @@
 import { cn } from "cn";
+import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import type { ComponentProps, ReactNode } from "react";
 
@@ -7,11 +8,16 @@ import { Price } from "@/components/product/price";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { getDiscountPercent } from "@/lib/product";
 
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
+
 function ProductCard({ className, children, ...props }: ComponentProps<"article">) {
   return (
     <article
       data-slot="product-card"
-      className={cn("relative flex flex-col h-full overflow-hidden", className)}
+      className={cn(
+        "relative flex h-full flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-1.5 shadow-soft transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none",
+        className,
+      )}
       {...props}
     >
       {children}
@@ -57,15 +63,18 @@ function ProductCardImage({
   return (
     <div
       data-slot="product-card-image"
-      // Catalogue shots are chrome on white; a tone step keeps the part from dissolving into the page.
-      className={cn("relative aspect-square overflow-hidden bg-muted", className)}
+      // Catalogue shots are chrome on white; keep the tile plain so the part sits on a clean background.
+      className={cn(
+        "relative aspect-square overflow-hidden rounded-[1.15rem] bg-white",
+        className,
+      )}
     >
       {src ? (
         <Image
           src={src}
           alt={alt}
           {...(width && height ? { height, width } : { fill: true })}
-          className="absolute inset-0 size-full object-cover"
+          className="absolute inset-0 size-full object-contain p-3"
           loading={loading}
           sizes="100vw"
         />
@@ -88,7 +97,7 @@ function ProductCardContent({ className, children, ...props }: ComponentProps<"d
   return (
     <div
       data-slot="product-card-content"
-      className={cn("flex flex-col flex-1 py-2.5", className)}
+      className={cn("flex flex-1 flex-col px-3 py-4", className)}
       {...props}
     >
       {children}
@@ -100,7 +109,10 @@ function ProductCardTitle({ className, children, ...props }: ComponentProps<"h3"
   return (
     <h3
       data-slot="product-card-title"
-      className={cn("font-sans text-sm font-medium text-foreground line-clamp-1", className)}
+      className={cn(
+        `${interTight.className} text-base font-normal leading-tight text-foreground line-clamp-2`,
+        className,
+      )}
       {...props}
     >
       {children}
@@ -167,12 +179,17 @@ function ProductCardSkeleton({ className }: { className?: string }) {
   return (
     <div
       data-slot="product-card-skeleton"
-      className={cn("flex flex-col overflow-hidden", className)}
+      className={cn(
+        "flex flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-1.5 shadow-soft",
+        className,
+      )}
     >
-      <ImagePlaceholder className="aspect-square animate-pulse" />
-      <div className="py-2.5 h-12 box-content grid gap-2">
-        <div className="h-4 w-full bg-accent animate-pulse" />
-        <div className="h-4 w-12 bg-accent animate-pulse" />
+      <div className="rounded-[1.15rem] bg-[#fff4ed]">
+        <ImagePlaceholder className="aspect-square animate-pulse" />
+      </div>
+      <div className="grid h-16 box-content grid-rows-[auto_1fr] gap-2 p-4">
+        <div className="h-4 w-full rounded bg-accent animate-pulse" />
+        <div className="h-4 w-16 rounded bg-accent animate-pulse" />
       </div>
     </div>
   );

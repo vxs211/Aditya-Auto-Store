@@ -152,7 +152,7 @@ export function QuickShop({ handle, href, image, label, title }: QuickShopProps)
         render={
           <button
             aria-label={`${label}: ${title}`}
-            className="absolute right-2.5 bottom-2.5 z-10 hidden size-9 cursor-pointer items-center justify-center rounded-full bg-background/90 text-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-background lg:flex"
+            className="absolute right-4 bottom-4 z-10 hidden size-9 cursor-pointer items-center justify-center rounded-full bg-white/90 text-primary shadow-md ring-1 ring-inset ring-white/25 backdrop-blur-sm transition-colors hover:bg-white lg:flex"
             onClick={load}
             type="button"
           >

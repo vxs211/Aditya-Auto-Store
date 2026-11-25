@@ -3,13 +3,13 @@ import { type ReactNode, Suspense } from "react";
 import { CollectionViewedTracker } from "@/components/analytics/trackers";
 import { BrowseResultsFallback } from "@/components/collections/browse";
 import { CollectionBrowseFrame } from "@/components/collections/collection-browse-provider";
+import { CollectionShopHeader } from "@/components/collections/collection-header";
 import { CollectionFiltersSkeleton } from "@/components/collections/filters";
 import { PublishedCollectionFilters } from "@/components/collections/filters-client";
 import { BrowseFallback, BrowseToolbar } from "@/components/collections/toolbar";
 import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
 import { CollectionSchema } from "@/components/schema/collection-schema";
 import { Container } from "@/components/ui/container";
-import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { Sections } from "@/components/ui/sections";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,6 +19,7 @@ interface CollectionLayoutProps {
   children: ReactNode;
   collection: Collection;
   handle: string;
+  productCount?: number;
   sortExclude?: SortValue[];
 }
 
@@ -27,6 +28,7 @@ export function CollectionLayout({
   children,
   collection,
   handle,
+  productCount,
   sortExclude,
 }: CollectionLayoutProps) {
   return (
@@ -34,10 +36,20 @@ export function CollectionLayout({
       {collection.id ? (
         <CollectionViewedTracker collection={{ handle: collection.handle, id: collection.id }} />
       ) : null}
-      <Page className="pt-2.5 md:pt-10">
+      <Page className="gap-0 pt-0">
+        <div aria-hidden="true" className="h-10 bg-[#F66101] sm:h-14" />
+        <div
+          aria-hidden="true"
+          className="h-14 bg-[linear-gradient(180deg,#F66101_0%,#ff8a4d_45%,#ffe3d1_85%,#ffffff_100%)] sm:h-20"
+        />
         <Container>
           <Sections className="gap-5">
-            <CollectionHeader collection={collection} handle={handle} homeLabel="Home" />
+            <CollectionHeader
+              collection={collection}
+              handle={handle}
+              homeLabel="Home"
+              productCount={productCount}
+            />
             <CollectionBrowseFrame handle={handle} path={`/collections/${handle}`}>
               <BrowseToolbar
                 filters={<PublishedCollectionFilters fallback={<CollectionFiltersSkeleton />} />}
@@ -95,10 +107,12 @@ function CollectionHeader({
   collection,
   handle,
   homeLabel,
+  productCount,
 }: {
   collection: Collection;
   handle: string;
   homeLabel: string;
+  productCount?: number;
 }) {
   const { title, description, updatedAt } = collection;
 
@@ -111,12 +125,7 @@ function CollectionHeader({
     <>
       <BreadcrumbSchema items={breadcrumbItems} />
       <CollectionSchema collection={{ handle, title, description, updatedAt }} />
-      <div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl">
-          <Link href={`/collections/${handle}`}>{title}</Link>
-        </h1>
-        {description && <p className="mt-1 leading-6 text-muted-foreground">{description}</p>}
-      </div>
+      <CollectionShopHeader count={productCount} title={title} />
     </>
   );
 }

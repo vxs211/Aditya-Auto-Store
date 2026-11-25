@@ -1,4 +1,5 @@
 import { cn } from "cn";
+import { Inter_Tight } from "next/font/google";
 import { type ReactNode, Suspense } from "react";
 
 import { BundleComponents, BundleParents } from "@/components/product-detail/bundle-components";
@@ -14,11 +15,7 @@ import {
   ProductFormPrice,
 } from "@/components/product-detail/product-form";
 import { ProductInfoOptions } from "@/components/product-detail/product-info";
-import {
-  ColorImageCarouselItems,
-  ColorImageGrid,
-  ProductMedia,
-} from "@/components/product-detail/product-media";
+import { ProductMedia } from "@/components/product-detail/product-media";
 import { ProductPrice } from "@/components/product-detail/product-price";
 import { ProductSchema } from "@/components/product-detail/schema";
 import { StickyBuyBar } from "@/components/product-detail/sticky-buy-bar";
@@ -27,6 +24,7 @@ import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
 import { MinusIcon, PlusIcon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "@/components/ui/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { shopConfig } from "@/lib/config";
@@ -40,6 +38,40 @@ import {
 } from "@/lib/product";
 import { type SelectedOptions } from "@/lib/product/types";
 import type { ProductDetails, ProductVariant } from "@/lib/product/types";
+
+// The site's display face, so the PDP title reads with the homepage and nav.
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "600"] });
+
+function BreadcrumbRow({ product }: { product: ProductDetails }) {
+  const trail = [
+    { name: "Home", path: "/" },
+    { name: product.category?.name ?? "Products", path: "/collections/all" },
+    { name: product.title },
+  ];
+  return (
+    <nav
+      aria-label="Breadcrumb"
+      className="flex flex-wrap items-center gap-2 py-3 text-xs text-muted-foreground"
+    >
+      {trail.map((crumb, index) => (
+        <span key={crumb.name} className="flex items-center gap-2">
+          {index > 0 ? (
+            <span aria-hidden className="text-muted-foreground/40">
+              /
+            </span>
+          ) : null}
+          {crumb.path ? (
+            <Link href={crumb.path} className="transition-colors hover:text-foreground">
+              {crumb.name}
+            </Link>
+          ) : (
+            <span className="text-foreground">{crumb.name}</span>
+          )}
+        </span>
+      ))}
+    </nav>
+  );
+}
 
 export function ProductDetailSection({
   product,
@@ -76,6 +108,7 @@ export function ProductDetailSection({
           { name: product.title, path: `/products/${product.handle}` },
         ]}
       />
+      <BreadcrumbRow product={product} />
       <div className="grid gap-10 lg:grid-cols-10 lg:items-start lg:gap-5">
         <ProductMediaArea product={product} selectedOptionsPromise={selectedOptionsPromise} />
         <ProductInfoArea product={product} variantPromise={variantPromise} />
@@ -84,77 +117,27 @@ export function ProductDetailSection({
   );
 }
 
-function ProductMediaArea({
+async function ProductMediaArea({
   product,
   selectedOptionsPromise,
 }: {
   product: ProductDetails;
   selectedOptionsPromise: Promise<SelectedOptions>;
 }) {
-  if (!hasColorImagePartitioning(product.options)) {
-    return (
+  const selected = await selectedOptionsPromise;
+  const colorImage = hasColorImagePartitioning(product.options)
+    ? getSelectedColorImage(product, selected)
+    : undefined;
+  return (
+    <div className="lg:col-span-6">
       <ProductMedia
-        otherImages={product.images}
+        colorImage={colorImage}
+        otherImages={colorImage ? getSharedImages(product.images, product.options) : product.images}
         videos={product.videos}
         title={product.title}
-        className="lg:col-span-6"
       />
-    );
-  }
-
-  return (
-    <ProductMedia
-      otherImages={getSharedImages(product.images, product.options)}
-      videos={product.videos}
-      title={product.title}
-      className="lg:col-span-6"
-      desktopSlot={
-        // Color image is the LCP slot; a pulsing skeleton flashes harder than an empty image canvas.
-        <Suspense fallback={<div className="aspect-square w-full" />}>
-          <ResolvedColorImageGrid
-            product={product}
-            selectedOptionsPromise={selectedOptionsPromise}
-          />
-        </Suspense>
-      }
-      mobileSlot={
-        <Suspense
-          fallback={
-            <div className="relative shrink-0 w-full snap-start snap-always overflow-hidden aspect-square" />
-          }
-        >
-          <ResolvedColorImageCarousel
-            product={product}
-            selectedOptionsPromise={selectedOptionsPromise}
-          />
-        </Suspense>
-      }
-    />
+    </div>
   );
-}
-
-async function ResolvedColorImageGrid({
-  product,
-  selectedOptionsPromise,
-}: {
-  product: ProductDetails;
-  selectedOptionsPromise: Promise<SelectedOptions>;
-}) {
-  const image = getSelectedColorImage(product, await selectedOptionsPromise);
-  if (!image) return null;
-  return <ColorImageGrid images={[image]} title={product.title} />;
-}
-
-async function ResolvedColorImageCarousel({
-  product,
-  selectedOptionsPromise,
-}: {
-  product: ProductDetails;
-  selectedOptionsPromise: Promise<SelectedOptions>;
-}) {
-  const image = getSelectedColorImage(product, await selectedOptionsPromise);
-  if (!image) return null;
-  return <ColorImageCarouselItems images={[image]} title={product.title} />;
 }
 
 function ProductInfoArea({
@@ -177,7 +160,16 @@ function ProductInfoArea({
         data-uniform-price={product.hasUniformPricing}
       >
         <div data-slot="product-info-header">
-          <h1 className="font-sans text-foreground text-3xl">{product.title}</h1>
+          {product.vendor ? (
+            <p
+              className={`text-xs tracking-[0.14em] text-muted-foreground uppercase ${interTight.className}`}
+            >
+              {product.vendor}
+            </p>
+          ) : null}
+          <h1 className={`mt-1.5 text-foreground text-h2 ${interTight.className}`}>
+            {product.title}
+          </h1>
           {product.hasUniformPricing ? (
             <ProductPrice
               amount={product.priceRange.minVariantPrice.amount}
@@ -449,10 +441,12 @@ export function ProductDetailSkeleton() {
           <div className="-mx-5 aspect-square w-[calc(100%+2.5rem)] bg-accent" />
           <div aria-hidden="true" className="h-1.5" />
         </div>
-        <div className="hidden grid-cols-2 gap-2.5 lg:grid">
-          <div className="aspect-square w-full bg-accent" />
-          <div className="aspect-square w-full bg-accent" />
-          <div className="aspect-square w-full bg-accent" />
+        <div className="hidden gap-3 lg:grid lg:grid-cols-[7rem_1fr]">
+          <div className="flex flex-col gap-2.5">
+            <div className="aspect-square w-full bg-accent" />
+            <div className="aspect-square w-full bg-accent" />
+            <div className="aspect-square w-full bg-accent" />
+          </div>
           <div className="aspect-square w-full bg-accent" />
         </div>
       </div>

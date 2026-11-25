@@ -12,6 +12,7 @@ import {
   ProductCardTitle,
 } from "./components";
 import { QuickShop } from "./quick-shop";
+import { ProductCardRating } from "./rating";
 
 export interface ProductCardProps {
   loading?: "eager" | "lazy";
@@ -46,6 +47,7 @@ export function ProductCard({ loading, outOfStockText, product, quickShopText }:
           ) : null}
         </ProductCardImage>
         <ProductCardContent>
+          <ProductCardRating productId={product.id} />
           <ProductCardTitle>
             <Link href={href} className="after:absolute after:inset-0">
               {product.title}

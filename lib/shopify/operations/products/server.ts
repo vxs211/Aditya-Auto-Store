@@ -8,6 +8,7 @@ import type {
 
 import { shopConfig } from "@/lib/config";
 import type { CommerceLocale } from "@/lib/config/types";
+import { DUMMY_PRODUCT_HANDLE, dummyProduct, dummyVariant } from "@/lib/product/dummy";
 import type {
   ProductCard,
   ProductDetails,
@@ -54,6 +55,12 @@ import {
 type StorefrontProductFilter = NonNullable<
   NonNullable<StorefrontApi.VariablesOf<typeof COLLECTION_PRODUCTS_QUERY>["filters"]>[number]
 >;
+
+// Dev-only: dummy products stand in for Shopify so the PDP can be designed without live data.
+const isDev = process.env.NODE_ENV === "development";
+function isDummy(handle: string): boolean {
+  return isDev && handle === DUMMY_PRODUCT_HANDLE;
+}
 
 // Hydrogen's ProductFilter folds the taxonomy namespace into `key`; the Storefront schema wants them apart.
 function toStorefrontFilters(filters: ProductFilter[]): StorefrontProductFilter[] | undefined {
@@ -110,6 +117,7 @@ export async function fetchProduct({
   handle: string;
   locale?: CommerceLocale;
 }): Promise<ProductDetails | undefined> {
+  if (isDummy(handle)) return dummyProduct(handle);
   const response = shopConfig.pdp.bundles.isEnabled
     ? await storefront.request(GET_PRODUCT_BY_HANDLE_WITH_BUNDLES_QUERY, {
         locale,
@@ -162,6 +170,7 @@ export async function fetchProductVariant({
   locale?: CommerceLocale;
   selectedOptions: SelectedOption[];
 }): Promise<ProductVariant | undefined> {
+  if (isDummy(handle)) return dummyVariant(handle, selectedOptions);
   const response = shopConfig.pdp.bundles.isEnabled
     ? await storefront.request(GET_PRODUCT_VARIANT_WITH_BUNDLES_QUERY, {
         locale,
@@ -490,6 +499,8 @@ export async function fetchCollectionProducts(
     sortKey: sortBy,
   } = params;
   const sort = toCollectionSort(sortBy);
+  // Accessories-first ordering applies to the shop's default (manual) sort; an explicit user sort wins.
+  const reorderDefault = sortBy === undefined || parseSortByValue(sortBy)?.sortKey === "MANUAL";
   const response = await storefront.request(COLLECTION_PRODUCTS_QUERY, {
     locale,
     variables: {
@@ -515,13 +526,19 @@ export async function fetchCollectionProducts(
   const products = shopifyProducts.map((product) =>
     transformFilteredShopifyProductCard(product, selectedColor),
   );
+  const ordered = reorderDefault
+    ? [
+        ...products.filter((product) => !product.tags?.includes("trading")),
+        ...products.filter((product) => product.tags?.includes("trading")),
+      ]
+    : products;
   return {
     facets: transformShopifyFilters(data.collection.products.filters, {
       activeFilters: filters,
       currencyCode: products[0]?.price.currencyCode,
     }),
     pageInfo: data.collection.products.pageInfo,
-    products,
+    products: ordered,
   };
 }
 
@@ -545,6 +562,7 @@ export async function fetchProductRecommendations({
   intent: ProductRecommendationIntent;
   locale?: CommerceLocale;
 }): Promise<ProductCard[]> {
+  if (isDummy(handle)) return [];
   const response = await storefront.request(PRODUCT_RECOMMENDATIONS_QUERY, {
     locale,
     variables: { handle, intent },

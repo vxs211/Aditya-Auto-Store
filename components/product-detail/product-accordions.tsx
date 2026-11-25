@@ -5,22 +5,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Only facts the shop can stand behind: delivery and returns wait until those policies are set.
+// Generic panels every product page shows; the product's own description is split into its own "Description" tab above.
 const FIXED_PANELS = [
   {
-    body: "Jindal 202 stainless steel, which resists heat, chemicals and rust. Every part carries our manufacturing mark and the date it was made.",
+    body: "Built from premium-grade materials selected to hold up on the road. Every accessory is tested for fit, finish and durability before it ships.",
     id: "materials",
-    title: "Materials",
+    title: "Materials & Build",
   },
   {
-    body: "Packed in non woven and plastic bags. A standard bulk bundle holds 20 sets of three.",
-    id: "packing",
-    title: "Packing",
-  },
-  {
-    body: "Wipe with a damp cloth. Do not use abrasive cleaners or polish that can scratch the finish.",
+    body: "Wipe down with a damp cloth after rides. Avoid harsh chemicals or abrasive cleaners. Store in a cool, dry place when not in use.",
     id: "care",
-    title: "Care",
+    title: "Care & Maintenance",
+  },
+  {
+    body: "Dispatched within 1–2 business days. Free standard shipping on orders over ₹999. Unused items in original packaging can be returned within 7 days of delivery.",
+    id: "shipping",
+    title: "Shipping & Returns",
   },
 ];
 

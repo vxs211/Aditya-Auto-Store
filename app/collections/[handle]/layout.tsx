@@ -6,7 +6,12 @@ import {
   CollectionLayout,
 } from "@/components/collections/collection-page";
 import { FitmentLayout } from "@/components/collections/fitment";
-import { getCollection, getCollectionFitment, getCollections } from "@/lib/collections/server";
+import {
+  getCollection,
+  getCollectionFitment,
+  getCollectionProductCount,
+  getCollections,
+} from "@/lib/collections/server";
 import { PLACEHOLDER_HANDLE } from "@/lib/static-params";
 
 export async function generateStaticParams() {
@@ -45,16 +50,18 @@ async function CollectionHandleLayoutContent({
 
   // A brand lists model tiles instead of products, so its default grid is not rendered.
   if (fitment.models.length > 0) return <FitmentLayout collection={collection} fitment={fitment} />;
+
+  const productCount = await getCollectionProductCount({ handle });
   if (fitment.brand) {
     return (
-      <FitmentLayout collection={collection} fitment={fitment}>
+      <FitmentLayout collection={collection} fitment={fitment} productCount={productCount}>
         {children}
       </FitmentLayout>
     );
   }
 
   return (
-    <CollectionLayout collection={collection} handle={handle}>
+    <CollectionLayout collection={collection} handle={handle} productCount={productCount}>
       {children}
     </CollectionLayout>
   );

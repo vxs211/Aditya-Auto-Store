@@ -22,18 +22,17 @@ function mediaKey(item: MediaItem) {
   return "placeholder";
 }
 
-// `preload` alone does not set high fetch priority; other images stay lazy so the hidden carousel or grid never downloads.
+// `preload` alone does not set high fetch priority; other images stay lazy so the rail and mobile carousel never download up front.
 const LCP_IMAGE_PROPS = { fetchPriority: "high", loading: "eager", preload: true } as const;
 
 const LAZY_IMAGE_PROPS = { loading: "lazy" } as const;
 
-// Tailwind `lg`, where the 2x2 grid replaces the carousel.
+// The desktop rail is above the fold, so preload every rail image while the lazy <img> keeps mobile from fetching them.
 const DESKTOP_MEDIA = "(min-width: 1024px)";
-// The 2x2 grid is above the fold, so desktop preloads every tile while the lazy <img> keeps mobile from fetching them.
-const DESKTOP_GRID_PRELOAD_COUNT = 4;
+const DESKTOP_RAIL_PRELOAD_COUNT = 4;
 
 // The preload must share the <img>'s srcset and sizes, or the browser downloads the tile twice.
-function preloadDesktopGridImage(image: ImageType) {
+function preloadDesktopRailImage(image: ImageType) {
   const { props } = getImageProps({
     src: image.url,
     alt: "",
@@ -102,6 +101,79 @@ function MediaVideo({
   );
 }
 
+function Tile({
+  item,
+  title,
+  idx,
+  priority,
+  className,
+}: {
+  item: MediaItem;
+  title: string;
+  idx: number;
+  priority: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={cn("relative overflow-hidden bg-wash", className)}>
+      {item.type === "video" ? (
+        <MediaVideo item={item} priority={priority} />
+      ) : item.type === "placeholder" ? (
+        <ImagePlaceholder className="size-full" />
+      ) : (
+        <LightboxTrigger image={item.image}>
+          <MediaImage item={item} title={title} idx={idx} priority={priority} />
+        </LightboxTrigger>
+      )}
+    </div>
+  );
+}
+
+function Rail({
+  active,
+  displayItems,
+  mediaItems,
+  title,
+  onSelect,
+}: {
+  active: number;
+  displayItems: MediaItem[];
+  mediaItems: MediaItem[];
+  title: string;
+  onSelect: (index: number) => void;
+}) {
+  for (const [idx, item] of mediaItems.entries()) {
+    if (idx >= DESKTOP_RAIL_PRELOAD_COUNT) break;
+    // The first tile is the LCP image and already preloaded via next/image's `preload` prop.
+    if (idx > 0 && item.type === "image") preloadDesktopRailImage(item.image);
+  }
+  return (
+    <div className="hidden lg:flex w-28 shrink-0 flex-col gap-2.5">
+      {displayItems.map((item, idx) => (
+        <button
+          type="button"
+          key={mediaKey(item)}
+          aria-label={`View image ${idx + 1}`}
+          aria-pressed={idx === active}
+          onClick={() => onSelect(idx)}
+          className={cn(
+            "relative aspect-square overflow-hidden rounded-lg ring-1 transition-all",
+            idx === active ? "ring-2 ring-foreground" : "ring-border opacity-70 hover:opacity-100",
+          )}
+        >
+          {item.type === "video" ? (
+            <MediaVideo item={item} priority={false} />
+          ) : item.type === "placeholder" ? (
+            <ImagePlaceholder className="size-full" />
+          ) : (
+            <MediaImage item={item} title={title} idx={idx} priority={false} />
+          )}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function Carousel({
   mediaItems,
   title,
@@ -165,14 +237,16 @@ function Carousel({
           return (
             <div
               key={mediaKey(item)}
-              className="relative shrink-0 w-full snap-start snap-always overflow-hidden aspect-square"
+              className="relative shrink-0 w-full snap-start snap-always overflow-hidden aspect-square bg-wash"
             >
               {item.type === "video" ? (
                 <MediaVideo item={item} priority={priority} />
               ) : item.type === "placeholder" ? (
                 <ImagePlaceholder className="size-full" />
               ) : (
-                <MediaImage item={item} title={title} idx={idx} priority={priority} />
+                <LightboxTrigger image={item.image}>
+                  <MediaImage item={item} title={title} idx={idx} priority={priority} />
+                </LightboxTrigger>
               )}
             </div>
           );
@@ -200,150 +274,90 @@ function Carousel({
   );
 }
 
-function GridItem({
-  item,
-  title,
-  idx,
-  priority,
-}: {
-  item: MediaItem;
-  title: string;
-  idx: number;
-  priority: boolean;
-}) {
-  return (
-    <div className="relative w-full overflow-hidden aspect-square">
-      {item.type === "video" ? (
-        <MediaVideo item={item} priority={priority} />
-      ) : item.type === "placeholder" ? (
-        <ImagePlaceholder className="size-full" />
-      ) : (
-        <LightboxTrigger image={item.image}>
-          <MediaImage item={item} title={title} idx={idx} priority={priority} />
-        </LightboxTrigger>
-      )}
-    </div>
-  );
-}
-
-function Grid({
-  mediaItems,
-  title,
-  hasColorSlot,
-  interactive = true,
-  children,
-}: {
-  mediaItems: MediaItem[];
-  title: string;
-  hasColorSlot: boolean;
-  interactive?: boolean;
-  children?: ReactNode;
-}) {
-  // The color slot (children) occupies the first tile when present.
-  const firstTileOffset = hasColorSlot ? 1 : 0;
-  for (const [idx, item] of mediaItems.entries()) {
-    const tile = idx + firstTileOffset;
-    if (tile >= DESKTOP_GRID_PRELOAD_COUNT) break;
-    // Tile 0 is the LCP image and already preloaded via next/image's `preload` prop.
-    if (tile > 0 && item.type === "image") preloadDesktopGridImage(item.image);
-  }
-
-  const grid = (
-    <div className="grid grid-cols-2 gap-2.5">
-      {children}
-      {mediaItems.map((item, idx) => (
-        <GridItem
-          key={mediaKey(item)}
-          item={item}
-          title={title}
-          idx={idx}
-          priority={!hasColorSlot && idx === 0}
-        />
-      ))}
-    </div>
-  );
-
-  return interactive ? <Lightbox label={title}>{grid}</Lightbox> : grid;
-}
-
-export function ColorImageGrid({ images, title }: { images: ImageType[]; title: string }) {
-  return images.map((image, idx) => (
-    <GridItem
-      key={image.url}
-      item={{ type: "image", image }}
-      title={title}
-      idx={idx}
-      priority={idx === 0}
-    />
-  ));
-}
-
-export function ColorImageCarouselItems({ images, title }: { images: ImageType[]; title: string }) {
-  return images.map((image, idx) => (
-    <div
-      key={image.url}
-      className="relative shrink-0 w-full snap-start snap-always overflow-hidden aspect-square"
-    >
-      <Image
-        src={image.url}
-        alt={image.altText || `${title} image ${idx + 1}`}
-        height={image.height}
-        width={image.width}
-        className="absolute inset-0 size-full object-cover"
-        sizes="100vw"
-        {...(idx === 0 ? LCP_IMAGE_PROPS : LAZY_IMAGE_PROPS)}
-        draggable={false}
-      />
-    </div>
-  ));
-}
-
 export function ProductMedia({
+  colorImage,
   otherImages,
   videos,
   title,
   className,
-  desktopSlot,
-  mobileSlot,
 }: {
+  colorImage?: ImageType;
   otherImages: ImageType[];
   videos: Video[];
   title: string;
   className?: string;
-  desktopSlot?: ReactNode;
-  mobileSlot?: ReactNode;
 }) {
-  const sharedMediaItems: MediaItem[] = [
+  // Desktop: the rail picks the main image; a null color image means no partition.
+  const [active, setActive] = useState(0);
+  const sharedItems: MediaItem[] = [
     ...videos.map((video): MediaItem => ({ type: "video", video })),
     ...otherImages.map((image): MediaItem => ({ type: "image", image })),
   ];
-
-  const hasColorSlot = !!mobileSlot || !!desktopSlot;
-  const isEmpty = sharedMediaItems.length === 0 && !hasColorSlot;
-  const mediaItems: MediaItem[] = isEmpty ? [{ type: "placeholder" }] : sharedMediaItems;
+  const displayItems: MediaItem[] = [
+    ...(colorImage ? [{ type: "image" as const, image: colorImage }] : []),
+    ...sharedItems,
+  ];
+  const isEmpty = displayItems.length === 0;
+  const items: MediaItem[] = isEmpty ? [{ type: "placeholder" }] : displayItems;
+  const clamped = Math.min(active, items.length - 1);
+  useEffect(() => {
+    if (active > clamped) setActive(clamped);
+  }, [active, clamped]);
 
   return (
     <div className={className}>
+      {/* Mobile keeps the carousel; the color image is its first slide when present. */}
       <div className="lg:hidden">
         <Carousel
-          key={mediaItems.map(mediaKey).join(",")}
-          mediaItems={mediaItems}
+          key={colorImage ? `color-${colorImage.url}` : "shared"}
+          hasColorSlot={!!colorImage}
+          mediaItems={
+            sharedItems.length === 0 ? (isEmpty ? [{ type: "placeholder" }] : []) : sharedItems
+          }
           title={title}
-          hasColorSlot={hasColorSlot}
         >
-          {mobileSlot}
+          {colorImage ? (
+            <div className="relative w-full shrink-0 snap-start snap-always overflow-hidden aspect-square bg-wash">
+              <LightboxTrigger image={colorImage}>
+                <MediaImage
+                  item={{ type: "image", image: colorImage }}
+                  title={title}
+                  idx={0}
+                  priority
+                />
+              </LightboxTrigger>
+            </div>
+          ) : null}
         </Carousel>
       </div>
-      <div className="hidden lg:block">
-        <Grid
-          mediaItems={mediaItems}
-          title={title}
-          hasColorSlot={hasColorSlot}
-          interactive={!isEmpty}
-        >
-          {desktopSlot}
-        </Grid>
-      </div>
+
+      {/* Desktop: main image with a clickable thumbnail rail on the left, the store's gallery treatment. */}
+      <Lightbox label={title}>
+        <div className="hidden lg:grid lg:grid-cols-[7rem_1fr] lg:gap-3">
+          <Rail
+            active={clamped}
+            displayItems={displayItems}
+            mediaItems={items}
+            onSelect={setActive}
+            title={title}
+          />
+          <div className="relative grid content-start gap-3">
+            {items.map((item, idx) => (
+              <Tile
+                item={item}
+                key={mediaKey(item)}
+                title={title}
+                idx={idx}
+                priority={idx === 0}
+                className={cn(
+                  "aspect-square rounded-xl overflow-hidden",
+                  idx !== clamped && "hidden",
+                )}
+              />
+            ))}
+          </div>
+        </div>
+      </Lightbox>
     </div>
   );
 }

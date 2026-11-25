@@ -125,11 +125,32 @@ const GET_COLLECTION_PRODUCT_COUNT_PAGE_QUERY = gql(`#graphql
   }
 `);
 
-async function fetchProductCountPage(handle: string, after: string, locale: CommerceLocale) {
+async function fetchProductCountPage(handle: string, after: string | null, locale: CommerceLocale) {
   return storefront.request(GET_COLLECTION_PRODUCT_COUNT_PAGE_QUERY, {
     locale,
     variables: { after, handle },
   });
+}
+
+// Totals a collection's products, walking the count cursor to the end.
+export async function fetchCollectionProductCount({
+  handle,
+  locale = shopConfig.localization,
+}: {
+  handle: string;
+  locale?: CommerceLocale;
+}): Promise<number> {
+  let count = 0;
+  let after: string | null = null;
+  do {
+    const page = await fetchProductCountPage(handle, after, locale);
+    assertStorefrontOk(page, "getCollectionProductCountPage");
+    const connection = page.data.collection?.products;
+    if (!connection) break;
+    count += connection.nodes.length;
+    after = connection.pageInfo.hasNextPage ? connection.pageInfo.endCursor : null;
+  } while (after);
+  return count;
 }
 
 export async function fetchCollectionFitment({

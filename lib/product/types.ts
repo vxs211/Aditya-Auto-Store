@@ -65,6 +65,8 @@ export interface ProductCard {
   isGiftCard: boolean;
   maxPrice: Money;
   price: Money;
+  /** Storefront product tags; "manufactured" marks in-house accessories, "trading" marks resold goods. */
+  tags?: string[];
   title: string;
   vendor?: string;
 }
