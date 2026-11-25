@@ -1,15 +1,15 @@
 import {
-  AwardIcon as BadgeCheck,
-  RulerIcon as Ruler,
-  ShieldCheckIcon as ShieldCheck,
-  WorkflowIcon as Factory,
+  AwardIcon,
+  CheckIcon,
+  RulerIcon,
+  ShieldCheckIcon,
 } from "@/components/ui/icon";
 
 const CHIPS = [
-  { Icon: Factory, label: "Made in our own factory" },
-  { Icon: ShieldCheck, label: "Jindal 202 stainless steel" },
-  { Icon: Ruler, label: "Made to fit this model" },
-  { Icon: BadgeCheck, label: "Marked and dated" },
+  { Icon: AwardIcon, label: "Premium\nquality" },
+  { Icon: CheckIcon, label: "Vehicle\ncompatible" },
+  { Icon: ShieldCheckIcon, label: "Strong &\nDurable" },
+  { Icon: RulerIcon, label: "Precision\nFit" },
 ];
 
 export function TrustChips() {
@@ -26,7 +26,7 @@ export function TrustChips() {
           <span className="flex size-10 items-center justify-center rounded-full border border-border">
             <Icon aria-hidden className="size-4 text-primary" />
           </span>
-          <span className="text-xs leading-tight text-muted-foreground">{label}</span>
+          <span className="whitespace-pre-line text-xs leading-tight text-muted-foreground">{label}</span>
         </li>
       ))}
     </ul>
