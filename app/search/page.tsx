@@ -77,6 +77,21 @@ export default function SearchPage({ searchParams }: PageProps<"/search">) {
                 <SearchQueryLabel searchParamsPromise={searchParams} />
               </Suspense>
             </h1>
+            <p className="mt-3 text-sm text-muted-foreground">
+              Looking for help?{" "}
+              <Link className="underline underline-offset-4" href="/return-policy">
+                Returns
+              </Link>
+              ,{" "}
+              <Link className="underline underline-offset-4" href="/track-order">
+                order status
+              </Link>{" "}
+              or{" "}
+              <Link className="underline underline-offset-4" href="/contact">
+                contact us
+              </Link>
+              .
+            </p>
           </div>
           <Suspense fallback={<BrowseFallback resultCount={<Skeleton className="h-4 w-20" />} />}>
             <SearchBrowse

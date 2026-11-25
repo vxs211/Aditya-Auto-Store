@@ -159,7 +159,13 @@ function SearchDialogContent({ onClose, open }: { onClose: () => void; open: boo
           <DialogTitle className="sr-only">Search</DialogTitle>
           <div className="bg-background rounded-xl shadow-lg overflow-hidden duration-200">
             <form onSubmit={handleSubmit} className="flex items-center gap-3 px-4 py-3">
-              <Search className="size-4 shrink-0 text-foreground/40" />
+              <button
+                type="submit"
+                aria-label="Search products"
+                className="shrink-0 cursor-pointer text-foreground/60 hover:text-foreground"
+              >
+                <Search className="size-4" />
+              </button>
               <input
                 ref={inputRef}
                 type="text"

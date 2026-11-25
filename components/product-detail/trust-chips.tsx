@@ -16,26 +16,22 @@ const CHIPS = [
 ];
 
 const GUARANTEES = [
-  { Icon: TruckIcon, label: "Free\nshipping" },
-  { Icon: UndoIcon, label: "Easy 3-day\nreturns" },
-  { Icon: LockIcon, label: "100% Secure\nPayment" },
+  { Icon: TruckIcon, label: "Shipping at\ncheckout" },
+  { Icon: UndoIcon, label: "Returns subject\nto policy" },
+  { Icon: LockIcon, label: "Shopify\ncheckout" },
 ];
 
 export function TrustChips() {
   return (
-    <ul
-      className="grid grid-cols-4 gap-x-4 gap-y-3"
-      data-slot="product-trust-chips"
-    >
+    <ul className="grid grid-cols-4 gap-x-4 gap-y-3" data-slot="product-trust-chips">
       {CHIPS.map(({ Icon, label }) => (
-        <li
-          className="flex flex-col items-center gap-1.5 text-center"
-          key={label}
-        >
+        <li className="flex flex-col items-center gap-1.5 text-center" key={label}>
           <span className="flex size-10 items-center justify-center rounded-full border border-border">
             <Icon aria-hidden className="size-4 text-primary" />
           </span>
-          <span className="whitespace-pre-line text-xs leading-tight text-muted-foreground">{label}</span>
+          <span className="whitespace-pre-line text-xs leading-tight text-muted-foreground">
+            {label}
+          </span>
         </li>
       ))}
     </ul>
@@ -44,19 +40,15 @@ export function TrustChips() {
 
 export function ServiceGuarantees() {
   return (
-    <ul
-      className="grid grid-cols-3 gap-3"
-      data-slot="product-service-guarantees"
-    >
+    <ul className="grid grid-cols-3 gap-3" data-slot="product-service-guarantees">
       {GUARANTEES.map(({ Icon, label }) => (
-        <li
-          className="flex flex-col items-center gap-1.5 text-center"
-          key={label}
-        >
+        <li className="flex flex-col items-center gap-1.5 text-center" key={label}>
           <span className="flex size-10 items-center justify-center rounded-full border border-border">
             <Icon aria-hidden className="size-4 text-primary" />
           </span>
-          <span className="whitespace-pre-line text-xs leading-tight text-muted-foreground">{label}</span>
+          <span className="whitespace-pre-line text-xs leading-tight text-muted-foreground">
+            {label}
+          </span>
         </li>
       ))}
     </ul>

@@ -3,7 +3,6 @@ import { Suspense } from "react";
 
 import { SparklesIcon } from "@/components/ui/icon";
 import { shopConfig } from "@/lib/config";
-import type { MenuItem } from "@/lib/menu/types";
 
 import { BarLink } from "./bar-link";
 import { BarMotion, BarRise } from "./bar-motion";
@@ -14,7 +13,7 @@ import { SearchModal } from "./search-modal";
 
 // Phones up to tablets: a light pill with the main links, and a round search button beside it, floating at the
 // bottom within thumb reach. Desktop keeps the top bar.
-export function BottomBar({ items }: { items: MenuItem[] }) {
+export function BottomBar() {
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] z-50 flex items-center justify-center gap-2 lg:hidden">
       <Suspense fallback={null}>
@@ -24,7 +23,7 @@ export function BottomBar({ items }: { items: MenuItem[] }) {
           <Suspense fallback={<CartIconFallback />}>
             <CartIcon className={BAR_ITEM_CLASS} label="Cart" />
           </Suspense>
-          <MobileMenu items={items} label="Menu" triggerClassName={BAR_ITEM_CLASS} />
+          <MobileMenu label="Menu" triggerClassName={BAR_ITEM_CLASS} />
         </BarMotion>
       </Suspense>
       {shopConfig.search.isEnabled && (
@@ -37,7 +36,7 @@ export function BottomBar({ items }: { items: MenuItem[] }) {
             <SearchModal
               accent={
                 <SparklesIcon
-                  className="absolute top-2.5 right-2.5 size-3.5 text-primary"
+                  className="absolute top-2.5 right-2.5 size-3.5 text-primary [&_circle]:hidden [&_path:first-child]:fill-current [&_path:not(:first-child)]:hidden"
                   data-accent
                 />
               }

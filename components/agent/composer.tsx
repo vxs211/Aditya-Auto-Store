@@ -53,7 +53,7 @@ export function AgentComposer({
         e.preventDefault();
         submit();
       }}
-      className="px-2.5 py-2.5"
+      className="px-4 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom,0px))]"
     >
       <InputGroup className="h-auto flex-row items-end rounded-lg border-border bg-transparent shadow-none has-[[data-slot=input-group-control]:focus-visible]:border-foreground has-[[data-slot=input-group-control]:focus-visible]:ring-0">
         <InputGroupTextarea

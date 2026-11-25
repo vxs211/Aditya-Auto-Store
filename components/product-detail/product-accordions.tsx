@@ -4,23 +4,14 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Link } from "@/components/ui/link";
 
 // Generic panels every product page shows; the product's own description is split into its own "Description" tab above.
 const FIXED_PANELS = [
   {
-    body: "Built from premium-grade materials selected to hold up on the road. Every accessory is tested for fit, finish and durability before it ships.",
-    id: "materials",
-    title: "Materials & Build",
-  },
-  {
     body: "Wipe down with a damp cloth after rides. Avoid harsh chemicals or abrasive cleaners. Store in a cool, dry place when not in use.",
     id: "care",
     title: "Care & Maintenance",
-  },
-  {
-    body: "Dispatched within 1–2 business days. Free standard shipping on orders over ₹999. Unused items in original packaging can be returned within 7 days of delivery.",
-    id: "shipping",
-    title: "Shipping & Returns",
   },
 ];
 
@@ -47,6 +38,27 @@ export function ProductAccordions({ descriptionHtml }: { descriptionHtml: string
           </AccordionContent>
         </AccordionItem>
       ))}
+      <AccordionItem value="fitment">
+        <AccordionTrigger className="py-4 text-base">Fitment help</AccordionTrigger>
+        <AccordionContent className="text-sm text-muted-foreground">
+          Check the product description for compatible models and years. If you are unsure,{" "}
+          <Link className="underline underline-offset-4" href="/contact">
+            contact us
+          </Link>{" "}
+          with your scooter model and year before ordering.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="shipping">
+        <AccordionTrigger className="py-4 text-base">Shipping &amp; returns</AccordionTrigger>
+        <AccordionContent className="text-sm text-muted-foreground">
+          Shipping costs are shown at checkout. Returns are subject to eligibility and conditions in
+          our{" "}
+          <Link className="underline underline-offset-4" href="/return-policy">
+            return policy
+          </Link>
+          .
+        </AccordionContent>
+      </AccordionItem>
     </Accordion>
   );
 }

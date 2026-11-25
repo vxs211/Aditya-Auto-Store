@@ -7,6 +7,11 @@ import {
   ProductDetailSection,
   ProductDetailSkeleton,
 } from "@/components/product-detail/product-detail-section";
+import {
+  ProductStory,
+  ProductReviews,
+  ProductFaq,
+} from "@/components/product-detail/product-story";
 import { RecentlyViewedRecorder } from "@/components/product-detail/recently-viewed";
 import { RelatedProductsSection } from "@/components/product/related-products-section";
 import { Container } from "@/components/ui/container";
@@ -151,6 +156,9 @@ async function ProductPageContent({
         selectedOptionsPromise={selectedOptionsPromise}
         variantPromise={variantPromise}
       />
+      <ProductStory />
+      <ProductReviews />
+      <ProductFaq />
       {shopConfig.pdp.relatedProducts.isEnabled ? (
         <RelatedProductsSection handle={handle} limit={4} />
       ) : null}

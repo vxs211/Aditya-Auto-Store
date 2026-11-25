@@ -113,7 +113,7 @@ export async function Nav() {
           </div>
         </Container>
       </nav>
-      <BottomBar items={items} />
+      <BottomBar />
     </>
   );
 }

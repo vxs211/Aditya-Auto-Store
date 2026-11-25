@@ -200,7 +200,7 @@ export function AgentPanel({ onOpenChange, open, triggerRef }: AgentPanelProps) 
     >
       <SheetContent
         ref={panelRef}
-        className="gap-0 p-0"
+        className="inset-y-auto right-4 bottom-[calc(1rem+env(safe-area-inset-bottom,0px))] h-[min(36rem,calc(100dvh-2rem-env(safe-area-inset-bottom,0px)))] w-[calc(100%-2rem)] max-w-md gap-0 overflow-hidden rounded-3xl border p-0"
         closeButton={false}
         finalFocus={triggerRef}
         initialFocus={() => panelRef.current?.querySelector("textarea") ?? true}
@@ -208,8 +208,13 @@ export function AgentPanel({ onOpenChange, open, triggerRef }: AgentPanelProps) 
         overlay={false}
         side="right"
       >
-        <div className="flex h-16 shrink-0 items-center justify-between gap-2 px-2.5">
-          <SheetTitle className="font-normal text-xl leading-4">Shop Agent</SheetTitle>
+        <div className="flex min-h-16 shrink-0 items-center justify-between gap-3 border-b px-5">
+          <div className="grid gap-1 py-3">
+            <SheetTitle className="font-sans text-lg font-semibold">
+              Aditya shopping assistant
+            </SheetTitle>
+            <p className="text-xs text-muted-foreground">Products, fitment and store questions</p>
+          </div>
           <div className="flex items-center gap-2.5">
             <button
               aria-label="Clear chat"
@@ -258,7 +263,42 @@ export function AgentPanel({ onOpenChange, open, triggerRef }: AgentPanelProps) 
                 ? showRestoring && (
                     <p className="text-muted-foreground text-sm">Restoring your conversation…</p>
                   )
-                : !awaitingReply && <p className="text-foreground text-sm">Hi, how can I help?</p>
+                : !awaitingReply && (
+                    <div className="grid gap-4 rounded-2xl bg-muted p-5">
+                      <div className="grid gap-1">
+                        <p className="font-semibold">What are you looking for?</p>
+                        <p className="text-sm text-muted-foreground">
+                          Tell us your scooter model and what you need, or choose a question.
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {[
+                          {
+                            label: "Find accessories",
+                            message: "Help me find accessories for my scooter.",
+                          },
+                          {
+                            label: "Check fitment",
+                            message: "Help me check whether an accessory fits my scooter.",
+                          },
+                          {
+                            label: "Shipping & returns",
+                            message: "What are the shipping and return policies?",
+                          },
+                        ].map(({ label, message }) => (
+                          <button
+                            key={label}
+                            type="button"
+                            disabled={clearing || hasReachedLimit}
+                            onClick={() => handleSend(message)}
+                            className="cursor-pointer rounded-full border border-border bg-background px-3 py-2 text-sm transition-colors hover:border-primary hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
+                          >
+                            {label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )
               : messages.map((message, index) => (
                   <ChatMessage
                     key={message.id}
@@ -291,7 +331,7 @@ export function AgentPanel({ onOpenChange, open, triggerRef }: AgentPanelProps) 
           }}
           onStop={handleStop}
           onSubmit={handleSend}
-          placeholder="Ask anything…"
+          placeholder="Ask about products or your scooter…"
           status={restoring ? "resuming" : busy ? "busy" : "idle"}
           value={input}
         />

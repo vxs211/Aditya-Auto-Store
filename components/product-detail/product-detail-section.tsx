@@ -19,7 +19,11 @@ import { ProductMedia } from "@/components/product-detail/product-media";
 import { ProductPrice } from "@/components/product-detail/product-price";
 import { ProductSchema } from "@/components/product-detail/schema";
 import { StickyBuyBar } from "@/components/product-detail/sticky-buy-bar";
-import { ServiceGuarantees, StockIndicator, TrustChips } from "@/components/product-detail/trust-chips";
+import {
+  ServiceGuarantees,
+  StockIndicator,
+  TrustChips,
+} from "@/components/product-detail/trust-chips";
 import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
 import { MinusIcon, PlusIcon } from "@/components/ui/icon";
 import { Input } from "@/components/ui/input";
@@ -129,7 +133,7 @@ async function ProductMediaArea({
     ? getSelectedColorImage(product, selected)
     : undefined;
   return (
-    <div className="lg:col-span-6">
+    <div className="lg:sticky lg:top-20 lg:col-span-6">
       <ProductMedia
         colorImage={colorImage}
         otherImages={colorImage ? getSharedImages(product.images, product.options) : product.images}
@@ -154,7 +158,7 @@ function ProductInfoArea({
   const allInStock = product.defaultVariant?.availableForSale ?? product.availableForSale;
   const hasOptions = options.some((option) => option.values.length > 1);
   return (
-    <div className="grid gap-10 lg:sticky lg:top-20 lg:col-span-4">
+    <div className="grid gap-10 lg:col-span-4">
       <div
         className="grid data-[uniform-price=true]:gap-10"
         data-uniform-price={product.hasUniformPricing}

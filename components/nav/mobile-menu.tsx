@@ -1,144 +1,90 @@
 "use client";
 
+import { Popover } from "@base-ui/react/popover";
 import { useState } from "react";
 
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Button } from "@/components/ui/button";
-import { MenuIcon as Menu } from "@/components/ui/icon";
+  ArrowRIcon,
+  MenuIcon as Menu,
+  MessageCircleIcon,
+  TruckIcon,
+  XIcon,
+} from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import type { MenuItem } from "@/lib/menu/types";
-
-import { MenuLink } from "./menu-link";
 
 export function MobileMenu({
-  items,
   label,
   triggerClassName,
 }: {
-  items: MenuItem[];
   label?: string;
   triggerClassName: string;
 }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger
+    <Popover.Root open={open} onOpenChange={setOpen}>
+      <Popover.Trigger
         render={
           <button type="button" className={triggerClassName}>
-            <Menu className="size-5" />
-            <span className={label ? undefined : "sr-only"}>{label ?? "Menu"}</span>
+            {open ? <XIcon className="size-5" /> : <Menu className="size-5" />}
+            <span className={label ? undefined : "sr-only"}>
+              {open ? "Close" : (label ?? "Menu")}
+            </span>
           </button>
         }
       />
-      <SheetContent side="left" className="gap-0">
-        <div className="flex h-18 items-center px-5">
-          <SheetTitle className="text-lg font-semibold">Menu</SheetTitle>
-        </div>
-        <nav className="min-h-0 flex-1 overflow-y-auto px-5 pb-5">
-          <MobileMenuList items={items} onLinkClick={close} />
-        </nav>
-        <div className="border-t p-5">
-          <Button className="w-full" render={<Link href="/collections" onClick={close} />}>
-            Shop by model
-          </Button>
-        </div>
-      </SheetContent>
-    </Sheet>
-  );
-}
-
-function MobileMenuList({ items, onLinkClick }: { items: MenuItem[]; onLinkClick: () => void }) {
-  const hasAnyChildren = items.some((item) => item.items.length > 0);
-
-  if (!hasAnyChildren) {
-    return (
-      <ul className="flex flex-col gap-2.5">
-        {items.map((item) => (
-          <li key={item.id}>
-            <MenuLink
-              url={item.url}
-              onClick={onLinkClick}
-              className="text-base transition-colors hover:text-muted-foreground"
-            >
-              {item.title}
-            </MenuLink>
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
-  return (
-    <Accordion multiple className="w-full">
-      {items.map((item) =>
-        item.items.length > 0 ? (
-          <AccordionItem key={item.id} value={item.id}>
-            <AccordionTrigger className="py-3 text-base">{item.title}</AccordionTrigger>
-            <AccordionContent>
-              <NestedItems items={item.items} onLinkClick={onLinkClick} />
-              {item.url ? (
-                <MenuLink
-                  url={item.url}
-                  onClick={onLinkClick}
-                  className="mt-3 block text-xs font-medium uppercase tracking-wide text-muted-foreground hover:text-foreground transition-colors"
+      <Popover.Portal>
+        <Popover.Positioner
+          align="end"
+          side="top"
+          sideOffset={8}
+          className="z-40 !fixed !top-auto !bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] !left-1/2 ![transform:translateX(-50%)]"
+        >
+          <Popover.Popup className="w-[min(17rem,calc(100vw-2rem))] origin-bottom-right overflow-hidden rounded-3xl bg-background font-sans shadow-[0_8px_28px_rgba(0,0,0,0.18)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] data-starting-style:translate-y-6 data-starting-style:scale-x-75 data-starting-style:scale-y-0 data-starting-style:opacity-0 data-ending-style:translate-y-6 data-ending-style:scale-x-75 data-ending-style:scale-y-0 data-ending-style:opacity-0 motion-reduce:transition-none [&_h3]:font-sans">
+            <div className="grid gap-1 px-5 pt-5 pb-4">
+              <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">
+                Aditya Auto
+              </p>
+              <Popover.Title className="font-sans text-lg font-semibold">
+                Here to help
+              </Popover.Title>
+              <p className="text-sm text-muted-foreground">Questions or looking for an order?</p>
+            </div>
+            <nav aria-label="Help" className="grid gap-2 px-3 pb-3">
+              {[
+                {
+                  href: "/contact",
+                  icon: MessageCircleIcon,
+                  title: "Contact us",
+                  detail: "Talk to our team",
+                },
+                {
+                  href: "/track-order",
+                  icon: TruckIcon,
+                  title: "Track order",
+                  detail: "Check your order status",
+                },
+              ].map(({ detail, href, icon: Icon, title }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={close}
+                  className="flex items-center gap-3 rounded-2xl bg-muted p-3 transition-colors hover:bg-primary/10"
                 >
-                  {`Show all ${item.title}`}
-                </MenuLink>
-              ) : null}
-            </AccordionContent>
-          </AccordionItem>
-        ) : (
-          <div key={item.id} className="border-b last:border-b-0">
-            <MenuLink
-              url={item.url}
-              onClick={onLinkClick}
-              className="flex py-3 text-base transition-colors hover:text-muted-foreground"
-            >
-              {item.title}
-            </MenuLink>
-          </div>
-        ),
-      )}
-    </Accordion>
-  );
-}
-
-function NestedItems({ items, onLinkClick }: { items: MenuItem[]; onLinkClick: () => void }) {
-  return (
-    <ul className="flex flex-col gap-3 pl-3">
-      {items.map((item) => (
-        <li key={item.id} className="space-y-2">
-          <MenuLink
-            url={item.url}
-            onClick={onLinkClick}
-            className="block text-sm font-medium hover:opacity-70 transition-opacity"
-          >
-            {item.title}
-          </MenuLink>
-          {item.items.length > 0 && (
-            <ul className="flex flex-col gap-2 pl-3">
-              {item.items.map((leaf) => (
-                <li key={leaf.id}>
-                  <MenuLink
-                    url={leaf.url}
-                    onClick={onLinkClick}
-                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {leaf.title}
-                  </MenuLink>
-                </li>
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-background text-primary">
+                    <Icon aria-hidden className="size-5" />
+                  </span>
+                  <span className="grid flex-1 gap-0.5">
+                    <span className="text-sm font-semibold">{title}</span>
+                    <span className="text-xs text-muted-foreground">{detail}</span>
+                  </span>
+                  <ArrowRIcon aria-hidden className="size-4 text-muted-foreground" />
+                </Link>
               ))}
-            </ul>
-          )}
-        </li>
-      ))}
-    </ul>
+            </nav>
+          </Popover.Popup>
+        </Popover.Positioner>
+      </Popover.Portal>
+    </Popover.Root>
   );
 }
