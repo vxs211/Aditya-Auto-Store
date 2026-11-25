@@ -53,12 +53,14 @@ function MediaImage({
   idx,
   priority,
   className,
+  fit = "cover",
 }: {
   item: Extract<MediaItem, { type: "image" }>;
   title: string;
   idx: number;
   priority: boolean;
   className?: string;
+  fit?: "cover" | "contain";
 }) {
   return (
     <Image
@@ -66,7 +68,7 @@ function MediaImage({
       alt={item.image.altText || `${title} image ${idx + 1}`}
       height={item.image.height}
       width={item.image.width}
-      className={cn("absolute inset-0 size-full object-cover", className)}
+      className={cn("absolute inset-0 size-full", fit === "cover" ? "object-cover" : "object-contain", className)}
       sizes="100vw"
       {...(priority ? LCP_IMAGE_PROPS : LAZY_IMAGE_PROPS)}
       draggable={false}
@@ -107,12 +109,14 @@ function Tile({
   idx,
   priority,
   className,
+  fit = "cover",
 }: {
   item: MediaItem;
   title: string;
   idx: number;
   priority: boolean;
   className?: string;
+  fit?: "cover" | "contain";
 }) {
   return (
     <div className={cn("relative overflow-hidden bg-wash", className)}>
@@ -122,7 +126,13 @@ function Tile({
         <ImagePlaceholder className="size-full" />
       ) : (
         <LightboxTrigger image={item.image}>
-          <MediaImage item={item} title={title} idx={idx} priority={priority} />
+          <MediaImage
+            fit={fit}
+            item={item}
+            title={title}
+            idx={idx}
+            priority={priority}
+          />
         </LightboxTrigger>
       )}
     </div>
@@ -245,7 +255,13 @@ function Carousel({
                 <ImagePlaceholder className="size-full" />
               ) : (
                 <LightboxTrigger image={item.image}>
-                  <MediaImage item={item} title={title} idx={idx} priority={priority} />
+                  <MediaImage
+                    fit="contain"
+                    item={item}
+                    title={title}
+                    idx={idx}
+                    priority={priority}
+                  />
                 </LightboxTrigger>
               )}
             </div>
@@ -320,6 +336,7 @@ export function ProductMedia({
             <div className="relative w-full shrink-0 snap-start snap-always overflow-hidden aspect-square bg-wash">
               <LightboxTrigger image={colorImage}>
                 <MediaImage
+                  fit="contain"
                   item={{ type: "image", image: colorImage }}
                   title={title}
                   idx={0}
@@ -344,6 +361,7 @@ export function ProductMedia({
           <div className="relative grid content-start gap-3">
             {items.map((item, idx) => (
               <Tile
+                fit="contain"
                 item={item}
                 key={mediaKey(item)}
                 title={title}
