@@ -34,12 +34,20 @@ export function FitmentLayout({
 }: FitmentLayoutProps) {
   const { handle, title, updatedAt } = collection;
   const { body, brand, models } = fitment;
+  const visibleModels =
+    handle === "bajaj-chetak-accessories"
+      ? models.filter(
+          (model) =>
+            model.handle !== "chetak-black-accessories" &&
+            model.handle !== "chetak-c2501-black-accessories",
+        )
+      : models;
   // The banner metafield is rarely set; the collection image is a real picture of this scooter.
   const banner = fitment.banner ?? collection.image ?? null;
   const crumbs = [
     { name: "Home", path: "/" },
     ...(brand ? [{ name: brand.title, path: `/collections/${brand.handle}` }] : []),
-    { name: title, path: `/collections/${handle}` },
+    { name: brand ? modelDisplayName(title, handle) : title, path: `/collections/${handle}` },
   ];
   const compatibleWith = brand ? `${brand.title} ${title}` : title;
   // Model product pages get the compact shop header; brand tiles keep the banner layout.
@@ -112,10 +120,10 @@ export function FitmentLayout({
             </ol>
           </nav>
           {models.length > 0 ? (
-            <ModelTiles models={models} />
+            <ModelTiles models={visibleModels} />
           ) : (
             <div className="grid gap-4">
-              <CollectionShopHeader count={productCount} title={modelDisplayName(title)} />
+              <CollectionShopHeader count={productCount} title={modelDisplayName(title, handle)} />
               <CollectionBrowseFrame handle={handle} path={`/collections/${handle}`}>
                 {children}
               </CollectionBrowseFrame>
@@ -131,18 +139,21 @@ export function FitmentLayout({
 
 function ModelTiles({ models }: { models: CollectionFitment["models"] }) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-reveal>
-      {models.map(({ handle, image, productCount, title }, index) => (
-        <li className={index === 0 ? "sm:col-span-2" : undefined} key={handle}>
+    <ul
+      className={`grid gap-4 sm:grid-cols-2 lg:gap-6${models.length > 2 ? " lg:grid-cols-3" : ""}`}
+      data-reveal
+    >
+      {models.map(({ handle, image, productCount, title }) => (
+        <li className="min-w-0" key={handle}>
           <Link
             className="group flex h-full flex-col overflow-hidden rounded-3xl border border-black/10 bg-white p-1.5 shadow-soft transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none"
             href={`/collections/${handle}`}
           >
-            <div className="relative aspect-4/3 overflow-hidden rounded-[1.15rem] bg-[linear-gradient(135deg,#fff4ed_0%,#ffe6d7_48%,#ff9d6c_100%)] sm:aspect-video">
+            <div className="relative aspect-4/3 overflow-hidden rounded-[1.15rem] bg-white sm:aspect-video">
               {image ? (
                 <Image
                   alt={image.altText}
-                  className="object-cover transition-transform group-hover:scale-105"
+                  className="object-contain p-2"
                   fill
                   sizes="100vw"
                   src={image.url}
@@ -152,11 +163,11 @@ function ModelTiles({ models }: { models: CollectionFitment["models"] }) {
               )}
             </div>
             <div className="flex flex-1 flex-wrap items-end justify-between gap-4 p-5">
-              <div className="grid gap-1">
+              <div className="grid min-w-0 gap-1">
                 <h2
-                  className={`${interTight.className} text-xl font-normal leading-tight text-foreground`}
+                  className={`${interTight.className} text-xl font-normal leading-tight wrap-anywhere text-foreground`}
                 >
-                  {modelDisplayName(title)}
+                  {modelDisplayName(title, handle)}
                 </h2>
                 <p className="text-sm text-muted-foreground">
                   {productCount} {productCount === 1 ? "product" : "products"}

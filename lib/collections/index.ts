@@ -99,6 +99,8 @@ export function brandDisplayName(title: string): string {
     .join(" ");
 }
 
-export function modelDisplayName(title: string): string {
+export function modelDisplayName(title: string, handle: string): string {
+  if (handle === "bajaj-chetak-c2501-accessories") return "Bajaj Chetak C25 Series";
+  if (handle === "bajaj-chetak-ev-accessories") return "Bajaj Chetak C35 Series";
   return title.replace(/\s*accessories$/i, "").trim() || title;
 }

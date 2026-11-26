@@ -27,7 +27,7 @@ export async function Nav() {
         items: brand.models.map((model) => ({
           id: `nav-model-${model.handle}`,
           items: [],
-          title: modelDisplayName(model.title),
+          title: modelDisplayName(model.title, model.handle),
           url: `/collections/${model.handle}`,
         })),
         title: brandDisplayName(brand.title),
@@ -52,7 +52,7 @@ export async function Nav() {
           ? [
               {
                 image: model.image,
-                title: modelDisplayName(model.title),
+                title: modelDisplayName(model.title, model.handle),
                 url: `/collections/${model.handle}`,
               },
             ]

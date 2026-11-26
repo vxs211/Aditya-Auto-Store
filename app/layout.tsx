@@ -22,6 +22,8 @@ import { SiteSchema } from "@/components/schema/site-schema";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { botIdProtectedRoutes } from "@/lib/botid";
 import { seedCartData } from "@/lib/cart/server";
+import { brandDisplayName, modelDisplayName } from "@/lib/collections";
+import { getFitmentBrands } from "@/lib/collections/server";
 import { shopConfig } from "@/lib/config";
 
 export const ensureStatic = "prefetch";
@@ -45,6 +47,17 @@ const michroma = Michroma({
   subsets: ["latin"],
   weight: "400",
 });
+
+async function StoreAssistant() {
+  const brands = (await getFitmentBrands()).map(({ handle, models, title }) => ({
+    handle,
+    models: models
+      .filter(({ handle }) => handle !== "chetak-black-accessories" && handle !== "chetak-c2501-black-accessories")
+      .map(({ handle, title }) => ({ handle, title: modelDisplayName(title, handle) })),
+    title: brandDisplayName(title),
+  }));
+  return <AgentButton brands={brands} />;
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   // Un-awaited: the promise streams to the client provider; never block the shell on it.
@@ -82,7 +95,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <SmoothScroll />
           <CartUI />
           <Suspense>
-            <ActionBar>{shopConfig.agent.isEnabled && <AgentButton />}</ActionBar>
+            <ActionBar>{shopConfig.agent.isEnabled && <StoreAssistant />}</ActionBar>
           </Suspense>
           <Suspense>
             <AnalyticsComponents />
