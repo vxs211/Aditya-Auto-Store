@@ -123,7 +123,7 @@ export default function FaqPage() {
               {FAQS.map(({ answer, question }) => (
                 <AccordionItem key={question} value={question}>
                   <AccordionTrigger className="text-base">{question}</AccordionTrigger>
-                  <AccordionContent className="text-base text-muted-foreground">
+                  <AccordionContent className="max-w-prose text-base/relaxed text-pretty text-muted-foreground">
                     {answer}
                   </AccordionContent>
                 </AccordionItem>

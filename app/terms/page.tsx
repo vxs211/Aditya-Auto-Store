@@ -132,19 +132,19 @@ export default function TermsPage() {
 
       <Container>
         <Sections className="gap-16 py-16 md:gap-20 md:py-20">
-          <div className="mx-auto grid w-full max-w-3xl gap-12">
-            <p className="text-base text-muted-foreground" data-reveal>
+          <div className="mx-auto grid w-full max-w-prose gap-12 text-base/relaxed text-pretty text-muted-foreground">
+            <p data-reveal>
               Welcome to {NAME}. By using our website you agree to the terms below. Please read them
               carefully.
             </p>
             {SECTIONS.map(({ heading, intro, points }, index) => (
               <section className="grid gap-3" data-reveal key={heading}>
-                <h2 className="text-h3">
+                <h2 className="text-h3 text-foreground">
                   {index + 1}. {heading}
                 </h2>
-                {intro && <p className="text-base text-muted-foreground">{intro}</p>}
+                {intro && <p>{intro}</p>}
                 {points && (
-                  <ul className="grid gap-2 text-base text-muted-foreground">
+                  <ul className="grid gap-2">
                     {points.map((point) => (
                       <li className="flex gap-3" key={point}>
                         <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-primary" />

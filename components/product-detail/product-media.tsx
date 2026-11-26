@@ -6,6 +6,8 @@ import { type ReactNode, useEffect, useState } from "react";
 import { preload } from "react-dom";
 
 import { AutoPlayVideo } from "@/components/ui/auto-play-video";
+import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/ui/icon";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import type { Image as ImageType, Video } from "@/lib/media/types";
 
@@ -139,6 +141,35 @@ function Tile({
   );
 }
 
+function GalleryArrows({ onStep }: { onStep: (direction: -1 | 1) => void }) {
+  const className =
+    "pointer-events-auto rounded-full bg-background text-foreground shadow-md ring-1 ring-border focus-visible:outline-2 focus-visible:outline-offset-2";
+  return (
+    <div className="pointer-events-none absolute inset-x-2 top-1/2 z-10 flex -translate-y-1/2 justify-between">
+      <Button
+        aria-label="Previous image"
+        className={className}
+        onClick={() => onStep(-1)}
+        size="icon-lg"
+        type="button"
+        variant="inverse"
+      >
+        <ChevronLeftIcon aria-hidden="true" />
+      </Button>
+      <Button
+        aria-label="Next image"
+        className={className}
+        onClick={() => onStep(1)}
+        size="icon-lg"
+        type="button"
+        variant="inverse"
+      >
+        <ChevronRightIcon aria-hidden="true" />
+      </Button>
+    </div>
+  );
+}
+
 function Rail({
   active,
   displayItems,
@@ -158,7 +189,7 @@ function Rail({
     if (idx > 0 && item.type === "image") preloadDesktopRailImage(item.image);
   }
   return (
-    <div className="hidden lg:flex w-28 shrink-0 flex-col gap-2.5">
+    <div className="flex flex-col gap-2.5">
       {displayItems.map((item, idx) => (
         <button
           type="button"
@@ -167,7 +198,7 @@ function Rail({
           aria-pressed={idx === active}
           onClick={() => onSelect(idx)}
           className={cn(
-            "relative aspect-square overflow-hidden rounded-lg ring-1 transition-all",
+            "relative aspect-square cursor-pointer overflow-hidden rounded-lg ring-1 transition-all",
             idx === active ? "ring-2 ring-foreground" : "ring-border opacity-70 hover:opacity-100",
           )}
         >
@@ -236,37 +267,44 @@ function Carousel({
   }, [container]);
   return (
     <div className="grid gap-5">
-      <div
-        ref={setContainer}
-        className="relative overflow-x-auto flex snap-x snap-mandatory overscroll-x-contain scrollbar-hide -mx-5 w-[calc(100%+2.5rem)]"
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
-        {children}
-        {mediaItems.map((item, idx) => {
-          const priority = !hasColorSlot && idx === 0;
-          return (
-            <div
-              key={mediaKey(item)}
-              className="relative shrink-0 w-full snap-start snap-always overflow-hidden aspect-square bg-wash"
-            >
-              {item.type === "video" ? (
-                <MediaVideo item={item} priority={priority} />
-              ) : item.type === "placeholder" ? (
-                <ImagePlaceholder className="size-full" />
-              ) : (
-                <LightboxTrigger image={item.image}>
-                  <MediaImage
-                    fit="contain"
-                    item={item}
-                    title={title}
-                    idx={idx}
-                    priority={priority}
-                  />
-                </LightboxTrigger>
-              )}
-            </div>
-          );
-        })}
+      <div className="relative -mx-5">
+        <div
+          ref={setContainer}
+          className="relative overflow-x-auto flex snap-x snap-mandatory overscroll-x-contain scrollbar-hide"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          {children}
+          {mediaItems.map((item, idx) => {
+            const priority = !hasColorSlot && idx === 0;
+            return (
+              <div
+                key={mediaKey(item)}
+                className="relative shrink-0 w-full snap-start snap-always overflow-hidden aspect-square bg-wash"
+              >
+                {item.type === "video" ? (
+                  <MediaVideo item={item} priority={priority} />
+                ) : item.type === "placeholder" ? (
+                  <ImagePlaceholder className="size-full" />
+                ) : (
+                  <LightboxTrigger image={item.image}>
+                    <MediaImage
+                      fit="contain"
+                      item={item}
+                      title={title}
+                      idx={idx}
+                      priority={priority}
+                    />
+                  </LightboxTrigger>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        {itemCount > 1 && (
+          <GalleryArrows
+            onStep={(direction) => scrollToImage((selectedIndex + direction + itemCount) % itemCount)}
+          />
+        )}
       </div>
 
       {/* Dot indicators – reserve space but hide when there's only one image */}
@@ -350,7 +388,7 @@ export function ProductMedia({
 
       {/* Desktop: main image with a clickable thumbnail rail on the left, the store's gallery treatment. */}
       <Lightbox label={title}>
-        <div className="hidden lg:grid lg:grid-cols-[7rem_1fr] lg:gap-3">
+        <div className="hidden lg:grid lg:grid-cols-[3.5rem_1fr] lg:gap-3">
           <Rail
             active={clamped}
             displayItems={displayItems}
@@ -358,7 +396,7 @@ export function ProductMedia({
             onSelect={setActive}
             title={title}
           />
-          <div className="relative grid content-start gap-3">
+          <div className="relative grid self-start">
             {items.map((item, idx) => (
               <Tile
                 fit="contain"
@@ -373,6 +411,11 @@ export function ProductMedia({
                 )}
               />
             ))}
+            {items.length > 1 && (
+              <GalleryArrows
+                onStep={(direction) => setActive((clamped + direction + items.length) % items.length)}
+              />
+            )}
           </div>
         </div>
       </Lightbox>

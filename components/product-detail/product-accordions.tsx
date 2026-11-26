@@ -23,7 +23,7 @@ export function ProductAccordions({ descriptionHtml }: { descriptionHtml: string
           <AccordionTrigger className="py-4 text-base">Description</AccordionTrigger>
           <AccordionContent>
             <div
-              className="prose prose-sm text-foreground/80"
+              className="prose prose-neutral prose-p:text-pretty wrap-anywhere"
               // oxlint-disable-next-line react/no-danger -- Product descriptions pass through sanitizeShopifyHtml when fetched.
               dangerouslySetInnerHTML={{ __html: descriptionHtml }}
             />
@@ -34,13 +34,13 @@ export function ProductAccordions({ descriptionHtml }: { descriptionHtml: string
         <AccordionItem key={id} value={id}>
           <AccordionTrigger className="py-4 text-base">{title}</AccordionTrigger>
           <AccordionContent>
-            <p className="text-sm text-muted-foreground">{body}</p>
+            <p className="text-base/relaxed text-pretty text-muted-foreground">{body}</p>
           </AccordionContent>
         </AccordionItem>
       ))}
       <AccordionItem value="fitment">
         <AccordionTrigger className="py-4 text-base">Fitment help</AccordionTrigger>
-        <AccordionContent className="text-sm text-muted-foreground">
+        <AccordionContent className="text-base/relaxed text-pretty text-muted-foreground">
           Check the product description for compatible models and years. If you are unsure,{" "}
           <Link className="underline underline-offset-4" href="/contact">
             contact us
@@ -50,7 +50,7 @@ export function ProductAccordions({ descriptionHtml }: { descriptionHtml: string
       </AccordionItem>
       <AccordionItem value="shipping">
         <AccordionTrigger className="py-4 text-base">Shipping &amp; returns</AccordionTrigger>
-        <AccordionContent className="text-sm text-muted-foreground">
+        <AccordionContent className="text-base/relaxed text-pretty text-muted-foreground">
           Shipping costs are shown at checkout. Returns are subject to eligibility and conditions in
           our{" "}
           <Link className="underline underline-offset-4" href="/return-policy">

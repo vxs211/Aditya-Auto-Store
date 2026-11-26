@@ -29,13 +29,13 @@ export function ProductPrice({
       <Price
         amount={amount}
         currencyCode={currencyCode}
-        className={cn("text-xl", markedDown && "text-link")}
+        className={cn("text-3xl/9 font-semibold", markedDown && "text-link")}
       />
       {markedDown && (
         <Price
           amount={compareAtAmount}
           currencyCode={currencyCode}
-          className="text-xl line-through text-muted-foreground"
+          className="text-lg line-through text-muted-foreground"
         />
       )}
       {discountPercent !== null ? <DiscountBadge percent={discountPercent} /> : null}

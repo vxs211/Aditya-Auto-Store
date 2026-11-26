@@ -25,12 +25,16 @@ export function StickyBuyBar({
 
   useEffect(() => {
     const buyBox = document.getElementById("buy-box");
+    const footer = document.getElementById("site-footer");
     if (!buyBox) return;
-    // Only once the buy box has scrolled off the top: appearing while it is still below would duplicate the button.
-    const observer = new IntersectionObserver(([entry]) =>
-      setIsVisible(Boolean(entry && !entry.isIntersecting && entry.boundingClientRect.bottom < 0)),
+    const observer = new IntersectionObserver(() =>
+      setIsVisible(
+        buyBox.getBoundingClientRect().bottom <= 0 &&
+          (!footer || footer.getBoundingClientRect().top > window.innerHeight),
+      ),
     );
     observer.observe(buyBox);
+    if (footer) observer.observe(footer);
     return () => observer.disconnect();
   }, []);
 

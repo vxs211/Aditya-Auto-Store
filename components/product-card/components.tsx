@@ -110,7 +110,7 @@ function ProductCardTitle({ className, children, ...props }: ComponentProps<"h3"
     <h3
       data-slot="product-card-title"
       className={cn(
-        `${interTight.className} text-base font-normal leading-tight text-foreground line-clamp-2`,
+        `${interTight.className} line-clamp-2 text-base/5 font-medium wrap-anywhere text-foreground`,
         className,
       )}
       {...props}
@@ -143,11 +143,11 @@ function ProductCardPrice({
   return (
     <div data-slot="product-card-price" className={cn(className)}>
       <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-        <span className="inline-flex items-baseline gap-x-1 text-sm text-foreground">
+        <span className="inline-flex flex-wrap items-baseline gap-x-1 text-sm font-medium text-foreground">
           <Price
             amount={amount}
             currencyCode={currencyCode}
-            className={cn("text-sm", discountPercent !== null ? "text-link" : "text-foreground")}
+            className={cn("text-sm whitespace-nowrap", discountPercent !== null ? "text-link" : "text-foreground")}
           />
           {isRange && (
             <>
@@ -155,7 +155,7 @@ function ProductCardPrice({
               <Price
                 amount={maxAmount}
                 currencyCode={currencyCode}
-                className="text-sm text-foreground"
+                className="text-sm whitespace-nowrap text-foreground"
               />
             </>
           )}
@@ -165,7 +165,7 @@ function ProductCardPrice({
             <Price
               amount={compareAtAmount}
               currencyCode={compareAtCurrencyCode}
-              className="text-xs text-muted-foreground line-through"
+              className="text-sm whitespace-nowrap text-muted-foreground line-through"
             />
             <DiscountBadge percent={discountPercent} />
           </>

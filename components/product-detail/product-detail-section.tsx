@@ -171,27 +171,25 @@ function ProductInfoArea({
               {product.vendor}
             </p>
           ) : null}
-          <h1 className={`mt-1.5 text-foreground text-h2 ${interTight.className}`}>
+          <h1 className={`mt-1.5 text-h2 text-balance wrap-anywhere text-foreground ${interTight.className}`}>
             {product.title}
           </h1>
           {product.hasUniformPricing ? (
             <ProductPrice
+              className="mt-2"
               amount={product.priceRange.minVariantPrice.amount}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
               compareAtAmount={product.compareAtPriceRange?.minVariantPrice.amount}
             />
           ) : null}
-          <div className="mt-5 grid gap-4">
-            <StockIndicator availableForSale={allInStock} />
-            <TrustChips />
-          </div>
+          {product.hasUniformPricing ? <ProductStockDetails availableForSale={allInStock} /> : null}
         </div>
 
         {singleVariant ? (
           <ProductInfoContent
             priceSlot={
               !product.hasUniformPricing ? (
-                <Suspense fallback={<div className="h-7" aria-hidden />}>
+                <Suspense fallback={<div className="h-16" aria-hidden />}>
                   <ResolvedProductPrice variantPromise={variantPromise} />
                 </Suspense>
               ) : undefined
@@ -269,26 +267,31 @@ function ProductInfoContent({
 
   return (
     <ProductForm product={formProduct}>
-      <div className="grid gap-10" id="buy-box">
+      <div className="grid gap-10">
         {!product.hasUniformPricing ? (
-          <div data-slot="product-info-price">
+          <div className="mt-2" data-slot="product-info-price">
             {priceSlot ?? <ProductFormPrice fallbackVariant={fallbackVariant} />}
+            <ProductStockDetails
+              availableForSale={product.defaultVariant?.availableForSale ?? product.availableForSale}
+            />
           </div>
         ) : null}
-        {hasOptions ? <ProductFormOptions handle={product.handle} /> : null}
-        {product.isGiftCard ? (
-          <GiftCardPurchaseForm />
-        ) : (
-          <>
-            <BuyButtons
-              fallbackVariant={fallbackVariant}
-              availableForSale={product.availableForSale}
-              buyWithShop={shopConfig.pdp.buyWithShop.isEnabled}
-              quantityPicker={shopConfig.pdp.quantityPicker.isEnabled}
-            />
-            <ServiceGuarantees />
-          </>
-        )}
+        <div className="grid gap-10" id="buy-box">
+          {hasOptions ? <ProductFormOptions handle={product.handle} /> : null}
+          {product.isGiftCard ? (
+            <GiftCardPurchaseForm />
+          ) : (
+            <>
+              <BuyButtons
+                fallbackVariant={fallbackVariant}
+                availableForSale={product.availableForSale}
+                buyWithShop={shopConfig.pdp.buyWithShop.isEnabled}
+                quantityPicker={shopConfig.pdp.quantityPicker.isEnabled}
+              />
+              <ServiceGuarantees />
+            </>
+          )}
+        </div>
       </div>
       {!product.isGiftCard && (
         <StickyBuyBar
@@ -306,6 +309,15 @@ function ProductInfoContent({
   );
 }
 
+function ProductStockDetails({ availableForSale }: { availableForSale: boolean }) {
+  return (
+    <div className="mt-5 grid gap-4">
+      <StockIndicator availableForSale={availableForSale} />
+      <TrustChips />
+    </div>
+  );
+}
+
 function ProductInfoFallback({
   showLabel,
   allInStock,
@@ -319,7 +331,12 @@ function ProductInfoFallback({
 }) {
   return (
     <div className="grid gap-10">
-      {!product.hasUniformPricing ? <div className="h-7" aria-hidden /> : null}
+      {!product.hasUniformPricing ? (
+        <div className="mt-2">
+          <div className="h-16" aria-hidden />
+          <ProductStockDetails availableForSale={allInStock} />
+        </div>
+      ) : null}
       {hasOptions ? (
         <ProductInfoOptions options={toStaticOptionGroups(product)} hideImages />
       ) : null}
@@ -448,7 +465,7 @@ export function ProductDetailSkeleton() {
           <div className="-mx-5 aspect-square w-[calc(100%+2.5rem)] bg-accent" />
           <div aria-hidden="true" className="h-1.5" />
         </div>
-        <div className="hidden gap-3 lg:grid lg:grid-cols-[7rem_1fr]">
+        <div className="hidden gap-3 lg:grid lg:grid-cols-[3.5rem_1fr]">
           <div className="flex flex-col gap-2.5">
             <div className="aspect-square w-full bg-accent" />
             <div className="aspect-square w-full bg-accent" />

@@ -97,9 +97,9 @@ function OrderLineItemRow({ item }: { item: OrderLineItem }) {
         ) : null}
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{item.title}</p>
+        <p className="text-sm/5 font-medium wrap-anywhere">{item.title}</p>
         {item.variantTitle ? (
-          <p className="truncate text-xs text-muted-foreground">{item.variantTitle}</p>
+          <p className="text-xs/4 wrap-anywhere text-muted-foreground">{item.variantTitle}</p>
         ) : null}
         <p className="text-xs text-muted-foreground">× {item.quantity}</p>
       </div>

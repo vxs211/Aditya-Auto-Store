@@ -112,12 +112,12 @@ function CartLineItem({ item }: CartLineItemProps) {
           <div className="grid gap-1">
             {href ? (
               <Link href={href} className="cursor-pointer transition-opacity hover:opacity-70">
-                <h3 className="line-clamp-1 font-sans text-sm font-medium text-foreground">
+                <h3 className="font-sans text-sm/5 font-medium wrap-anywhere text-foreground">
                   {title}
                 </h3>
               </Link>
             ) : (
-              <h3 className="line-clamp-1 font-sans text-sm font-medium text-foreground">
+              <h3 className="font-sans text-sm/5 font-medium wrap-anywhere text-foreground">
                 {title}
               </h3>
             )}

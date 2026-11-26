@@ -92,11 +92,11 @@ export default function ReturnPolicyPage() {
 
       <Container>
         <Sections className="gap-16 py-16 md:gap-20 md:py-20">
-          <div className="mx-auto grid w-full max-w-3xl gap-12">
+          <div className="mx-auto grid w-full max-w-prose gap-12">
             {SECTIONS.map(({ heading, points }) => (
               <section className="grid gap-3" data-reveal key={heading}>
                 <h2 className="text-h3">{heading}</h2>
-                <ul className="grid gap-2 text-base text-muted-foreground">
+                <ul className="grid gap-2 text-base/relaxed text-pretty text-muted-foreground">
                   {points.map((point) => (
                     <li className="flex gap-3" key={point}>
                       <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-primary" />
@@ -106,7 +106,7 @@ export default function ReturnPolicyPage() {
                 </ul>
               </section>
             ))}
-            <p className="text-small text-muted-foreground" data-reveal>
+            <p className="text-base/relaxed text-pretty text-muted-foreground" data-reveal>
               {shopConfig.site.name} may refuse a return or refund if the item does not meet the
               conditions above.
             </p>
