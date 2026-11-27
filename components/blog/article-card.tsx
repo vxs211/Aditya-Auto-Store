@@ -15,8 +15,8 @@ export function ArticleCard({ article }: ArticleCardProps) {
     dateStyle: "long",
   }).format(new Date(article.publishedAt));
   return (
-    <article className="grid content-start gap-4">
-      <Link className="relative aspect-3/2 overflow-hidden rounded-xl" href={href}>
+    <article className="grid content-start gap-3 rounded-2xl bg-white shadow-card p-3 sm:p-4">
+      <Link className="relative aspect-3/2 overflow-hidden rounded-2xl bg-[#fff1e8]" href={href}>
         {article.image ? (
           <Image
             alt={article.image.altText}
@@ -29,7 +29,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
           <ImagePlaceholder className="size-full bg-muted" />
         )}
       </Link>
-      <div className="grid gap-2.5">
+      <div className="grid gap-2.5 pt-1">
         <time className="text-muted-foreground text-sm" dateTime={article.publishedAt}>
           {publishedAt}
         </time>

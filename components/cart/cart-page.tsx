@@ -2,10 +2,13 @@
 
 import type { ComponentProps, ReactNode } from "react";
 
+import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
-import { Sections } from "@/components/ui/sections";
+import { PageHero, PRIMARY_PILL } from "@/components/ui/page-cards";
+import { PremiumBagIcon } from "@/components/ui/premium-icons";
+import { SectionHeading } from "@/components/ui/section-heading";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSuspenseCart } from "@/lib/cart/client";
 
@@ -18,29 +21,39 @@ export function CartPageContent() {
 
   if (cart.totalQuantity === 0) {
     return (
-      <div className="flex flex-col items-center justify-center gap-5 py-10 px-5">
-        <h2 className="text-2xl sm:text-3xl">Your cart is empty</h2>
-        <Link
-          href="/"
-          className="inline-flex cursor-pointer items-center justify-center h-12 px-8 rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-        >
-          Continue Shopping
-        </Link>
-      </div>
+      <Page className="bg-white pt-0 md:pt-0">
+        <PageHero title="Your cart" />
+        <section className="bg-white pb-12 sm:pb-16 lg:pb-24">
+          <Container className="grid max-w-xl justify-items-center gap-5 rounded-2xl bg-white p-8 text-center shadow-card sm:p-12">
+            <span className="grid size-20 place-items-center rounded-2xl bg-[#fff1e8]">
+              <PremiumBagIcon className="size-12 text-primary" />
+            </span>
+            <div className="grid gap-1">
+              <h2 className="font-heading text-2xl font-semibold">Your cart is empty</h2>
+              <p className="text-body text-muted-foreground">
+                Pick your scooter and see the parts made for it.
+              </p>
+            </div>
+            <Button className={PRIMARY_PILL} render={<Link href="/collections" />} size="lg">
+              Continue shopping
+            </Button>
+          </Container>
+        </section>
+      </Page>
     );
   }
 
   return (
     <CartPageLayout
       count={
-        <span className="flex size-7 items-center justify-center rounded-full bg-foreground text-sm text-background">
+        <span className="flex size-8 items-center justify-center rounded-full bg-primary text-base font-semibold text-white tabular-nums">
           {cart.totalQuantity}
         </span>
       }
       summary={<CartSummary cart={cart} />}
       warnings={<CartWarnings />}
     >
-      <CartLineItems lines={cart.lines.nodes} />
+      <CartLineItems cards lines={cart.lines.nodes} />
     </CartPageLayout>
   );
 }
@@ -96,22 +109,24 @@ interface CartPageLayoutProps extends ComponentProps<"div"> {
 
 function CartPageLayout({ children, count, summary, warnings, ...props }: CartPageLayoutProps) {
   return (
-    <Page {...props}>
-      <Container>
-        <Sections>
-          <div className="flex items-center gap-2.5">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl">Cart</h1>
-            {count}
-          </div>
+    <Page className="bg-white pt-0 md:pt-0" {...props}>
+      <section className="bg-white pt-12 pb-8 sm:pt-16 sm:pb-10 lg:pt-24 lg:pb-12">
+        <Container className="flex items-center justify-center gap-3">
+          <SectionHeading align="center" title="Your cart" />
+          {count}
+        </Container>
+      </section>
+      <section className="bg-white pb-12 sm:pb-16 lg:pb-24">
+        <Container className="grid gap-5">
           {warnings}
-          <div className="grid gap-5 lg:grid-cols-12">
-            <div className="lg:col-span-8 xl:col-span-9">{children}</div>
-            <aside className="lg:col-span-4 xl:col-span-3">
-              <div className="lg:sticky lg:top-20">{summary}</div>
+          <div className="grid items-start gap-3 lg:grid-cols-12">
+            <div className="lg:col-span-8">{children}</div>
+            <aside className="lg:sticky lg:top-24 lg:col-span-4">
+              <div className="rounded-2xl bg-white p-5 shadow-card sm:p-6">{summary}</div>
             </aside>
           </div>
-        </Sections>
-      </Container>
+        </Container>
+      </section>
     </Page>
   );
 }

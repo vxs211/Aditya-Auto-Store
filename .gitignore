@@ -55,3 +55,8 @@ progress.txt
 
 # opensrc - source code for packages
 opensrc/
+
+# Impeccable design skill (local only)
+.agents/skills/impeccable/
+.claude/skills/impeccable
+skills-lock.json

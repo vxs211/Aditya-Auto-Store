@@ -4,7 +4,12 @@ import { cn } from "cn";
 import Image from "next/image";
 import { type ReactNode, useState } from "react";
 
-import { ChevronRightIcon, MessageSquareTextIcon, SearchIcon } from "@/components/ui/icon";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MessageSquareTextIcon,
+  SearchIcon,
+} from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 
 const BRAND_LOGOS: Partial<Record<string, string>> = {
@@ -20,17 +25,17 @@ const ENTER =
 const stagger = (i: number) => ({ animationDelay: `${Math.min(i, 8) * 45}ms` });
 
 const TILE_CLASS =
-  "group flex cursor-pointer items-center gap-2.5 rounded-[10px] border border-border bg-background p-3 text-left text-sm font-medium shadow-sm transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-0.5 hover:border-primary hover:shadow-md active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50";
+  "group flex cursor-pointer items-center gap-2.5 rounded-2xl bg-white p-3 text-left text-sm font-semibold shadow-card transition-[transform,box-shadow] duration-150 hover:-translate-y-0.5 hover:shadow-card-hover active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50";
 
 function BotBubble({ children }: { children: ReactNode }) {
   return (
     <div className={`flex items-end gap-2 ${ENTER}`}>
-      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary text-white">
+      <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-[#fff1e8] text-primary">
         <MessageSquareTextIcon className="size-4" />
       </span>
       <p
         aria-live="polite"
-        className="max-w-[85%] rounded-2xl rounded-bl-sm bg-background px-3.5 py-2.5 text-sm font-medium shadow-sm"
+        className="max-w-[85%] rounded-2xl rounded-bl-sm bg-[#fff1e8] px-3.5 py-2.5 text-sm font-medium text-foreground"
       >
         {children}
       </p>
@@ -41,7 +46,7 @@ function BotBubble({ children }: { children: ReactNode }) {
 function UserBubble({ children }: { children: ReactNode }) {
   return (
     <p
-      className={`ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-foreground px-3.5 py-2 text-sm text-white ${ENTER}`}
+      className={`ml-auto w-fit max-w-[85%] rounded-2xl rounded-br-sm bg-primary px-3.5 py-2 text-sm font-medium text-white ${ENTER}`}
     >
       {children}
     </p>
@@ -67,7 +72,7 @@ export function ShoppingQuestions({ brands, onVehicleSelect }: ShoppingQuestions
   const [brand, setBrand] = useState<ShoppingBrand>();
   const step = brand ? 3 : searching ? 2 : 1;
   const backClass =
-    "w-fit rounded-full px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground";
+    "inline-flex w-fit items-center gap-1 rounded-full px-2 py-1 text-sm text-muted-foreground transition-colors hover:bg-[#fff1e8] hover:text-foreground";
   return (
     <div className="grid gap-3">
       <div aria-hidden className="h-1 overflow-hidden rounded-full bg-border">
@@ -94,7 +99,7 @@ export function ShoppingQuestions({ brands, onVehicleSelect }: ShoppingQuestions
             type="button"
           >
             <span className="flex items-center gap-3">
-              <span className="grid size-9 place-items-center rounded-lg bg-primary/10 text-primary">
+              <span className="grid size-9 place-items-center rounded-xl bg-[#fff1e8] text-primary">
                 <SearchIcon className="size-4" />
               </span>
               Search your brand
@@ -106,7 +111,7 @@ export function ShoppingQuestions({ brands, onVehicleSelect }: ShoppingQuestions
             {brand.models.map((vehicle, i) => (
               <Link
                 className={cn(
-                  "rounded-full border border-border bg-background px-3.5 py-2 text-sm font-medium shadow-sm transition-[transform,box-shadow,border-color,color] duration-150 hover:-translate-y-0.5 hover:border-primary hover:text-primary hover:shadow-md",
+                  "rounded-full bg-white px-4 py-2 text-sm font-semibold shadow-card transition-[transform,box-shadow] duration-150 hover:-translate-y-0.5 hover:shadow-card-hover",
                   ENTER,
                 )}
                 href={`/collections/${vehicle.handle}`}
@@ -146,11 +151,13 @@ export function ShoppingQuestions({ brands, onVehicleSelect }: ShoppingQuestions
         <>
           {brand ? (
             <Link className={backClass} href="/collections" onNavigate={() => setBrand(undefined)}>
-              ← Back
+              <ChevronLeftIcon aria-hidden="true" className="size-4" />
+              Back
             </Link>
           ) : (
             <button className={backClass} onClick={() => setSearching(false)} type="button">
-              ← Back
+              <ChevronLeftIcon aria-hidden="true" className="size-4" />
+              Back
             </button>
           )}
         </>

@@ -55,7 +55,7 @@ export function AgentComposer({
       }}
       className="px-4 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom,0px))]"
     >
-      <InputGroup className="h-auto flex-row items-end rounded-lg border-border bg-transparent shadow-none has-[[data-slot=input-group-control]:focus-visible]:border-foreground has-[[data-slot=input-group-control]:focus-visible]:ring-0">
+      <InputGroup className="h-auto flex-row items-end rounded-2xl border-0 bg-white shadow-card has-[[data-slot=input-group-control]:focus-visible]:ring-2 has-[[data-slot=input-group-control]:focus-visible]:ring-primary/40">
         <InputGroupTextarea
           aria-label="Message Shop Agent"
           value={value}
@@ -70,7 +70,7 @@ export function AgentComposer({
           variant="default"
           aria-label={isBusy ? "Stop" : "Send"}
           disabled={disabled || status === "resuming" || (!value.trim() && !isBusy)}
-          className="mr-1.5 mb-1.5"
+          className="mr-1.5 mb-1.5 rounded-full"
         >
           {icon}
         </InputGroupButton>

@@ -2,10 +2,17 @@ import type { Metadata } from "next";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { Highlight } from "@/components/ui/highlight";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
-import { Sections } from "@/components/ui/sections";
+import {
+  CheckList,
+  HelpBand,
+  PageHero,
+  PolicyCard,
+  PRIMARY_PILL,
+  WHITE_PILL,
+  WhatsAppIcon,
+} from "@/components/ui/page-cards";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
@@ -121,81 +128,62 @@ export default function TermsPage() {
   const { phone, whatsapp } = shopConfig.contact;
   return (
     <Page className="pt-0 md:pt-0">
-      <section className="bg-foreground text-background">
-        <Container className="grid justify-items-center gap-4 py-12 text-center md:py-20">
-          <h1 className="text-display max-w-3xl">
-            Terms of <Highlight>service</Highlight>
-          </h1>
-          <p className="max-w-2xl text-silver">Last updated {LAST_UPDATED}</p>
-        </Container>
-      </section>
+      <PageHero eyebrow="Legal" title="Terms of service">
+        Last updated {LAST_UPDATED}
+      </PageHero>
 
-      <Container>
-        <Sections className="gap-16 py-16 md:gap-20 md:py-20">
-          <div className="mx-auto grid w-full max-w-prose gap-12 text-base/relaxed text-pretty text-muted-foreground">
-            <p data-reveal>
+      <section className="bg-white pb-12 sm:pb-16 lg:pb-24">
+        <Container className="grid gap-8 sm:gap-10">
+          <div className="mx-auto grid w-full max-w-3xl gap-3">
+            <p className="px-2 pb-2 text-body text-pretty text-muted-foreground" data-reveal>
               Welcome to {NAME}. By using our website you agree to the terms below. Please read them
               carefully.
             </p>
             {SECTIONS.map(({ heading, intro, points }, index) => (
-              <section className="grid gap-3" data-reveal key={heading}>
-                <h2 className="text-h3 text-foreground">
-                  {index + 1}. {heading}
-                </h2>
-                {intro && <p>{intro}</p>}
-                {points && (
-                  <ul className="grid gap-2">
-                    {points.map((point) => (
-                      <li className="flex gap-3" key={point}>
-                        <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-primary" />
-                        {point}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
+              <PolicyCard heading={heading} key={heading} number={index + 1}>
+                {intro && <p className="text-body text-pretty text-muted-foreground">{intro}</p>}
+                {points && <CheckList points={points} />}
+              </PolicyCard>
             ))}
           </div>
 
-          <section
-            className="grid gap-5 bg-muted p-8 md:flex md:items-center md:justify-between md:p-14"
-            data-reveal
+          <HelpBand
+            body="Monday to Saturday, 10:00am to 6:00pm. We are happy to help."
+            title="Questions about these terms?"
           >
-            <div>
-              <h2 className="text-h3">Questions about these terms?</h2>
-              <p className="text-muted-foreground">
-                Monday to Saturday, 10:00am to 6:00pm. We are happy to help.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {whatsapp && (
-                <Button
-                  render={
-                    <a
-                      href={`https://wa.me/${whatsapp}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    />
-                  }
-                >
-                  Chat on WhatsApp
-                </Button>
-              )}
-              {phone && (
-                <Button
-                  render={<a href={`tel:${phone.replace(/[^\d+]/g, "")}`} />}
-                  variant="outline"
-                >
-                  Call us
-                </Button>
-              )}
-              <Button render={<Link href="/return-policy" />} variant="outline">
-                Return policy
+            {whatsapp && (
+              <Button
+                className={PRIMARY_PILL}
+                render={
+                  <a href={`https://wa.me/${whatsapp}`} rel="noopener noreferrer" target="_blank" />
+                }
+                size="lg"
+              >
+                <WhatsAppIcon className="size-5" />
+                Chat on WhatsApp
               </Button>
-            </div>
-          </section>
-        </Sections>
-      </Container>
+            )}
+            {phone && (
+              <Button
+                className={WHITE_PILL}
+                render={<a href={`tel:${phone.replace(/[^\d+]/g, "")}`} />}
+                size="lg"
+                variant="secondary"
+              >
+                Call us
+              </Button>
+            )}
+            <Button
+              className={WHITE_PILL}
+              render={<Link href="/return-policy" />}
+              size="lg"
+              variant="secondary"
+            >
+              Return policy
+            </Button>
+          </HelpBand>
+        </Container>
+      </section>
     </Page>
   );
 }

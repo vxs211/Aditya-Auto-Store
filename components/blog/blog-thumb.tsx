@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import Image from "next/image";
 
 import type { Guide } from "@/lib/guides";
@@ -8,13 +9,23 @@ export function BlogThumb({
   guide,
   photo,
   priority,
+  className,
+  compact,
 }: {
+  compact?: boolean;
+  className?: string;
   guide: Pick<Guide, "headline" | "title">;
   photo?: GuidePhoto;
   priority?: boolean;
 }) {
   return (
-    <div className="relative aspect-16/10 overflow-hidden bg-muted">
+    <div
+      className={cn(
+        "relative overflow-hidden bg-muted",
+        compact ? "aspect-3/2" : "aspect-16/10",
+        className,
+      )}
+    >
       <Image
         alt=""
         className="absolute top-5 left-5 h-6 w-auto"
@@ -23,11 +34,18 @@ export function BlogThumb({
         unoptimized
         width={120}
       />
-      <p className="absolute top-16 left-5 z-10 max-w-[52%] font-heading text-h3 text-balance">
+      <p
+        className={cn(
+          "absolute left-5 z-10 font-heading text-balance",
+          compact
+            ? "top-12 max-w-[48%] text-base leading-tight font-semibold"
+            : "top-16 max-w-[52%] text-h3",
+        )}
+      >
         {guide.headline}
       </p>
       {photo && (
-        <div className="absolute inset-y-0 right-0 w-[60%]">
+        <div className="absolute inset-y-0 right-0 w-[56%]">
           <Image
             alt={photo.alt}
             className="object-contain object-right-bottom mix-blend-multiply"

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Inter_Tight } from "next/font/google";
 
 import {
   Accordion,
@@ -8,12 +9,19 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { Highlight } from "@/components/ui/highlight";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
-import { Sections } from "@/components/ui/sections";
+import {
+  HelpBand,
+  PageHero,
+  PRIMARY_PILL,
+  WHITE_PILL,
+  WhatsAppIcon,
+} from "@/components/ui/page-cards";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 const TITLE = "Frequently asked questions";
 const DESCRIPTION =
@@ -105,71 +113,63 @@ export default function FaqPage() {
   return (
     <Page className="pt-0 md:pt-0">
       <script type="application/ld+json">{JSON.stringify(FAQ_SCHEMA)}</script>
-      <section className="bg-foreground text-background">
-        <Container className="grid gap-4 py-12 md:py-20">
-          <h1 className="text-display max-w-3xl">
-            Questions, <Highlight>answered</Highlight>
-          </h1>
-          <p className="max-w-2xl text-silver">
-            Fitment, material, bulk orders and support. If yours is not here, message us.
-          </p>
+      <PageHero eyebrow="FAQ" title="Questions, answered">
+        Fitment, material, bulk orders and support. If yours is not here, message us.
+      </PageHero>
+
+      <section className="bg-white pb-12 sm:pb-16 lg:pb-24" data-reveal>
+        <Container className="grid gap-8 sm:gap-10">
+          <Accordion className="mx-auto grid w-full max-w-3xl gap-3">
+            {FAQS.map(({ answer, question }) => (
+              <AccordionItem
+                className="rounded-2xl border-b-0 bg-white px-5 shadow-card transition-shadow hover:shadow-card-hover sm:px-6"
+                key={question}
+                value={question}
+              >
+                <AccordionTrigger className={`${interTight.className} text-lg font-semibold hover:no-underline`}>
+                  {question}
+                </AccordionTrigger>
+                <AccordionContent className="max-w-prose text-base/relaxed text-pretty text-muted-foreground">
+                  {answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+
+          <HelpBand body="Tell us your scooter and we will say what fits." title="Still not sure?">
+            {whatsapp && (
+              <Button
+                className={PRIMARY_PILL}
+                render={
+                  <a href={`https://wa.me/${whatsapp}`} rel="noopener noreferrer" target="_blank" />
+                }
+                size="lg"
+              >
+                <WhatsAppIcon className="size-5" />
+                Chat on WhatsApp
+              </Button>
+            )}
+            {phone && (
+              <Button
+                className={WHITE_PILL}
+                render={<a href={`tel:${phone.replace(/[^\d+]/g, "")}`} />}
+                size="lg"
+                variant="secondary"
+              >
+                Call us
+              </Button>
+            )}
+            <Button
+              className={WHITE_PILL}
+              render={<Link href="/collections" />}
+              size="lg"
+              variant="secondary"
+            >
+              Shop by model
+            </Button>
+          </HelpBand>
         </Container>
       </section>
-
-      <Container>
-        <Sections className="gap-20 py-16 md:gap-28 md:py-20">
-          <section className="max-w-3xl" data-reveal>
-            <Accordion>
-              {FAQS.map(({ answer, question }) => (
-                <AccordionItem key={question} value={question}>
-                  <AccordionTrigger className="text-base">{question}</AccordionTrigger>
-                  <AccordionContent className="max-w-prose text-base/relaxed text-pretty text-muted-foreground">
-                    {answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </section>
-
-          <section
-            className="grid gap-5 bg-muted p-8 md:flex md:items-center md:justify-between md:p-14"
-            data-reveal
-          >
-            <div>
-              <h2 className="text-h3">Still not sure?</h2>
-              <p className="text-muted-foreground">
-                Tell us your scooter and we will say what fits.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {whatsapp && (
-                <Button
-                  render={
-                    <a
-                      href={`https://wa.me/${whatsapp}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    />
-                  }
-                >
-                  Chat on WhatsApp
-                </Button>
-              )}
-              {phone && (
-                <Button
-                  render={<a href={`tel:${phone.replace(/[^\d+]/g, "")}`} />}
-                  variant="outline"
-                >
-                  Call us
-                </Button>
-              )}
-              <Button render={<Link href="/collections" />} variant="outline">
-                Shop by model
-              </Button>
-            </div>
-          </section>
-        </Sections>
-      </Container>
     </Page>
   );
 }

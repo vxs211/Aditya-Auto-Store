@@ -5,6 +5,7 @@ import { type FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { WhatsAppIcon } from "@/components/ui/page-cards";
 
 // There is no public order lookup, so the number is sent to us on WhatsApp and we reply with the status.
 export function TrackOrderForm({ siteName, whatsapp }: { siteName: string; whatsapp: string }) {
@@ -23,7 +24,7 @@ export function TrackOrderForm({ siteName, whatsapp }: { siteName: string; whats
   }
 
   return (
-    <form className="grid max-w-md gap-4" onSubmit={handleSubmit}>
+    <form className="grid gap-4" onSubmit={handleSubmit}>
       <div className="grid gap-2">
         <Label htmlFor="order-number">Order number</Label>
         <Input
@@ -37,7 +38,12 @@ export function TrackOrderForm({ siteName, whatsapp }: { siteName: string; whats
           value={orderNumber}
         />
       </div>
-      <Button className="w-fit" type="submit">
+      <Button
+        className="h-12 w-fit rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] px-6 text-base text-white shadow-lg ring-1 ring-white/25 ring-inset hover:shadow-xl"
+        size="lg"
+        type="submit"
+      >
+        <WhatsAppIcon className="size-5" />
         Ask us on WhatsApp
       </Button>
     </form>

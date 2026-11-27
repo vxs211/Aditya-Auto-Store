@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import { Inter_Tight } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 import { BlogThumb, formatPostDate } from "@/components/blog/blog-thumb";
 import { InlineText } from "@/components/blog/inline-text";
 import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
-import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
+import { ArrowRIcon, ChevronLeftIcon } from "@/components/ui/icon";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
 import { getFitmentBrands } from "@/lib/collections/server";
@@ -14,6 +15,8 @@ import { shopConfig } from "@/lib/config";
 import { GUIDES, getGuide } from "@/lib/guides";
 import { pickGuidePhotos } from "@/lib/guides/photos";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 export function generateStaticParams() {
   return GUIDES.map(({ slug }) => ({ slug }));
@@ -94,21 +97,31 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
       />
 
       <Container className="grid max-w-4xl gap-6 pt-10 md:pt-16">
-        <Link className="text-link hover:underline" href="/guides">
+        <Link
+          className="inline-flex w-fit items-center gap-1 text-body font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:decoration-primary"
+          href="/guides"
+        >
+          <ChevronLeftIcon aria-hidden="true" className="size-4" />
           All posts
         </Link>
-        <h1 className="text-h1 text-balance">{guide.title}</h1>
-        <p className="text-small text-muted-foreground">{formatPostDate(guide.published)}</p>
+        <h1 className="max-w-3xl text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.12] font-semibold tracking-[-0.1px] text-balance">
+          {guide.title}
+        </h1>
+        <p className="text-small text-muted-foreground tabular-nums">
+          {formatPostDate(guide.published)}
+        </p>
         <BlogThumb guide={guide} photo={photos.get(guide.slug)} priority />
       </Container>
 
-      <Container className="max-w-3xl">
+      <Container className="max-w-4xl">
         <article className="grid gap-12 py-12 md:py-16">
           {guide.sections.map(({ heading, paragraphs, steps }) => (
-            <section className="grid gap-4" key={heading}>
-              <h2 className="font-heading text-h2">{heading}</h2>
+            <section className="grid max-w-[68ch] gap-4" key={heading}>
+              <h2 className="font-heading text-3xl! leading-tight! tracking-[-0.1px] text-balance md:text-4xl!">
+                {heading}
+              </h2>
               {paragraphs.map((paragraph) => (
-                <p className="text-muted-foreground" key={paragraph}>
+                <p className="text-lg leading-8 text-pretty text-foreground/80" key={paragraph}>
                   <InlineText text={paragraph} />
                 </p>
               ))}
@@ -116,10 +129,10 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
                 <ol className="grid gap-4">
                   {steps.map((step, index) => (
                     <li className="flex gap-4" key={step}>
-                      <span className="flex size-8 shrink-0 items-center justify-center bg-primary font-heading font-semibold text-primary-foreground">
+                      <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-primary font-heading font-semibold text-primary-foreground tabular-nums">
                         {index + 1}
                       </span>
-                      <span className="pt-1 text-muted-foreground">
+                      <span className="pt-0.5 text-lg leading-8 text-pretty text-foreground/80">
                         <InlineText text={step} />
                       </span>
                     </li>
@@ -130,12 +143,16 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
           ))}
 
           {guide.faqs && (
-            <section className="grid gap-6">
-              <h2 className="font-heading text-h2">Questions</h2>
+            <section className="grid max-w-[68ch] gap-6">
+              <h2 className="font-heading text-3xl! leading-tight! tracking-[-0.1px] text-balance md:text-4xl!">
+                Questions
+              </h2>
               {guide.faqs.map(({ answer, question }) => (
                 <div className="grid gap-2" key={question}>
-                  <h3 className="font-heading text-h4">{question}</h3>
-                  <p className="text-muted-foreground">{answer}</p>
+                  <h3 className="font-heading text-h4 text-balance">{question}</h3>
+                  <p className="text-lg leading-8 text-pretty text-foreground/80">
+                    <InlineText text={answer} />
+                  </p>
                 </div>
               ))}
             </section>
@@ -144,32 +161,50 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
       </Container>
 
       <Container>
-        <section className="mb-16 grid gap-5 bg-foreground p-8 text-background md:mb-24 md:flex md:items-center md:justify-between md:p-14">
-          <div>
-            <h2 className="text-h2">Ready to find your parts?</h2>
-            <p className="text-silver">Pick your scooter and see what is made for it.</p>
-          </div>
-          <Button render={<Link href="/collections" />}>Shop by model</Button>
-        </section>
-
         <section className="mb-16 grid gap-8 md:mb-24">
           <div className="flex flex-wrap items-end justify-between gap-2">
-            <h2 className="font-heading text-h2">Recent posts</h2>
-            <Link className="text-sm text-link hover:underline" href="/guides">
+            <h2 className="font-heading text-3xl! leading-tight! tracking-[-0.1px] md:text-4xl!">
+              Recent posts
+            </h2>
+            <Link
+              className="text-sm font-medium text-foreground underline underline-offset-4"
+              href="/guides"
+            >
               View all posts
             </Link>
           </div>
-          <ul className="grid gap-x-5 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {recent.map((item) => (
               <li key={item.slug}>
-                <Link className="group grid gap-3" href={`/guides/${item.slug}`}>
-                  <BlogThumb guide={item} photo={photos.get(item.slug)} />
-                  <h3 className="font-heading text-h4 transition-colors group-hover:text-link">
-                    {item.title}
-                  </h3>
-                  <p className="text-small text-muted-foreground">
-                    {formatPostDate(item.published)}
-                  </p>
+                <Link
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-card p-3 transition-shadow hover:shadow-card-hover sm:p-4"
+                  href={`/guides/${item.slug}`}
+                >
+                  <BlogThumb
+                    className="rounded-2xl bg-[#fff1e8]"
+                    compact
+                    guide={item}
+                    photo={photos.get(item.slug)}
+                  />
+                  <span className="flex flex-1 flex-col gap-3 pt-3">
+                    <span className="text-xs font-medium text-muted-foreground tabular-nums">
+                      {formatPostDate(item.published)}
+                    </span>
+                    <h3
+                      className={`${interTight.className} text-lg! leading-snug! font-semibold text-balance text-foreground`}
+                    >
+                      {item.title}
+                    </h3>
+                    <span className="mt-auto inline-flex w-fit items-center gap-2 rounded-full bg-[#F66101] py-0.5 pr-0.5 pl-3 text-xs font-medium text-white">
+                      Read article
+                      <span className="flex size-6 items-center justify-center rounded-full bg-white text-foreground">
+                        <ArrowRIcon
+                          aria-hidden="true"
+                          className="size-3.5 transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
+                        />
+                      </span>
+                    </span>
+                  </span>
                 </Link>
               </li>
             ))}

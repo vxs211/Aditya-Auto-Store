@@ -2,10 +2,25 @@ import type { Metadata } from "next";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { Highlight } from "@/components/ui/highlight";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
-import { Sections } from "@/components/ui/sections";
+import {
+  CheckList,
+  HelpBand,
+  PageHero,
+  PolicyCard,
+  PRIMARY_PILL,
+  WHITE_PILL,
+  WhatsAppIcon,
+} from "@/components/ui/page-cards";
+import {
+  PremiumBagIcon,
+  PremiumChatIcon,
+  PremiumCheckIcon,
+  PremiumShieldIcon,
+  PremiumTruckIcon,
+  PremiumUndoIcon,
+} from "@/components/ui/premium-icons";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
@@ -30,6 +45,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   {
     heading: "Returns",
+    icon: PremiumUndoIcon,
     points: [
       "Returns are accepted within 3 days of delivery.",
       "The item must be unused, in its original condition and in its original packing.",
@@ -38,6 +54,7 @@ const SECTIONS = [
   },
   {
     heading: "Items that cannot be returned",
+    icon: PremiumShieldIcon,
     points: [
       "Parts that are used or damaged by incorrect fitting.",
       "Customised or special-order items.",
@@ -46,6 +63,7 @@ const SECTIONS = [
   },
   {
     heading: "Old model vehicle accessories",
+    icon: PremiumTruckIcon,
     points: [
       "Accessories for old model vehicles cannot be cancelled, refunded or returned, whether the order was paid on delivery (COD) or prepaid.",
       "If there is a manufacturing defect, or the part was damaged in transit, we will replace it after checking it.",
@@ -53,6 +71,7 @@ const SECTIONS = [
   },
   {
     heading: "Refunds",
+    icon: PremiumBagIcon,
     points: [
       "Once we receive and inspect the returned item, we will tell you the status of your refund.",
       "If approved, the refund goes to your original payment method within 7 to 10 business days.",
@@ -61,6 +80,7 @@ const SECTIONS = [
   },
   {
     heading: "Exchanges",
+    icon: PremiumCheckIcon,
     points: [
       "We exchange only parts that are defective or were delivered wrongly.",
       "To ask for an exchange, contact us within 48 hours of delivery with your order details and photos of the part.",
@@ -68,6 +88,7 @@ const SECTIONS = [
   },
   {
     heading: "How to start a return or refund",
+    icon: PremiumChatIcon,
     points: [
       "Call or message us on WhatsApp with your order ID, the product name, the reason for the return or refund, and clear photos if they apply.",
       "Our team will guide you through the next steps.",
@@ -79,78 +100,61 @@ export default function ReturnPolicyPage() {
   const { phone, whatsapp } = shopConfig.contact;
   return (
     <Page className="pt-0 md:pt-0">
-      <section className="bg-foreground text-background">
-        <Container className="grid justify-items-center gap-4 py-12 text-center md:py-20">
-          <h1 className="text-display max-w-3xl">
-            Return and <Highlight>refund</Highlight>
-          </h1>
-          <p className="max-w-2xl text-silver">
-            If something is not right with your order, here is how we fix it.
-          </p>
-        </Container>
-      </section>
+      <PageHero eyebrow="Policy" title="Return and refund">
+        If something is not right with your order, here is how we fix it.
+      </PageHero>
 
-      <Container>
-        <Sections className="gap-16 py-16 md:gap-20 md:py-20">
-          <div className="mx-auto grid w-full max-w-prose gap-12">
-            {SECTIONS.map(({ heading, points }) => (
-              <section className="grid gap-3" data-reveal key={heading}>
-                <h2 className="text-h3">{heading}</h2>
-                <ul className="grid gap-2 text-base/relaxed text-pretty text-muted-foreground">
-                  {points.map((point) => (
-                    <li className="flex gap-3" key={point}>
-                      <span aria-hidden className="mt-2.5 size-1.5 shrink-0 bg-primary" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </section>
+      <section className="bg-white pb-12 sm:pb-16 lg:pb-24">
+        <Container className="grid gap-8 sm:gap-10">
+          <div className="mx-auto grid w-full max-w-3xl gap-3">
+            {SECTIONS.map(({ heading, icon, points }) => (
+              <PolicyCard heading={heading} icon={icon} key={heading}>
+                <CheckList points={points} />
+              </PolicyCard>
             ))}
-            <p className="text-base/relaxed text-pretty text-muted-foreground" data-reveal>
+            <p className="px-2 pt-2 text-small text-pretty text-muted-foreground" data-reveal>
               {shopConfig.site.name} may refuse a return or refund if the item does not meet the
               conditions above.
             </p>
           </div>
 
-          <section
-            className="grid gap-5 bg-muted p-8 md:flex md:items-center md:justify-between md:p-14"
-            data-reveal
+          <HelpBand
+            body="Monday to Saturday, 10:00am to 6:00pm. Have your order ID ready."
+            title="Need to return something?"
           >
-            <div>
-              <h2 className="text-h3">Need to return something?</h2>
-              <p className="text-muted-foreground">
-                Monday to Saturday, 10:00am to 6:00pm. Have your order ID ready.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {whatsapp && (
-                <Button
-                  render={
-                    <a
-                      href={`https://wa.me/${whatsapp}`}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    />
-                  }
-                >
-                  Chat on WhatsApp
-                </Button>
-              )}
-              {phone && (
-                <Button
-                  render={<a href={`tel:${phone.replace(/[^\d+]/g, "")}`} />}
-                  variant="outline"
-                >
-                  Call us
-                </Button>
-              )}
-              <Button render={<Link href="/contact" />} variant="outline">
-                Contact us
+            {whatsapp && (
+              <Button
+                className={PRIMARY_PILL}
+                render={
+                  <a href={`https://wa.me/${whatsapp}`} rel="noopener noreferrer" target="_blank" />
+                }
+                size="lg"
+              >
+                <WhatsAppIcon className="size-5" />
+                Chat on WhatsApp
               </Button>
-            </div>
-          </section>
-        </Sections>
-      </Container>
+            )}
+            {phone && (
+              <Button
+                className={WHITE_PILL}
+                render={<a href={`tel:${phone.replace(/[^\d+]/g, "")}`} />}
+                size="lg"
+                variant="secondary"
+              >
+                Call us
+              </Button>
+            )}
+            <Button
+              className={WHITE_PILL}
+              render={<Link href="/contact" />}
+              size="lg"
+              variant="secondary"
+            >
+              Contact us
+            </Button>
+          </HelpBand>
+        </Container>
+      </section>
     </Page>
   );
 }

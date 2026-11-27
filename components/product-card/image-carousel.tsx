@@ -42,8 +42,7 @@ export function ProductImageCarousel({
   return (
     <div
       data-slot="product-card-image"
-      // Catalogue shots are chrome on white; keep the tile plain so the part sits on a clean background.
-      className={cn("relative aspect-square overflow-hidden rounded-[1.15rem] bg-white", className)}
+      className={cn("relative aspect-square overflow-hidden rounded-2xl bg-[#fff1e8]", className)}
     >
       {current ? (
         <Image
@@ -52,7 +51,7 @@ export function ProductImageCarousel({
           {...(current.width && current.height
             ? { width: current.width, height: current.height }
             : { fill: true })}
-          className="absolute inset-0 size-full object-contain p-3"
+          className="absolute inset-0 size-full object-contain p-3 mix-blend-multiply"
           src={current.url}
           sizes="100vw"
         />

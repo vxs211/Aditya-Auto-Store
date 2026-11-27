@@ -24,7 +24,7 @@ export function BrowseToolbar({ filters, resultCount, sortExclude }: BrowseToolb
           trigger={
             <button
               type="button"
-              className="flex cursor-pointer items-center gap-2 text-sm font-medium"
+              className="flex h-10 cursor-pointer items-center gap-2 rounded-full bg-white px-4 text-sm font-medium shadow-card transition-shadow hover:shadow-card-hover"
             >
               <SlidersHorizontalIcon className="size-4" />
               <span>Filters</span>
@@ -52,7 +52,7 @@ export function BrowseFallback({ resultCount }: BrowseFallbackProps) {
         filterSheet={
           <button
             type="button"
-            className="flex cursor-pointer items-center gap-2 text-sm font-medium"
+            className="flex h-10 cursor-pointer items-center gap-2 rounded-full bg-white px-4 text-sm font-medium shadow-card transition-shadow hover:shadow-card-hover"
           >
             <SlidersHorizontalIcon className="size-4" />
             <span>Filters</span>
@@ -60,7 +60,7 @@ export function BrowseFallback({ resultCount }: BrowseFallbackProps) {
         }
         resultCount={resultCount}
         sortSelect={
-          <div className="flex h-9 w-fit items-center justify-between gap-2 rounded-md bg-transparent px-0 py-2 text-sm whitespace-nowrap">
+          <div className="flex h-10 w-fit items-center justify-between gap-2 rounded-full bg-white px-4 text-sm whitespace-nowrap shadow-card">
             <span>Sort</span>
             <ChevronDownIcon className="size-4 text-muted-foreground opacity-50" />
           </div>

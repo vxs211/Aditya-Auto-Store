@@ -66,12 +66,12 @@ function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
           className="absolute left-0 right-0 top-full z-40 mx-auto mt-2 w-fit"
           host={host}
         >
-          <ul className="min-w-56 rounded-3xl border border-black/10 bg-white p-2 shadow-xl">
+          <ul className="min-w-56 rounded-2xl bg-white p-2 shadow-card-hover">
             {item.items.map((entry) => (
               <li key={entry.id}>
                 <MenuLink
                   url={entry.url}
-                  className={`block rounded-2xl px-6 py-3 text-base font-normal text-foreground transition-colors hover:bg-primary-tint hover:text-primary-hover ${interTight.className}`}
+                  className={`block rounded-full px-5 py-3 text-base font-semibold text-foreground transition-colors hover:bg-[#fff1e8] ${interTight.className}`}
                 >
                   {entry.title}
                 </MenuLink>
@@ -94,7 +94,7 @@ function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
         />
       </MenuLink>
       <DropdownPanel className="absolute inset-x-0 top-full z-40 mt-2" host={host}>
-        <div className="rounded-3xl border border-black/10 bg-white shadow-xl">
+        <div className="rounded-2xl bg-white shadow-card-hover">
           <MegaPanel defaultId={mega.defaultId} details={mega.details} entries={item.items} />
         </div>
       </DropdownPanel>

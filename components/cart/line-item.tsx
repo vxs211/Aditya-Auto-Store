@@ -1,6 +1,8 @@
 "use client";
 
 import type { CartLine as HydrogenCartLine } from "@shopify/hydrogen";
+import { cn } from "cn";
+import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 
 import { MinusIcon, PlusIcon, TrashIcon as Trash2Icon } from "@/components/ui/icon";
@@ -13,16 +15,19 @@ import { formatPrice } from "@/lib/money";
 import { CartLineForm } from "./line-form";
 import { CartWarnings } from "./warnings";
 
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
+
 interface CartLineItemsProps {
+  cards?: boolean;
   lines: CartLine[];
 }
 
-export function CartLineItems({ lines }: CartLineItemsProps) {
+export function CartLineItems({ cards, lines }: CartLineItemsProps) {
   const keys = getLineRowKeys(lines);
   return (
-    <ul className="grid gap-5" aria-label="Cart items">
+    <ul className={cards ? "grid gap-3" : "grid gap-5"} aria-label="Cart items">
       {lines.map((line, index) => (
-        <CartLineItem key={keys[index]} item={line} />
+        <CartLineItem card={cards} key={keys[index]} item={line} />
       ))}
     </ul>
   );
@@ -43,10 +48,11 @@ function getLineRowKeys(lines: CartLine[]) {
 }
 
 interface CartLineItemProps {
+  card?: boolean;
   item: CartLine;
 }
 
-function CartLineItem({ item }: CartLineItemProps) {
+function CartLineItem({ card, item }: CartLineItemProps) {
   const isPending = useCart((state) => state.pending.lines.has(item.id));
   const isCostPending = useCart((state) =>
     Boolean(state.pending.cost || state.revalidating || state.pending.lines.has(item.id)),
@@ -87,7 +93,7 @@ function CartLineItem({ item }: CartLineItemProps) {
       src={image.url}
       alt={image.altText || title}
       fill
-      className="object-cover"
+      className="object-contain p-1 mix-blend-multiply"
       sizes="100vw"
     />
   ) : (
@@ -96,28 +102,38 @@ function CartLineItem({ item }: CartLineItemProps) {
   const price = (amount: number) => formatPrice({ amount: String(amount), currencyCode });
 
   return (
-    <li className="flex gap-2.5" aria-busy={isPending || undefined} aria-label={title}>
+    <li
+      className={cn("flex gap-3", card && "rounded-2xl bg-white p-3 shadow-card sm:p-4")}
+      aria-busy={isPending || undefined}
+      aria-label={title}
+    >
       {href ? (
         <Link
           href={href}
-          className="relative size-18 shrink-0 cursor-pointer self-start overflow-hidden transition-opacity hover:opacity-80"
+          className="relative size-20 shrink-0 cursor-pointer self-start overflow-hidden rounded-2xl bg-[#fff1e8] transition-opacity hover:opacity-80"
         >
           {imageContent}
         </Link>
       ) : (
-        <div className="relative size-18 shrink-0 self-start overflow-hidden">{imageContent}</div>
+        <div className="relative size-20 shrink-0 self-start overflow-hidden rounded-2xl bg-[#fff1e8]">
+          {imageContent}
+        </div>
       )}
-      <div className="grid min-h-18 min-w-0 flex-1 gap-2.5 pt-0.5">
+      <div className="grid min-h-20 min-w-0 flex-1 gap-2.5 pt-0.5">
         <div className="grid gap-2.5">
           <div className="grid gap-1">
             {href ? (
               <Link href={href} className="cursor-pointer transition-opacity hover:opacity-70">
-                <h3 className="font-sans text-sm/5 font-medium wrap-anywhere text-foreground">
+                <h3
+                  className={`${interTight.className} text-base leading-snug font-semibold text-pretty wrap-anywhere text-foreground`}
+                >
                   {title}
                 </h3>
               </Link>
             ) : (
-              <h3 className="font-sans text-sm/5 font-medium wrap-anywhere text-foreground">
+              <h3
+                className={`${interTight.className} text-base leading-snug font-semibold text-pretty wrap-anywhere text-foreground`}
+              >
                 {title}
               </h3>
             )}
@@ -156,7 +172,7 @@ function CartLineItem({ item }: CartLineItemProps) {
             <>
               <div
                 aria-label="Item quantity"
-                className="grid h-9 grid-cols-[2.25rem_1.75rem_2.25rem] rounded-full ring-1 ring-border ring-inset"
+                className="grid h-9 grid-cols-[2.25rem_1.75rem_2.25rem] rounded-full bg-white shadow-card"
                 role="group"
               >
                 <button
@@ -190,7 +206,7 @@ function CartLineItem({ item }: CartLineItemProps) {
               <button
                 {...register("remove")}
                 type="submit"
-                className="flex size-9 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                className="flex size-9 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-destructive disabled:cursor-not-allowed disabled:opacity-40"
                 disabled={isOptimistic || !canRemove}
                 aria-label={`Remove item: ${lineName}`}
               >
@@ -203,7 +219,7 @@ function CartLineItem({ item }: CartLineItemProps) {
       </div>
       <div className="grid gap-0.5 self-start py-0.5 text-right text-sm tabular-nums tracking-tight">
         <span
-          className="font-medium text-foreground data-[pending=true]:text-muted-foreground"
+          className={`${interTight.className} text-base font-semibold text-foreground data-[pending=true]:text-muted-foreground`}
           data-pending={isCostPending || !currencyCode}
         >
           {isCostPending || !currencyCode ? "Updating…" : price(finalUnitPrice)}

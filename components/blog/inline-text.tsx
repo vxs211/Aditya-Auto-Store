@@ -16,7 +16,7 @@ export function InlineText({ text }: { text: string }) {
     <>
       {parts.map((part, index) =>
         typeof part === "string" ? (
-          part
+          part.replaceAll("'", "\u2019")
         ) : (
           <Link
             className="text-foreground underline decoration-primary decoration-2 underline-offset-4 hover:text-link"

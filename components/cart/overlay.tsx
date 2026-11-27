@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { LoaderIcon as Loader2, XIcon } from "@/components/ui/icon";
+import { PRIMARY_PILL } from "@/components/ui/page-cards";
+import { PremiumBagIcon } from "@/components/ui/premium-icons";
 import {
   Sheet,
   SheetClose,
@@ -23,7 +25,7 @@ function CartCountBadge() {
   const count = useCart((state) => state.data.totalQuantity);
   if (count === 0) return null;
   return (
-    <span className="flex size-5 items-center justify-center rounded-full bg-foreground text-xs text-background">
+    <span className="flex size-5 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white tabular-nums">
       {count}
     </span>
   );
@@ -57,7 +59,9 @@ export function CartOverlay({ description, title }: CartOverlayProps) {
       >
         <div className="flex h-16 shrink-0 items-center justify-between gap-2 px-2.5">
           <div className="flex items-center gap-1.5">
-            <SheetTitle className="font-normal text-xl leading-4">{title}</SheetTitle>
+            <SheetTitle className="font-heading text-xl leading-4 font-semibold">
+              {title}
+            </SheetTitle>
             <CartCountBadge />
           </div>
           <SheetClose
@@ -92,15 +96,19 @@ function OverlayContent() {
       <div className="flex h-full min-h-56 flex-col gap-5 px-2.5 pb-4">
         <CartWarnings />
         <div className="flex flex-1 flex-col items-center justify-center text-center">
-          <h3 className="mb-6 text-2xl">Your cart is empty</h3>
+          <span className="mb-4 grid size-20 place-items-center rounded-2xl bg-[#fff1e8]">
+            <PremiumBagIcon className="size-12 text-primary" />
+          </span>
+          <h3 className="mb-6 font-heading text-2xl font-semibold">Your cart is empty</h3>
           <Button
             onClick={() => {
               setOverlayOpen(false);
-              router.push("/");
+              router.push("/collections");
             }}
-            className="h-12 px-8"
+            className={PRIMARY_PILL}
+            size="lg"
           >
-            Continue Shopping
+            Continue shopping
           </Button>
         </div>
       </div>

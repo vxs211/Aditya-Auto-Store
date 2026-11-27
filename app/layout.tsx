@@ -49,14 +49,20 @@ const michroma = Michroma({
   weight: "400",
 });
 
+// Collections the shopping assistant does not offer as a vehicle choice.
+const HIDDEN_ASSISTANT_MODELS = new Set([
+  "chetak-black-accessories",
+  "chetak-c2501-black-accessories",
+  "leg-guard-honda-shine-sp",
+  "honda-shine-leg-guard",
+  "honda-unicorn-leg-guard",
+]);
+
 async function StoreAssistant() {
   const brands = (await getFitmentBrands()).map(({ handle, models, title }) => ({
     handle,
     models: models
-      .filter(
-        ({ handle }) =>
-          handle !== "chetak-black-accessories" && handle !== "chetak-c2501-black-accessories",
-      )
+      .filter(({ handle }) => !HIDDEN_ASSISTANT_MODELS.has(handle))
       .map(({ handle, title }) => ({ handle, title: modelDisplayName(title, handle) })),
     title: brandDisplayName(title),
   }));

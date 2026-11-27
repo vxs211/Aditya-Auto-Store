@@ -125,7 +125,7 @@ export function ReviewShowcase({ reviews }: { reviews: ShowcaseReview[] }) {
 
       <div
         aria-live="polite"
-        className="relative -my-8 h-[27rem] overflow-hidden [--g:1.5rem] [--w:min(32rem,86vw)] [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] max-sm:h-[24rem]"
+        className="relative -my-8 h-[21rem] overflow-hidden [--g:1.5rem] [--w:min(32rem,86vw)] [mask-image:linear-gradient(to_right,transparent,black_4%,black_96%,transparent)] max-sm:h-[22rem]"
       >
         <ul
           className={cn("absolute inset-y-8 left-1/2 w-0", SLIDE)}
@@ -184,7 +184,7 @@ export function ReviewShowcase({ reviews }: { reviews: ShowcaseReview[] }) {
                     ))}
                   </div>
                 </div>
-                <div className="flex min-w-0 flex-col justify-between gap-4 rounded-lg bg-white p-5 max-sm:justify-start max-sm:gap-3 max-sm:p-4">
+                <div className="flex min-w-0 flex-col justify-center gap-3 rounded-lg bg-white p-5 max-sm:justify-start max-sm:p-4">
                   <div className="flex items-center gap-3">
                     <span className="size-12 shrink-0">
                       <Avatar review={review} />
@@ -216,7 +216,7 @@ export function ReviewShowcase({ reviews }: { reviews: ShowcaseReview[] }) {
         ].map(({ icon: Icon, label, next }) => (
           <Button
             aria-label={label}
-            className="size-12 rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] text-white shadow-lg ring-1 ring-white/25 ring-inset hover:shadow-xl"
+            className="size-12 cursor-pointer rounded-full transition-[transform,box-shadow,filter] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] motion-reduce:transition-none hover:-translate-y-0.5 hover:scale-105 hover:brightness-110 active:scale-90 active:duration-100 active:ease-out active:shadow-sm active:brightness-95 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] text-white shadow-lg ring-1 ring-white/25 ring-inset hover:shadow-xl"
             key={label}
             onClick={() => go(next)}
             size="icon-lg"

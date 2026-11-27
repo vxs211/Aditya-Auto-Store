@@ -36,14 +36,9 @@ export function CollectionLayout({
       {collection.id ? (
         <CollectionViewedTracker collection={{ handle: collection.handle, id: collection.id }} />
       ) : null}
-      <Page className="gap-0 pt-0">
-        <div aria-hidden="true" className="h-10 bg-[#F66101] sm:h-14" />
-        <div
-          aria-hidden="true"
-          className="h-14 bg-[linear-gradient(180deg,#F66101_0%,#ff8a4d_45%,#ffe3d1_85%,#ffffff_100%)] sm:h-20"
-        />
-        <Container>
-          <Sections className="gap-5">
+      <Page className="gap-0 bg-white pt-0 md:pt-0">
+        <Container className="pt-12 pb-12 sm:pt-16 sm:pb-16 lg:pt-24 lg:pb-24">
+          <Sections className="gap-8 sm:gap-10">
             <CollectionHeader
               collection={collection}
               handle={handle}

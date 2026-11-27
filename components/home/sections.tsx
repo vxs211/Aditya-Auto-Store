@@ -439,11 +439,11 @@ export async function BlogSection() {
                 }`}
               >
                 <Link
-                  className={`group flex h-full overflow-hidden rounded-2xl bg-muted p-3 sm:p-4 transition-shadow hover:shadow-lg ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
+                  className={`group flex h-full overflow-hidden rounded-2xl bg-white shadow-card p-3 sm:p-4 transition-shadow hover:shadow-card-hover ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
                   href={isCollection ? "/collections/all" : `/guides/${guide.slug}`}
                 >
                   <span
-                    className={`relative block shrink-0 overflow-hidden rounded-lg bg-[#fff1e8] ${index === 0 ? "aspect-[16/9] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : guide.slug === "how-to-install-a-scooter-guard-at-home" ? "aspect-[21/9]" : "aspect-[16/9]"}`}
+                    className={`relative block shrink-0 overflow-hidden rounded-2xl bg-[#fff1e8] ${index === 0 ? "aspect-[16/9] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : guide.slug === "how-to-install-a-scooter-guard-at-home" ? "aspect-[21/9]" : "aspect-[16/9]"}`}
                   >
                     {photo && (
                       <Image
@@ -456,7 +456,7 @@ export async function BlogSection() {
                     )}
                   </span>
                   <span
-                    className={`grid flex-1 content-start ${guide.slug === "how-to-install-a-scooter-guard-at-home" ? "gap-2 p-3 sm:p-4" : "gap-3 p-3 sm:p-4"}`}
+                    className={`flex flex-1 flex-col ${guide.slug === "how-to-install-a-scooter-guard-at-home" ? "gap-2 pt-3" : "gap-3 pt-3"}`}
                   >
                     {!isCollection && (
                       <span className="text-xs font-medium text-link">
@@ -475,12 +475,12 @@ export async function BlogSection() {
                         ? "Discover scooter accessories made for a precise fit."
                         : guide.description}
                     </span>
-                    <span className="inline-flex w-fit items-center gap-3 rounded-full bg-[#F66101] py-1 pl-4 pr-1 text-sm font-medium text-white">
+                    <span className="mt-auto inline-flex w-fit items-center gap-2 rounded-full bg-[#F66101] py-0.5 pl-3 pr-0.5 text-xs font-medium text-white">
                       {isCollection ? "View collection" : "Read article"}{" "}
-                      <span className="flex size-8 items-center justify-center rounded-full bg-white text-black">
+                      <span className="flex size-6 items-center justify-center rounded-full bg-white text-black">
                         <ArrowRIcon
                           aria-hidden="true"
-                          className="size-4 transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
+                          className="size-3.5 transition-transform group-hover:translate-x-1 motion-reduce:transform-none"
                         />
                       </span>
                     </span>

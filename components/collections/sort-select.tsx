@@ -28,7 +28,7 @@ export function CollectionsSortSelect({ exclude = [] }: { exclude?: SortValue[] 
       onValueChange={(value) => setSortByValue(value ?? "manual")}
       disabled={status === "loading"}
     >
-      <SelectTrigger className="border-0 shadow-none bg-transparent px-0">
+      <SelectTrigger className="h-10 rounded-full border-0 bg-white px-4 shadow-card transition-shadow hover:shadow-card-hover">
         <span>Sort</span>
       </SelectTrigger>
       <SelectContent>

@@ -83,7 +83,7 @@ export const MORE_GUIDES: GuideDraft[] = [
       },
       {
         answer:
-          "Not on their own. A guard helps most in low-speed falls and knocks, such as a tip-over while parking or a slow slide.",
+          "Not on its own. A guard helps most in low-speed falls and knocks, such as a tip-over while parking or a slow slide.",
         question: "Will a guard save my scooter in any crash?",
       },
     ],
@@ -105,7 +105,7 @@ export const MORE_GUIDES: GuideDraft[] = [
       {
         heading: "Why fit and material matter",
         paragraphs: [
-          "A guard that does not match your model can sit loose, twist in a fall and press on the body instead of protecting it. That is why ours are made for one model each. The material matters too: stainless steel is the same metal all the way through, so a scratch does not open the way for rust the way it can on a plated part.",
+          "A guard that does not match your model can sit loose, twist in a fall and press on the body instead of protecting it. That is why ours are made for one model each. The material matters too: stainless steel is the same metal all the way through, so a scratch does not open a path to rust the way it can on a plated part.",
         ],
       },
       {

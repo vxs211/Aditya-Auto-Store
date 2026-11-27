@@ -44,9 +44,9 @@ export function CartTotal({ cart }: CartTotalProps) {
       <div className="flex items-baseline justify-between text-base text-foreground">
         <span>Estimated total</span>
         {isCostPending || !currencyCode ? (
-          <span className="font-medium text-muted-foreground text-xl">Updating…</span>
+          <span className="font-semibold text-muted-foreground text-xl">Updating…</span>
         ) : (
-          <Price amount={amount} className="font-medium text-xl" currencyCode={currencyCode} />
+          <Price amount={amount} className="font-semibold text-xl" currencyCode={currencyCode} />
         )}
       </div>
       <p className="text-muted-foreground text-xs">Taxes and shipping calculated at checkout.</p>
@@ -72,7 +72,7 @@ export function CartCheckout({ label = "Checkout" }: CartCheckoutProps) {
       <Button
         aria-busy={isCheckingOut || isUpdatingCart || undefined}
         aria-describedby={checkoutError ? checkoutErrorId : undefined}
-        className="h-12 w-full justify-center"
+        className="h-12 w-full justify-center rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] text-base text-white shadow-lg ring-1 ring-white/25 ring-inset hover:shadow-xl"
         disabled={isCheckoutDisabled}
         onClick={handleCheckout}
         type="button"

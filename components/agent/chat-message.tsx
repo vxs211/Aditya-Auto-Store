@@ -43,7 +43,7 @@ export function ChatMessage({
     return text ? (
       <div className="flex justify-end">
         <Bubble className="max-w-[85%]" variant="default">
-          <BubbleContent className="rounded-lg px-3.5">
+          <BubbleContent className="rounded-2xl rounded-br-sm bg-primary px-3.5 text-white">
             <Markdown>{text}</Markdown>
           </BubbleContent>
         </Bubble>

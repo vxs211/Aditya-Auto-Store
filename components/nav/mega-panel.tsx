@@ -78,8 +78,8 @@ export function MegaPanel({
   }
 
   return (
-    <Container className="grid grid-cols-[2fr_3fr] gap-16 pt-10 pb-12" ref={root}>
-      <ul className="grid grid-cols-2 content-start gap-x-10">
+    <Container className="grid grid-cols-[1.2fr_3fr] gap-10 pt-10 pb-12" ref={root}>
+      <ul className="grid content-start gap-2">
         {entries.map((entry) => (
           <li
             key={entry.id}
@@ -88,11 +88,13 @@ export function MegaPanel({
           >
             <MenuLink
               url={entry.url}
-              // A plain string, not cn(): tailwind-merge reads text-link (a colour) and text-h4 (a size) as the same
-              // group and would drop the size on the active link, shrinking it.
-              className={`block py-3 text-h4 font-semibold transition-colors hover:text-link ${interTight.className}${entry.id === current ? " text-link" : ""}`}
+              className={`flex items-center justify-between gap-2 rounded-full px-4 py-3 text-base font-semibold transition-[background-color,box-shadow] ${interTight.className} ${entry.id === current ? "bg-white shadow-card" : "hover:bg-[#fff1e8]"}`}
             >
               {entry.title}
+              <ArrowRIcon
+                aria-hidden="true"
+                className={`size-4 shrink-0 transition-opacity ${entry.id === current ? "opacity-100" : "opacity-0"}`}
+              />
             </MenuLink>
           </li>
         ))}
@@ -116,39 +118,45 @@ export function MegaPanel({
                 key={id}
               >
                 <div
-                  className={cn("flex items-baseline justify-between gap-4", entering && ENTER)}
+                  className={cn("flex items-center justify-between gap-4", entering && ENTER)}
                   style={entering ? { animationDelay: "120ms" } : undefined}
                 >
-                  <p className={`text-h3 ${interTight.className}`}>{detail.heading}</p>
-                  <p className="text-small text-muted-foreground">{detail.caption}</p>
+                  <p className={`text-2xl leading-tight font-semibold ${interTight.className}`}>
+                    {detail.heading}
+                  </p>
+                  <p className="rounded-full bg-[#fff1e8] px-3 py-1 text-small text-foreground tabular-nums">
+                    {detail.caption}
+                  </p>
                 </div>
                 <ul className="grid grid-cols-3 gap-4">
                   {detail.cards.map((card, cardIndex) => (
                     <li
-                      className={cn(entering && ENTER)}
+                      className={cn("h-full", entering && ENTER)}
                       key={card.url}
                       style={entering ? { animationDelay: `${180 + cardIndex * 90}ms` } : undefined}
                     >
                       <Link
-                        className="group/card relative block aspect-4/5 overflow-hidden rounded-[1.15rem] bg-[linear-gradient(135deg,#fff4ed_0%,#ffe6d7_48%,#ff9d6c_100%)] ring-1 ring-black/10 transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:transform-none motion-reduce:transition-none"
+                        className="group/card grid h-full grid-rows-[auto_1fr] gap-3 rounded-2xl bg-white p-3 shadow-card transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-card-hover motion-reduce:transform-none motion-reduce:transition-none"
                         href={card.url}
                       >
-                        <Image
-                          alt={card.image.altText || card.title}
-                          className={cn(
-                            "object-cover transition-transform duration-700 group-hover/card:scale-105",
-                            entering &&
-                              "animate-[menu-zoom_1400ms_cubic-bezier(0.16,1,0.3,1)_backwards] motion-reduce:animate-none",
-                          )}
-                          fill
-                          sizes="100vw"
-                          src={card.image.url}
-                          style={
-                            entering ? { animationDelay: `${180 + cardIndex * 90}ms` } : undefined
-                          }
-                        />
+                        <span className="relative block aspect-4/3 overflow-hidden rounded-2xl bg-[#fff1e8]">
+                          <Image
+                            alt={card.image.altText || card.title}
+                            className={cn(
+                              "object-contain p-2 mix-blend-multiply transition-transform duration-700 group-hover/card:scale-105",
+                              entering &&
+                                "animate-[menu-zoom_1400ms_cubic-bezier(0.16,1,0.3,1)_backwards] motion-reduce:animate-none",
+                            )}
+                            fill
+                            sizes="100vw"
+                            src={card.image.url}
+                            style={
+                              entering ? { animationDelay: `${180 + cardIndex * 90}ms` } : undefined
+                            }
+                          />
+                        </span>
                         <span
-                          className={`absolute right-3 bottom-3 left-3 flex items-center justify-between rounded-2xl bg-white/90 px-3.5 py-2 text-small font-medium text-foreground shadow-soft backdrop-blur-sm ${interTight.className}`}
+                          className={`flex items-center justify-between gap-2 px-1 pb-0.5 text-small leading-tight font-semibold text-foreground ${interTight.className}`}
                         >
                           {card.title}
                           <span
