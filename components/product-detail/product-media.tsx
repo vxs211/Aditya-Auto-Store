@@ -70,7 +70,11 @@ function MediaImage({
       alt={item.image.altText || `${title} image ${idx + 1}`}
       height={item.image.height}
       width={item.image.width}
-      className={cn("absolute inset-0 size-full", fit === "cover" ? "object-cover" : "object-contain", className)}
+      className={cn(
+        "absolute inset-0 size-full",
+        fit === "cover" ? "object-cover" : "object-contain",
+        className,
+      )}
       sizes="100vw"
       {...(priority ? LCP_IMAGE_PROPS : LAZY_IMAGE_PROPS)}
       draggable={false}
@@ -128,13 +132,7 @@ function Tile({
         <ImagePlaceholder className="size-full" />
       ) : (
         <LightboxTrigger image={item.image}>
-          <MediaImage
-            fit={fit}
-            item={item}
-            title={title}
-            idx={idx}
-            priority={priority}
-          />
+          <MediaImage fit={fit} item={item} title={title} idx={idx} priority={priority} />
         </LightboxTrigger>
       )}
     </div>
@@ -302,7 +300,9 @@ function Carousel({
         </div>
         {itemCount > 1 && (
           <GalleryArrows
-            onStep={(direction) => scrollToImage((selectedIndex + direction + itemCount) % itemCount)}
+            onStep={(direction) =>
+              scrollToImage((selectedIndex + direction + itemCount) % itemCount)
+            }
           />
         )}
       </div>
@@ -413,7 +413,9 @@ export function ProductMedia({
             ))}
             {items.length > 1 && (
               <GalleryArrows
-                onStep={(direction) => setActive((clamped + direction + items.length) % items.length)}
+                onStep={(direction) =>
+                  setActive((clamped + direction + items.length) % items.length)
+                }
               />
             )}
           </div>

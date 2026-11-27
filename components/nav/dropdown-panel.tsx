@@ -24,19 +24,30 @@ export function DropdownPanel({ children, className, host }: DropdownPanelProps)
     gsap.set(el, {
       opacity: 0,
       visibility: "hidden",
-      y: 10,
-      scale: 0.98,
+      y: 6,
+      scale: 0.92,
       transformOrigin: "top center",
     });
+
+    // Grow out of the trigger: the scale origin is the trigger's horizontal centre.
+    function originFromTrigger() {
+      const parent = el!.offsetParent as HTMLElement | null;
+      if (!li || !parent) return;
+      const trigger = li.getBoundingClientRect();
+      const x =
+        trigger.left + trigger.width / 2 - parent.getBoundingClientRect().left - el!.offsetLeft;
+      gsap.set(el, { transformOrigin: `${x}px 0px` });
+    }
 
     let grace: ReturnType<typeof setTimeout> | undefined;
 
     function show() {
       clearTimeout(grace);
       gsap.killTweensOf(el);
+      originFromTrigger();
       gsap.set(el, { visibility: "visible" });
       if (reduced) return gsap.set(el, { opacity: 1, scale: 1, y: 0 });
-      gsap.to(el, { duration: 0.5, ease: "power3.out", opacity: 1, scale: 1, y: 0 });
+      gsap.to(el, { duration: 0.45, ease: "power4.out", opacity: 1, scale: 1, y: 0 });
     }
 
     function hide() {
@@ -46,10 +57,10 @@ export function DropdownPanel({ children, className, host }: DropdownPanelProps)
       grace = setTimeout(() => {
         gsap.to(el, {
           duration: 0.18,
-          ease: "power2.in",
+          ease: "power2.out",
           opacity: 0,
           y: 4,
-          scale: 0.99,
+          scale: 0.96,
           onComplete: () => gsap.set(el, { visibility: "hidden" }),
         });
       }, 120);

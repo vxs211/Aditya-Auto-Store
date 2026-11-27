@@ -171,7 +171,9 @@ function ProductInfoArea({
               {product.vendor}
             </p>
           ) : null}
-          <h1 className={`mt-1.5 text-h2 text-balance wrap-anywhere text-foreground ${interTight.className}`}>
+          <h1
+            className={`mt-1.5 text-h2 text-balance wrap-anywhere text-foreground ${interTight.className}`}
+          >
             {product.title}
           </h1>
           {product.hasUniformPricing ? (
@@ -272,7 +274,9 @@ function ProductInfoContent({
           <div className="mt-2" data-slot="product-info-price">
             {priceSlot ?? <ProductFormPrice fallbackVariant={fallbackVariant} />}
             <ProductStockDetails
-              availableForSale={product.defaultVariant?.availableForSale ?? product.availableForSale}
+              availableForSale={
+                product.defaultVariant?.availableForSale ?? product.availableForSale
+              }
             />
           </div>
         ) : null}

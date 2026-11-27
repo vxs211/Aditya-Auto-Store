@@ -2,11 +2,18 @@
 
 import { getShopPayButtonUrl } from "@shopify/hydrogen";
 import { cn } from "cn";
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { useCartDrawer } from "@/components/cart/context";
 import { Button } from "@/components/ui/button";
-import { LoaderIcon as Loader2, MinusIcon, PlusIcon } from "@/components/ui/icon";
+import {
+  BagIcon,
+  CheckIcon,
+  LoaderIcon as Loader2,
+  MinusIcon,
+  PlusIcon,
+} from "@/components/ui/icon";
+import { IconSwap } from "@/components/ui/icon-swap";
 import { formatPrice } from "@/lib/money";
 import type { Money } from "@/lib/money/types";
 import { getProductPurchaseOptions } from "@/lib/product";
@@ -39,6 +46,19 @@ export function BuyButtons({
   const { plans, selectedPlan } = getProductPurchaseOptions(selectedVariant, purchaseOption);
   const missingRequiredPlan = Boolean(selectedVariant?.requiresSellingPlan && !selectedPlan);
   const { openOverlay } = useCartDrawer();
+  const [justAdded, setJustAdded] = useState(false);
+  const wasPending = useRef(false);
+
+  // pending true -> false means the add finished: hold the success state briefly.
+  useEffect(() => {
+    if (wasPending.current && !pending) {
+      setJustAdded(true);
+      const timer = window.setTimeout(() => setJustAdded(false), 1800);
+      wasPending.current = pending;
+      return () => window.clearTimeout(timer);
+    }
+    wasPending.current = pending;
+  }, [pending]);
 
   useEffect(() => {
     const handlePageShow = (e: PageTransitionEvent) => {
@@ -58,7 +78,8 @@ export function BuyButtons({
     variants: [{ id: selectedVariant.id, quantity }],
   });
   const getButtonText = () => {
-    if (pending) return "Adding to Cart...";
+    if (pending) return "Adding...";
+    if (justAdded) return "Added to cart";
     if (isSelectionUnresolved) return "Add to Cart";
     if (requiresBundleConfiguration) return "Choose bundle items";
     if (missingRequiredPlan) return "Subscription unavailable";
@@ -100,7 +121,8 @@ export function BuyButtons({
         {quantityPicker ? (
           <div
             aria-label="Item quantity"
-            className="grid h-12 w-32 shrink-0 grid-cols-[3rem_2rem_3rem] rounded-lg bg-background ring-1 ring-border ring-inset"
+            className="grid h-12 w-32 shrink-0 grid-cols-[3rem_2rem_3rem] overflow-hidden rounded-lg bg-background ring-1 ring-border ring-inset transition-[width,margin,opacity,filter] duration-300 ease-(--ease-out-soft) motion-reduce:transition-none data-[collapsed=true]:pointer-events-none data-[collapsed=true]:-mr-2.5 data-[collapsed=true]:w-0 data-[collapsed=true]:opacity-0 data-[collapsed=true]:blur-sm"
+            data-collapsed={justAdded}
             role="group"
           >
             <button
@@ -140,9 +162,17 @@ export function BuyButtons({
             missingRequiredPlan ||
             pending
           }
-          className="h-12 min-w-40 flex-1 justify-center data-[selection-unresolved=true]:disabled:opacity-100"
+          data-added={justAdded}
+          className="h-12 min-w-40 flex-1 justify-center duration-300 data-[added=true]:bg-success data-[added=true]:text-white data-[added=true]:hover:bg-success data-[selection-unresolved=true]:disabled:opacity-100"
         >
-          {getButtonText()}
+          <IconSwap
+            active={justAdded}
+            from={
+              pending ? <Loader2 className="size-4 animate-spin" /> : <BagIcon className="size-4" />
+            }
+            to={<CheckIcon className="size-4" />}
+          />
+          <span aria-live="polite">{getButtonText()}</span>
         </Button>
       </div>
       {buyWithShop && !selectedPlan && !selectedVariant.requiresSellingPlan ? (

@@ -49,7 +49,9 @@ export function ProductImageCarousel({
         <Image
           key={current.url}
           alt={current.altText || alt}
-          {...(current.width && current.height ? { width: current.width, height: current.height } : { fill: true })}
+          {...(current.width && current.height
+            ? { width: current.width, height: current.height }
+            : { fill: true })}
           className="absolute inset-0 size-full object-contain p-3"
           src={current.url}
           sizes="100vw"

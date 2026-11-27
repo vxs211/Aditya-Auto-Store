@@ -218,6 +218,15 @@ export function MessageCircleIcon(props: ComponentProps<"svg">) {
   );
 }
 
+export function MessageSquareTextIcon(props: ComponentProps<"svg">) {
+  return (
+    <Icon {...props}>
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+      <path d="M7 8h10M7 12h10M7 16h5" />
+    </Icon>
+  );
+}
+
 export function MinusIcon(props: ComponentProps<"svg">) {
   return (
     <Icon {...props}>

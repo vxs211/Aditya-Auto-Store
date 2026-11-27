@@ -64,10 +64,7 @@ function ProductCardImage({
     <div
       data-slot="product-card-image"
       // Catalogue shots are chrome on white; keep the tile plain so the part sits on a clean background.
-      className={cn(
-        "relative aspect-square overflow-hidden rounded-[1.15rem] bg-white",
-        className,
-      )}
+      className={cn("relative aspect-square overflow-hidden rounded-[1.15rem] bg-white", className)}
     >
       {src ? (
         <Image
@@ -147,7 +144,10 @@ function ProductCardPrice({
           <Price
             amount={amount}
             currencyCode={currencyCode}
-            className={cn("text-sm whitespace-nowrap", discountPercent !== null ? "text-link" : "text-foreground")}
+            className={cn(
+              "text-sm whitespace-nowrap",
+              discountPercent !== null ? "text-link" : "text-foreground",
+            )}
           />
           {isRange && (
             <>

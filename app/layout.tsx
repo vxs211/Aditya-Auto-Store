@@ -3,7 +3,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Inter, Michroma } from "next/font/google";
 
 import "./globals.css";
-import { Suspense } from "react";
+import Script from "next/script";
+import { Suspense, ViewTransition } from "react";
 
 import { ActionBar } from "@/components/action-bar";
 import { AgentButton } from "@/components/agent/agent-button";
@@ -52,7 +53,10 @@ async function StoreAssistant() {
   const brands = (await getFitmentBrands()).map(({ handle, models, title }) => ({
     handle,
     models: models
-      .filter(({ handle }) => handle !== "chetak-black-accessories" && handle !== "chetak-c2501-black-accessories")
+      .filter(
+        ({ handle }) =>
+          handle !== "chetak-black-accessories" && handle !== "chetak-c2501-black-accessories",
+      )
       .map(({ handle, title }) => ({ handle, title: modelDisplayName(title, handle) })),
     title: brandDisplayName(title),
   }));
@@ -63,8 +67,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   // Un-awaited: the promise streams to the client provider; never block the shell on it.
   const cartData = seedCartData();
   return (
-    <html lang={shopConfig.localization.locale}>
+    <html lang={shopConfig.localization.locale} suppressHydrationWarning>
       <head>
+        {/* Marks whether this visit began on the home page, so the nav and bottom bar only play their entrance then. */}
+        <Script
+          id="first-home"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.dataset.firstHome=location.pathname==='/'?'1':'0'",
+          }}
+        />
         {shopConfig.botid.isEnabled && <BotIdClient protect={botIdProtectedRoutes} />}
         <CartStandardActionsScript />
       </head>
@@ -83,7 +95,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <AnnouncementBar />
           <Nav />
           <main id="main-content" className="flex flex-1 flex-col min-w-0">
-            {children}
+            <ViewTransition default="page-fade">{children}</ViewTransition>
           </main>
           <Footer />
           <CursorFollower />

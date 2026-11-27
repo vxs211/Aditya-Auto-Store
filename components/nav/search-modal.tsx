@@ -22,6 +22,7 @@ import { useRecentlyViewedProducts } from "@/lib/product/client";
 import { SEARCH_TERM_MAX_LENGTH } from "@/lib/search";
 import { usePredictiveSearch } from "@/lib/search/client";
 import type { PredictiveSearchProduct, SearchSuggestion } from "@/lib/search/types";
+import { useTypewriter } from "@/lib/use-typewriter";
 
 export function SearchModal({
   accent,
@@ -84,6 +85,13 @@ function SearchTrigger({
   );
 }
 
+const SEARCH_HINTS = [
+  "Search products",
+  "Try “Activa footrest”",
+  "Try “Chetak guard”",
+  "Try “Access bumper”",
+] as const;
+
 function SearchDialogContent({ onClose, open }: { onClose: () => void; open: boolean }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -91,6 +99,7 @@ function SearchDialogContent({ onClose, open }: { onClose: () => void; open: boo
     usePredictiveSearch();
   const recentlyViewed = useRecentlyViewedProducts(open);
   const hasQuery = query.trim().length > 0;
+  const placeholder = useTypewriter(SEARCH_HINTS, !hasQuery);
   // An empty query falls back to recently viewed, so both states drive one keyboard list.
   const suggestions = hasQuery ? (results?.queries ?? []) : [];
   const products = hasQuery ? (results?.products ?? []) : recentlyViewed;
@@ -171,7 +180,7 @@ function SearchDialogContent({ onClose, open }: { onClose: () => void; open: boo
                 type="text"
                 name="q"
                 role="combobox"
-                placeholder="Search products"
+                placeholder={placeholder}
                 maxLength={SEARCH_TERM_MAX_LENGTH}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -208,7 +217,7 @@ function SearchDialogContent({ onClose, open }: { onClose: () => void; open: boo
               <div
                 id="search-modal-results"
                 role="listbox"
-                className="border-t border-border/30 max-h-[60vh] overflow-y-auto overscroll-contain"
+                className="border-t border-border/30 scroll-fade-y max-h-[60vh] overflow-y-auto overscroll-contain"
               >
                 {hasQuery && isLoading && !results && <LoadingSkeleton />}
 

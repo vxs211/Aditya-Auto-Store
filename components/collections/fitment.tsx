@@ -26,12 +26,7 @@ interface FitmentLayoutProps {
 }
 
 // Brand pages list their models; model pages show the product grid passed as children, with no filters or sorting.
-export function FitmentLayout({
-  children,
-  collection,
-  fitment,
-  productCount,
-}: FitmentLayoutProps) {
+export function FitmentLayout({ children, collection, fitment, productCount }: FitmentLayoutProps) {
   const { handle, title, updatedAt } = collection;
   const { body, brand, models } = fitment;
   const visibleModels =

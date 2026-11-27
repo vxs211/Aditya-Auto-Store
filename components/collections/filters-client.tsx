@@ -39,7 +39,7 @@ export function FilterSheet({ children, label, trigger }: FilterSheetProps) {
   return (
     <Sheet>
       <SheetTrigger render={trigger} />
-      <SheetContent side="left" className="gap-0 overflow-y-auto px-5 pb-5">
+      <SheetContent side="left" className="scroll-fade-y gap-0 overflow-y-auto px-5 pb-5">
         <div className="flex h-16 shrink-0 items-center gap-2">
           <SheetTitle className="text-lg font-semibold">{label}</SheetTitle>
         </div>

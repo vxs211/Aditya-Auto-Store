@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { LoaderIcon as Loader2, XIcon } from "@/components/ui/icon";
@@ -34,11 +35,26 @@ interface CartOverlayProps {
 }
 
 export function CartOverlay({ description, title }: CartOverlayProps) {
-  const { isOverlayOpen, setOverlayOpen } = useCartDrawer();
+  const { isOverlayOpen, originX, setOverlayOpen } = useCartDrawer();
+  // Below the lg breakpoint the bottom bar shows, and the cart grows out of it instead of sliding from the side.
+  const [compact, setCompact] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 1023px)");
+    const update = () => setCompact(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+  const popup = compact && originX !== undefined;
 
   return (
     <Sheet open={isOverlayOpen} onOpenChange={setOverlayOpen}>
-      <SheetContent closeButton={false} overlay={false} side="right" className="gap-0 p-0">
+      <SheetContent
+        closeButton={false}
+        side={popup ? "popup" : "right"}
+        style={popup ? { transformOrigin: `${originX}px 100%` } : undefined}
+        className="gap-0 p-0"
+      >
         <div className="flex h-16 shrink-0 items-center justify-between gap-2 px-2.5">
           <div className="flex items-center gap-1.5">
             <SheetTitle className="font-normal text-xl leading-4">{title}</SheetTitle>
@@ -46,7 +62,7 @@ export function CartOverlay({ description, title }: CartOverlayProps) {
           </div>
           <SheetClose
             aria-label="Close cart"
-            className="flex cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+            className="-mr-2 flex size-11 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
           >
             <XIcon className="size-5" />
           </SheetClose>
@@ -65,7 +81,7 @@ function OverlayContent() {
   const { setOverlayOpen } = useCartDrawer();
   if (isLoading && cart.lines.nodes.length === 0) {
     return (
-      <div className="flex h-full items-center justify-center gap-2.5" role="status">
+      <div className="flex h-full min-h-40 items-center justify-center gap-2.5" role="status">
         <Loader2 className="size-4 animate-spin" aria-hidden="true" />
         Loading cart…
       </div>
@@ -73,7 +89,7 @@ function OverlayContent() {
   }
   if (cart.lines.nodes.length === 0) {
     return (
-      <div className="flex h-full flex-col gap-5 px-2.5">
+      <div className="flex h-full min-h-56 flex-col gap-5 px-2.5 pb-4">
         <CartWarnings />
         <div className="flex flex-1 flex-col items-center justify-center text-center">
           <h3 className="mb-6 text-2xl">Your cart is empty</h3>
@@ -91,8 +107,8 @@ function OverlayContent() {
     );
   }
   return (
-    <div className="flex h-full flex-col">
-      <div className="grid flex-1 content-start gap-5 overflow-y-auto px-2.5 py-5">
+    <div className="flex h-full min-h-0 flex-1 flex-col">
+      <div className="scroll-fade-y grid flex-1 content-start gap-5 overflow-y-auto px-2.5 py-5">
         <CartWarnings />
         <CartLineItems lines={cart.lines.nodes} />
       </div>

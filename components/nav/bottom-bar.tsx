@@ -15,7 +15,10 @@ import { SearchModal } from "./search-modal";
 // bottom within thumb reach. Desktop keeps the top bar.
 export function BottomBar() {
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] z-50 flex items-center justify-center gap-2 lg:hidden">
+    <div
+      id="bottom-bar"
+      className="pointer-events-none fixed inset-x-0 bottom-[calc(env(safe-area-inset-bottom,0px)+0.75rem)] z-50 flex items-center justify-center gap-2 lg:hidden"
+    >
       <Suspense fallback={null}>
         <BarMotion className="bar-round pointer-events-auto relative flex items-stretch bg-background p-1.5 shadow-[0_8px_28px_rgba(0,0,0,0.18)]">
           <BarLink href="/" icon="home" label="Home" />

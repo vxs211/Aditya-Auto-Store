@@ -156,14 +156,14 @@ function CartLineItem({ item }: CartLineItemProps) {
             <>
               <div
                 aria-label="Item quantity"
-                className="grid h-6 grid-cols-[1.75rem_1.5rem_1.75rem] rounded-full ring-1 ring-border ring-inset"
+                className="grid h-9 grid-cols-[2.25rem_1.75rem_2.25rem] rounded-full ring-1 ring-border ring-inset"
                 role="group"
               >
                 <button
                   {...register("decrease")}
                   type="submit"
                   aria-label={`Decrease quantity: ${lineName}`}
-                  className="flex h-6 cursor-pointer items-center justify-center p-0 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-9 cursor-pointer items-center justify-center p-0 disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={isOptimistic || !canUpdateQuantity || quantity <= 1}
                 >
                   <MinusIcon className="size-3 shrink-0" />
@@ -172,7 +172,7 @@ function CartLineItem({ item }: CartLineItemProps) {
                   key={quantity}
                   {...register("quantity", { interactive: true, value: quantity })}
                   aria-label={`Quantity: ${lineName}`}
-                  className="h-6 w-6 rounded-full bg-transparent text-center text-xs font-medium tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed"
+                  className="h-9 w-7 rounded-full bg-transparent text-center text-xs font-medium tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/50 disabled:cursor-not-allowed"
                   disabled={isOptimistic || !canUpdateQuantity}
                   max={99}
                   min={canRemove ? 0 : 1}
@@ -181,7 +181,7 @@ function CartLineItem({ item }: CartLineItemProps) {
                   {...register("increase")}
                   type="submit"
                   aria-label={`Increase quantity: ${lineName}`}
-                  className="flex h-6 cursor-pointer items-center justify-center p-0 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-9 cursor-pointer items-center justify-center p-0 disabled:cursor-not-allowed disabled:opacity-50"
                   disabled={isOptimistic || !canUpdateQuantity || quantity >= 99}
                 >
                   <PlusIcon className="size-3 shrink-0" />
@@ -190,7 +190,7 @@ function CartLineItem({ item }: CartLineItemProps) {
               <button
                 {...register("remove")}
                 type="submit"
-                className="flex cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
+                className="flex size-9 cursor-pointer items-center justify-center text-muted-foreground transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-40"
                 disabled={isOptimistic || !canRemove}
                 aria-label={`Remove item: ${lineName}`}
               >

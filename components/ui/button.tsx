@@ -4,17 +4,19 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "cn";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all cursor-pointer active:scale-[0.97] motion-reduce:active:scale-100 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary-hover focus-visible:bg-primary-hover",
+          "bg-primary text-primary-foreground shadow-[inset_0_1px_0_rgb(255_255_255/0.3)] hover:bg-primary-hover focus-visible:bg-primary-hover",
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20",
-        outline: "bg-primary-tint text-primary-hover hover:bg-primary-tint-hover",
+          "bg-destructive text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.25)] hover:bg-destructive/90 focus-visible:ring-destructive/20",
+        outline:
+          "bg-primary-tint text-primary-hover shadow-[inset_0_1px_0_rgb(255_255_255/0.7)] hover:bg-primary-tint-hover",
         inverse: "bg-background text-link hover:bg-[#dfdcd9] hover:text-foreground",
-        secondary: "bg-primary-tint text-primary-hover hover:bg-primary-tint-hover",
+        secondary:
+          "bg-primary-tint text-primary-hover shadow-[inset_0_1px_0_rgb(255_255_255/0.7)] hover:bg-primary-tint-hover",
         ghost: "rounded-sm text-ink-soft hover:bg-wash",
         link: "text-link underline-offset-4 hover:underline",
       },

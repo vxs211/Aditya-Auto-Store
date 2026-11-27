@@ -55,7 +55,9 @@ export function HomeHero() {
             <span className="shrink-0">2 WHEELER</span>
             <span className="h-0.5 flex-1 bg-white" />
           </p>
-          <p className="whitespace-nowrap text-[34.25vw] leading-[0.85] tracking-[-0.02em] lg:text-[30.44vw]">ACCESSORIES</p>
+          <p className="whitespace-nowrap text-[34.25vw] leading-[0.85] tracking-[-0.02em] lg:text-[30.44vw]">
+            ACCESSORIES
+          </p>
         </div>
         <div className="absolute inset-0" data-hero-vehicles>
           <Image
@@ -406,7 +408,7 @@ export async function BlogSection() {
   if (latest.length === 0) return null;
 
   return (
-    <section className="bg-muted py-12 sm:py-16 lg:py-24">
+    <section className="bg-white py-12 sm:py-16 lg:py-24">
       <Container className="grid gap-6 sm:gap-8">
         <div className="grid justify-items-center gap-3 text-center">
           <SectionHeading title="From the blog" />
@@ -421,7 +423,7 @@ export async function BlogSection() {
             </span>
           </Button>
         </div>
-        <ul className="mx-auto flex w-full max-w-6xl snap-x snap-mandatory gap-3 overflow-x-auto pb-3 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
+        <ul className="scroll-fade-x mx-auto flex w-full max-w-6xl snap-x snap-mandatory gap-3 overflow-x-auto pb-3 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
           {latest.map((guide, index) => {
             const photo = photos.get(guide.slug);
             const isCollection = guide.slug === "how-to-install-a-scooter-guard-at-home";
@@ -437,7 +439,7 @@ export async function BlogSection() {
                 }`}
               >
                 <Link
-                  className={`group flex h-full overflow-hidden rounded-2xl bg-white p-3 sm:p-4 transition-shadow hover:shadow-lg ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
+                  className={`group flex h-full overflow-hidden rounded-2xl bg-muted p-3 sm:p-4 transition-shadow hover:shadow-lg ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
                   href={isCollection ? "/collections/all" : `/guides/${guide.slug}`}
                 >
                   <span
@@ -461,7 +463,9 @@ export async function BlogSection() {
                         {formatPostDate(guide.published)}
                       </span>
                     )}
-                    <h3 className={`${interTight.className} text-xl font-semibold leading-tight sm:text-2xl text-foreground group-hover:text-link`}>
+                    <h3
+                      className={`${interTight.className} text-xl font-semibold leading-tight sm:text-2xl text-foreground group-hover:text-link`}
+                    >
                       {isCollection ? "Explore our collection" : guide.headline}
                     </h3>
                     <span

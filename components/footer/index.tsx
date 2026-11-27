@@ -49,7 +49,10 @@ export async function Footer() {
 
   // Below lg the footer fills the screen and sits above the sticky header, so it slides over the logo bar.
   return (
-    <footer id="site-footer" className="relative z-40 flex min-h-dvh flex-col bg-[linear-gradient(180deg,#ffffff_0%,#F66101_100%)] pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] text-foreground lg:z-auto lg:min-h-0 lg:pb-0">
+    <footer
+      id="site-footer"
+      className="relative z-40 flex min-h-dvh flex-col bg-[linear-gradient(180deg,#ffffff_0%,#F66101_100%)] pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] text-foreground lg:z-auto lg:min-h-0 lg:pb-0"
+    >
       {/* pb-22 clears the fixed agent ActionBar pill when it renders */}
       <Container
         className={cn(

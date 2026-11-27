@@ -29,13 +29,7 @@ export function PartHotspots({
 
   return (
     <div className="relative mx-auto aspect-4/3 w-full max-w-3xl xl:h-full xl:max-h-full xl:w-auto">
-      <Image
-        alt={image.alt}
-        className="object-contain"
-        fill
-        sizes="100vw"
-        src={image.url}
-      />
+      <Image alt={image.alt} className="object-contain" fill sizes="100vw" src={image.url} />
       <svg
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 size-full"

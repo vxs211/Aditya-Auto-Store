@@ -4,19 +4,29 @@ import gsap from "gsap";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useRef } from "react";
 
-// Slow on purpose: the highlight glides to the tapped item and the bar rises in on load.
-const SLIDE = { duration: 0.6, ease: "power3.inOut" };
+import { useCartDrawer } from "@/components/cart/context";
+import { XIcon } from "@/components/ui/icon";
+
+// The highlight is tied to the page load: a tap starts a slow glide toward the item (HOLD), and when the new
+// route commits it finishes quickly (FINISH). A fast load snaps over almost at once; a slow load is tracked.
+const HOLD = { duration: 4, ease: "power2.out" };
+const FINISH = { duration: 0.3, ease: "power3.out" };
+const SLIDE = { duration: 0.45, ease: "power3.out" };
 const ENTRANCE = { duration: 1.2, ease: "power3.out" };
 
 export function BarMotion({ children, className }: { children: ReactNode; className: string }) {
   const nav = useRef<HTMLElement>(null);
   const highlight = useRef<HTMLSpanElement>(null);
   const placed = useRef(false);
+  const pending = useRef(false);
   const pathname = usePathname();
+  const { isOverlayOpen, menuOpen, setMenuOpen, setOverlayOpen } = useCartDrawer();
+  // While the cart or menu card is open, the whole pill becomes one Close button.
+  const closing = isOverlayOpen || menuOpen;
 
   // The bar rises in once.
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!playsEntrance()) return;
     // fromTo, not from: a repeated effect run (dev strict mode) would otherwise read the hidden start as the end.
     const tween = gsap.fromTo(
       nav.current,
@@ -35,7 +45,7 @@ export function BarMotion({ children, className }: { children: ReactNode; classN
     if (!bar || !pill) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    function place(animate: boolean) {
+    function place(animate: boolean, timing: { duration: number; ease: string } = SLIDE) {
       const active = bar?.querySelector<HTMLElement>('[data-active="true"]');
       if (!bar || !pill) return;
       if (!active) {
@@ -47,14 +57,17 @@ export function BarMotion({ children, className }: { children: ReactNode; classN
       gsap.to(pill, {
         height: to.height,
         opacity: 1,
+        overwrite: "auto",
         width: to.width,
         x: to.left - from.left,
         y: to.top - from.top,
-        ...(animate && !reduced ? SLIDE : { duration: 0 }),
+        ...(animate && !reduced ? timing : { duration: 0 }),
       });
     }
 
-    place(placed.current);
+    // A tap that started a hold finishes now that the route has committed.
+    place(placed.current, pending.current ? FINISH : SLIDE);
+    pending.current = false;
     placed.current = true;
     // Start gliding on the tap itself, not when the new route commits, so the highlight never trails the page.
     function onClick(event: MouseEvent) {
@@ -63,7 +76,8 @@ export function BarMotion({ children, className }: { children: ReactNode; classN
       bar?.querySelectorAll("a[data-active]").forEach((item) => {
         item.setAttribute("data-active", String(item === link));
       });
-      place(true);
+      pending.current = true;
+      place(true, HOLD);
     }
     bar.addEventListener("click", onClick, true);
     const observer = new ResizeObserver(() => place(false));
@@ -76,7 +90,21 @@ export function BarMotion({ children, className }: { children: ReactNode; classN
   }, [pathname]);
 
   return (
-    <nav aria-label="Primary" className={className} ref={nav}>
+    <nav aria-label="Primary" className={className} data-closing={closing} ref={nav}>
+      <button
+        aria-label="Close"
+        className="bar-round absolute inset-0 z-20 flex cursor-pointer items-center justify-center gap-2 bg-primary text-base font-semibold text-white opacity-0 blur-sm transition-[opacity,filter,scale] duration-300 ease-(--ease-out-soft) pointer-events-none active:scale-[0.98] data-[open=true]:pointer-events-auto data-[open=true]:opacity-100 data-[open=true]:blur-none motion-reduce:transition-none"
+        data-open={closing}
+        onClick={() => {
+          setOverlayOpen(false);
+          setMenuOpen(false);
+        }}
+        tabIndex={closing ? 0 : -1}
+        type="button"
+      >
+        <XIcon className="size-5" />
+        Close
+      </button>
       {/* The capsule behind the active item. */}
       <span
         aria-hidden
@@ -88,11 +116,19 @@ export function BarMotion({ children, className }: { children: ReactNode; classN
   );
 }
 
+// The entrance plays only when the visit started on the home page.
+function playsEntrance() {
+  return (
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    document.documentElement.dataset.firstHome === "1"
+  );
+}
+
 // The round search button rises in with the same motion as the bar.
 export function BarRise({ children, className }: { children: ReactNode; className?: string }) {
   const box = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!playsEntrance()) return;
     const tween = gsap.fromTo(
       box.current,
       { opacity: 0, y: 120 },

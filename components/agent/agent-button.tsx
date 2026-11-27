@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { MessageCircleIcon as MessageCircle } from "@/components/ui/icon";
+import { MessageSquareTextIcon } from "@/components/ui/icon";
 
 import { AgentPanel } from "./client";
 import type { ShoppingBrand } from "./shopping-questions";
@@ -17,8 +17,8 @@ export function AgentButton({ brands }: { brands: ShoppingBrand[] }) {
   useEffect(() => {
     const show = window.setTimeout(() => {
       if (!engaged.current) setGreeting(true);
-    }, 3000);
-    const hide = window.setTimeout(() => setGreeting(false), 12_000);
+    }, 5000);
+    const hide = window.setTimeout(() => setGreeting(false), 14_000);
     return () => {
       window.clearTimeout(show);
       window.clearTimeout(hide);
@@ -41,7 +41,7 @@ export function AgentButton({ brands }: { brands: ShoppingBrand[] }) {
     <>
       {vehicleSelected && (
         <p
-          className="absolute right-full mr-3 w-max max-w-56 rounded-xl border bg-background px-4 py-2.5 text-sm text-foreground shadow-md"
+          className="absolute right-full mr-3 w-max max-w-56 animate-in rounded-2xl rounded-br-sm bg-background px-4 py-3 text-sm font-medium text-foreground shadow-lg fade-in slide-in-from-right-2 duration-300 motion-reduce:animate-none"
           role="status"
         >
           Choose your accessories on this page.
@@ -49,7 +49,7 @@ export function AgentButton({ brands }: { brands: ShoppingBrand[] }) {
       )}
       {greeting && !vehicleSelected && (
         <button
-          className="absolute right-full mr-3 w-max max-w-56 cursor-pointer rounded-xl border bg-background px-4 py-2.5 text-left text-sm text-foreground shadow-md"
+          className="absolute right-full mr-3 w-max max-w-56 animate-in cursor-pointer rounded-2xl rounded-br-sm bg-background px-4 py-3 text-left text-sm font-medium text-foreground shadow-lg fade-in slide-in-from-right-2 duration-300 motion-reduce:animate-none"
           onClick={toggle}
           type="button"
         >
@@ -59,14 +59,14 @@ export function AgentButton({ brands }: { brands: ShoppingBrand[] }) {
       <button
         ref={triggerRef}
         aria-expanded={open}
-        className="bar-round flex size-14 cursor-pointer items-center justify-center bg-primary text-primary-foreground shadow-lg transition-colors hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className="bar-round flex size-16 cursor-pointer items-center justify-center border-4 border-white bg-primary text-white shadow-lg transition-colors hover:bg-primary-hover focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         onClick={toggle}
         onFocus={mount}
         onPointerEnter={mount}
         onTouchStart={mount}
         type="button"
       >
-        <MessageCircle className="size-6" />
+        <MessageSquareTextIcon className="size-7 stroke-[1.75]" />
         <span className="sr-only">Chat with shopping assistant</span>
       </button>
       {mounted && (

@@ -17,8 +17,15 @@ export function AgentThinking({ active, tool }: { active: boolean; tool?: string
   };
 
   return (
-    <p className="shimmer w-fit text-muted-foreground text-sm" role="status">
-      {tool && Object.hasOwn(toolLabels, tool) ? toolLabels[tool] : "Thinking…"}
+    <p className="flex w-fit items-center gap-2 text-muted-foreground text-sm" role="status">
+      <span aria-hidden className="typing-dots">
+        <i />
+        <i />
+        <i />
+      </span>
+      <span className="shimmer">
+        {tool && Object.hasOwn(toolLabels, tool) ? toolLabels[tool] : "Thinking…"}
+      </span>
     </p>
   );
 }

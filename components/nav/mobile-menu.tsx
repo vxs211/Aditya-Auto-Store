@@ -1,8 +1,9 @@
 "use client";
 
 import { Popover } from "@base-ui/react/popover";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
+import { useCartDrawer } from "@/components/cart/context";
 import {
   ArrowRIcon,
   MenuIcon as Menu,
@@ -19,13 +20,24 @@ export function MobileMenu({
   label?: string;
   triggerClassName: string;
 }) {
-  const [open, setOpen] = useState(false);
+  const { menuOpen: open, setMenuOpen: setOpen } = useCartDrawer();
   const close = () => setOpen(false);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const [originX, setOriginX] = useState<number>();
+  // The popup is centred above the bar; scale it out of the button that was pressed.
+  const onOpenChange = (next: boolean) => {
+    if (next && trigger.current) {
+      const rect = trigger.current.getBoundingClientRect();
+      const width = Math.min(272, window.innerWidth - 32);
+      setOriginX(rect.left + rect.width / 2 - (window.innerWidth - width) / 2);
+    }
+    setOpen(next);
+  };
   return (
-    <Popover.Root open={open} onOpenChange={setOpen}>
+    <Popover.Root open={open} onOpenChange={onOpenChange}>
       <Popover.Trigger
         render={
-          <button type="button" className={triggerClassName}>
+          <button ref={trigger} type="button" className={triggerClassName}>
             {open ? <XIcon className="size-5" /> : <Menu className="size-5" />}
             <span className={label ? undefined : "sr-only"}>
               {open ? "Close" : (label ?? "Menu")}
@@ -40,7 +52,12 @@ export function MobileMenu({
           sideOffset={8}
           className="z-40 !fixed !top-auto !bottom-[calc(5rem+env(safe-area-inset-bottom,0px))] !left-1/2 ![transform:translateX(-50%)]"
         >
-          <Popover.Popup className="w-[min(17rem,calc(100vw-2rem))] origin-bottom-right overflow-hidden rounded-3xl bg-background font-sans shadow-[0_8px_28px_rgba(0,0,0,0.18)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] data-starting-style:translate-y-6 data-starting-style:scale-x-75 data-starting-style:scale-y-0 data-starting-style:opacity-0 data-ending-style:translate-y-6 data-ending-style:scale-x-75 data-ending-style:scale-y-0 data-ending-style:opacity-0 motion-reduce:transition-none [&_h3]:font-sans">
+          <Popover.Popup
+            style={{
+              transformOrigin: originX === undefined ? "bottom right" : `${originX}px 100%`,
+            }}
+            className="w-[min(17rem,calc(100vw-2rem))] overflow-hidden rounded-3xl bg-background font-sans shadow-xl transition-all duration-400 ease-[cubic-bezier(0.23,1,0.32,1)] data-starting-style:translate-y-6 data-starting-style:scale-x-75 data-starting-style:scale-y-0 data-starting-style:opacity-0 data-ending-style:translate-y-6 data-ending-style:scale-x-75 data-ending-style:scale-y-0 data-ending-style:opacity-0 motion-reduce:transition-none [&_h3]:font-sans"
+          >
             <div className="grid gap-1 px-5 pt-5 pb-4">
               <p className="text-xs font-semibold tracking-[0.14em] text-primary uppercase">
                 Aditya Auto

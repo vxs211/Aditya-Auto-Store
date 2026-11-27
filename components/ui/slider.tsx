@@ -145,7 +145,7 @@ function SliderContent({ className, ...props }: ComponentProps<"div">) {
       data-slot="slider-content"
       onScroll={handleScroll}
       className={cn(
-        "scrollbar-hide grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain",
+        "scroll-fade-x scrollbar-hide grid snap-x snap-mandatory grid-flow-col gap-5 overflow-x-auto overscroll-x-contain",
         className,
       )}
       style={{ msOverflowStyle: "none", scrollbarWidth: "none" }}

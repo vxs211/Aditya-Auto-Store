@@ -26,6 +26,7 @@ export function CartIconClient({
 
   return (
     <button
+      data-cart-trigger
       onClick={openOverlay}
       className={
         className ??
@@ -36,7 +37,10 @@ export function CartIconClient({
       <span className="relative">
         <HandbagIcon className="size-5" />
         {quantity > 0 && (
-          <span className="absolute -top-2 -right-1 flex size-4 items-center justify-center rounded-full bg-primary text-xxs leading-none text-primary-foreground">
+          <span
+            key={quantity}
+            className="badge-pop absolute -top-2 -right-1 flex size-4 items-center justify-center rounded-full bg-primary text-xxs leading-none text-primary-foreground"
+          >
             {quantity}
           </span>
         )}
