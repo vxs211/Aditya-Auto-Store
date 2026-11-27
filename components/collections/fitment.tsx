@@ -1,9 +1,9 @@
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import type { ReactNode } from "react";
 
 import { CollectionBrowseFrame } from "@/components/collections/collection-browse-provider";
 import { CollectionShopHeader } from "@/components/collections/collection-header";
+import { CollectionHero } from "@/components/collections/collection-hero";
 import { BreadcrumbSchema } from "@/components/schema/breadcrumb-schema";
 import { CollectionSchema } from "@/components/schema/collection-schema";
 import { Container } from "@/components/ui/container";
@@ -11,12 +11,11 @@ import { ArrowRIcon } from "@/components/ui/icon";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Link } from "@/components/ui/link";
 import { Page } from "@/components/ui/page";
+import { WhatsAppIcon } from "@/components/ui/page-cards";
 import { Sections } from "@/components/ui/sections";
-import { modelDisplayName } from "@/lib/collections";
+import { HIDDEN_MODEL_HANDLES, modelDisplayName } from "@/lib/collections";
 import type { Collection, CollectionFitment } from "@/lib/collections/types";
 import { shopConfig } from "@/lib/config";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 interface FitmentLayoutProps {
   children?: ReactNode;
@@ -29,14 +28,7 @@ interface FitmentLayoutProps {
 export function FitmentLayout({ children, collection, fitment, productCount }: FitmentLayoutProps) {
   const { handle, title, updatedAt } = collection;
   const { body, brand, models } = fitment;
-  const visibleModels =
-    handle === "bajaj-chetak-accessories"
-      ? models.filter(
-          (model) =>
-            model.handle !== "chetak-black-accessories" &&
-            model.handle !== "chetak-c2501-black-accessories",
-        )
-      : models;
+  const visibleModels = models.filter((model) => !HIDDEN_MODEL_HANDLES.has(model.handle));
   // The banner metafield is rarely set; the collection image is a real picture of this scooter.
   const banner = fitment.banner ?? collection.image ?? null;
   const crumbs = [
@@ -49,15 +41,20 @@ export function FitmentLayout({ children, collection, fitment, productCount }: F
   const isModelPage = models.length === 0;
 
   return (
-    <Page className="pt-0 md:pt-0">
+    <Page className="relative pt-0 before:pointer-events-none before:absolute before:inset-x-0 before:-top-18 before:h-18 before:bg-[#F66101] lg:before:-top-20 lg:before:h-20 md:pt-0">
       <BreadcrumbSchema items={crumbs} />
       <CollectionSchema
         collection={{ description: collection.description, handle, title, updatedAt }}
       />
-      <div aria-hidden="true" className="h-10 bg-[#F66101] sm:h-14" />
-      <div
-        aria-hidden="true"
-        className="h-14 bg-[linear-gradient(180deg,#F66101_0%,#ff8a4d_45%,#ffe3d1_85%,#ffffff_100%)] sm:h-20"
+      <CollectionHero
+        title={
+          brand
+            ? modelDisplayName(title, handle)
+                .replace(/\s+(?:BS6\b|Next Gen\b|(?:19|20)\d{2}\b|\(Old Model\)).*$/i, "")
+                .replace(/\s+(?:black|leg guard)$/i, "")
+            : title
+        }
+        vehicle={isModelPage && !!brand}
       />
       {!isModelPage && (
         <section>
@@ -86,9 +83,7 @@ export function FitmentLayout({ children, collection, fitment, productCount }: F
               <p className="text-label font-medium tracking-[0.2em] text-muted-foreground uppercase">
                 Collection
               </p>
-              <h1 className={`${interTight.className} text-display font-semibold text-primary`}>
-                {title}
-              </h1>
+              <h2 className="text-display text-primary">{title}</h2>
               <p className="text-muted-foreground">Accessories made to fit {compatibleWith}</p>
             </div>
           </Container>
@@ -118,7 +113,11 @@ export function FitmentLayout({ children, collection, fitment, productCount }: F
             <ModelTiles models={visibleModels} />
           ) : (
             <div className="grid gap-4">
-              <CollectionShopHeader count={productCount} title={modelDisplayName(title, handle)} />
+              <CollectionShopHeader
+                count={productCount}
+                secondary
+                title={modelDisplayName(title, handle)}
+              />
               <CollectionBrowseFrame handle={handle} path={`/collections/${handle}`}>
                 {children}
               </CollectionBrowseFrame>
@@ -159,9 +158,7 @@ function ModelTiles({ models }: { models: CollectionFitment["models"] }) {
             </div>
             <div className="flex flex-1 flex-wrap items-end justify-between gap-4 p-5">
               <div className="grid min-w-0 gap-1">
-                <h2
-                  className={`${interTight.className} text-xl font-normal leading-tight wrap-anywhere text-foreground`}
-                >
+                <h2 className="text-xl font-normal leading-[1.04] wrap-anywhere text-foreground">
                   {modelDisplayName(title, handle)}
                 </h2>
                 <p className="text-sm text-muted-foreground">
@@ -202,7 +199,7 @@ function ContentCard({ body, title }: { body: string; title: string }) {
       className="grid gap-6 rounded-3xl border border-black/10 bg-[linear-gradient(135deg,#fff4ed_0%,#ffe6d7_48%,#ffffff_100%)] p-6 shadow-soft md:grid-cols-[1fr_2fr] md:p-10"
       data-reveal
     >
-      <h2 className={`${interTight.className} text-h3`}>About {title}</h2>
+      <h2 className="text-h3">About {title}</h2>
       <div className="grid gap-3 text-muted-foreground">
         {paragraphs.map((paragraph) => (
           <p key={paragraph}>{paragraph}</p>
@@ -231,6 +228,7 @@ function ContactBand() {
           rel="noopener noreferrer"
           target="_blank"
         >
+          <WhatsAppIcon className="size-5" />
           Chat on WhatsApp
         </Link>
       )}

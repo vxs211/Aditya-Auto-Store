@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import { type ComponentProps, type ComponentType, type ReactNode, Suspense } from "react";
 
@@ -26,8 +25,6 @@ import {
 import { SectionHeading } from "@/components/ui/section-heading";
 import { getCollectionResults } from "@/lib/collections/server";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 type Icon = ComponentType<ComponentProps<"svg">>;
 
@@ -166,7 +163,7 @@ function InfoCard({ body, icon, title }: { body: string; icon: Icon; title: stri
     <li className="grid content-start gap-4 rounded-2xl bg-white p-5 shadow-card sm:p-6">
       <IconTile icon={icon} />
       <div className="grid gap-1.5">
-        <h3 className={`${interTight.className} text-xl leading-tight font-semibold`}>{title}</h3>
+        <h3 className="text-xl leading-[1.29] font-medium tracking-normal">{title}</h3>
         <p className="text-body text-pretty text-muted-foreground">{body}</p>
       </div>
     </li>
@@ -220,7 +217,7 @@ export default function AboutPage() {
               Contact us
             </Button>
           </div>
-          <ul className="grid w-full max-w-5xl grid-cols-3 gap-3 rounded-2xl bg-[#fff1e8] p-3 sm:gap-4 sm:p-6">
+          <ul className="grid w-full max-w-5xl grid-cols-3 gap-3 rounded-2xl bg-white p-3 sm:gap-4 sm:p-6">
             {["activa", "Access", "Chetak"].map((name) => (
               <li className="relative aspect-4/3" key={name}>
                 <Image
@@ -246,9 +243,7 @@ export default function AboutPage() {
               >
                 <IconTile icon={icon} />
                 <div className="grid gap-1">
-                  <dd
-                    className={`${interTight.className} text-4xl leading-none font-semibold tabular-nums`}
-                  >
+                  <dd className={`font-sans text-4xl leading-none font-semibold tabular-nums`}>
                     {value}
                   </dd>
                   <dt className="text-small text-muted-foreground">{label}</dt>
@@ -275,7 +270,7 @@ export default function AboutPage() {
               as they make it, and you can buy a single piece or order in bulk.
             </p>
           </div>
-          <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-[#fff1e8] shadow-card">
+          <div className="relative aspect-4/3 overflow-hidden rounded-2xl bg-white shadow-card">
             <Image
               alt="Aditya stainless steel accessories on a scooter"
               className="object-contain p-6 mix-blend-multiply"
@@ -369,9 +364,7 @@ export default function AboutPage() {
         <Container>
           <div className="grid gap-5 rounded-2xl bg-white p-6 text-center shadow-card sm:p-10 md:flex md:items-center md:justify-between md:text-left">
             <div className="grid gap-2">
-              <h2 className={`${interTight.className} text-2xl leading-tight font-semibold`}>
-                Ready to upgrade your ride?
-              </h2>
+              <h2 className="text-2xl">Ready to upgrade your ride?</h2>
               <p className="text-body text-muted-foreground">
                 Pick your scooter and see the parts made for it.
               </p>
@@ -399,7 +392,7 @@ async function RangePictures() {
     <ul className="grid grid-cols-2 gap-3 lg:grid-cols-4">
       {shown.map((product) => (
         <li className="grid gap-3 rounded-2xl bg-white p-3 shadow-card sm:p-4" key={product.id}>
-          <div className="relative aspect-square overflow-hidden rounded-2xl bg-[#fff1e8]">
+          <div className="relative aspect-square overflow-hidden rounded-2xl bg-white">
             <Image
               alt={product.featuredImage?.altText ?? product.title}
               className="object-cover mix-blend-multiply"
@@ -408,7 +401,7 @@ async function RangePictures() {
               src={product.featuredImage?.url ?? ""}
             />
           </div>
-          <p className={`${interTight.className} text-base leading-snug font-semibold text-pretty`}>
+          <p className={`font-sans text-base leading-snug font-semibold text-pretty`}>
             {product.title}
           </p>
         </li>

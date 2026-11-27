@@ -42,7 +42,7 @@ export function ProductImageCarousel({
   return (
     <div
       data-slot="product-card-image"
-      className={cn("relative aspect-square overflow-hidden rounded-2xl bg-[#fff1e8]", className)}
+      className={cn("relative aspect-square overflow-hidden rounded-2xl bg-white", className)}
     >
       {current ? (
         <Image

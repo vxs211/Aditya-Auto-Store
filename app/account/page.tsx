@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
 import { redirect } from "next/navigation";
 import { type ComponentProps, type ComponentType, type ReactNode, Suspense } from "react";
 
@@ -19,7 +18,6 @@ import { isCustomerLoggedIn } from "@/lib/auth/server";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 const TITLE = "My account";
 const DESCRIPTION =
@@ -132,7 +130,7 @@ export default function AccountLandingPage() {
 
           <div className="grid gap-5 rounded-2xl bg-white p-6 shadow-card sm:p-10 md:flex md:items-center md:justify-between">
             <div className="grid max-w-2xl gap-2">
-              <h2 className={`${interTight.className} text-2xl leading-tight font-semibold`}>
+              <h2 className="text-2xl">
                 New to {shopConfig.site.name}?
               </h2>
               <p className="text-body text-pretty text-muted-foreground">
@@ -210,7 +208,7 @@ function TileText({
       </span>
       <span className="grid gap-1 px-1 pb-1">
         <h3
-          className={`${interTight.className} text-lg leading-tight font-semibold text-foreground`}
+          className="text-lg leading-[1.29] font-medium tracking-normal text-foreground"
         >
           {title}
         </h3>

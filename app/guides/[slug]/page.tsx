@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -16,7 +15,6 @@ import { GUIDES, getGuide } from "@/lib/guides";
 import { pickGuidePhotos } from "@/lib/guides/photos";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 export function generateStaticParams() {
   return GUIDES.map(({ slug }) => ({ slug }));
@@ -104,7 +102,7 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
           <ChevronLeftIcon aria-hidden="true" className="size-4" />
           All posts
         </Link>
-        <h1 className="max-w-3xl text-[clamp(2rem,4.6vw,3.25rem)] leading-[1.12] font-semibold tracking-[-0.1px] text-balance">
+        <h1 className="max-w-3xl text-[clamp(2.25rem,calc(4.6vw+0.25rem),3.5rem)] leading-[1.04] font-normal tracking-[-0.04275em] text-balance">
           {guide.title}
         </h1>
         <p className="text-small text-muted-foreground tabular-nums">
@@ -117,7 +115,7 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
         <article className="grid gap-12 py-12 md:py-16">
           {guide.sections.map(({ heading, paragraphs, steps }) => (
             <section className="grid max-w-[68ch] gap-4" key={heading}>
-              <h2 className="font-heading text-3xl! leading-tight! tracking-[-0.1px] text-balance md:text-4xl!">
+              <h2 className="font-heading text-[2rem]! leading-[1.04]! tracking-[-0.04275em] text-balance md:text-[2.375rem]!">
                 {heading}
               </h2>
               {paragraphs.map((paragraph) => (
@@ -144,7 +142,7 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
 
           {guide.faqs && (
             <section className="grid max-w-[68ch] gap-6">
-              <h2 className="font-heading text-3xl! leading-tight! tracking-[-0.1px] text-balance md:text-4xl!">
+              <h2 className="font-heading text-[2rem]! leading-[1.04]! tracking-[-0.04275em] text-balance md:text-[2.375rem]!">
                 Questions
               </h2>
               {guide.faqs.map(({ answer, question }) => (
@@ -163,7 +161,7 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
       <Container>
         <section className="mb-16 grid gap-8 md:mb-24">
           <div className="flex flex-wrap items-end justify-between gap-2">
-            <h2 className="font-heading text-3xl! leading-tight! tracking-[-0.1px] md:text-4xl!">
+            <h2 className="font-heading text-[2rem]! leading-[1.04]! tracking-[-0.04275em] md:text-[2.375rem]!">
               Recent posts
             </h2>
             <Link
@@ -181,7 +179,7 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
                   href={`/guides/${item.slug}`}
                 >
                   <BlogThumb
-                    className="rounded-2xl bg-[#fff1e8]"
+                    className="rounded-2xl bg-white"
                     compact
                     guide={item}
                     photo={photos.get(item.slug)}
@@ -191,7 +189,7 @@ async function GuideContent({ params }: { params: Promise<{ slug: string }> }) {
                       {formatPostDate(item.published)}
                     </span>
                     <h3
-                      className={`${interTight.className} text-lg! leading-snug! font-semibold text-balance text-foreground`}
+                      className="text-[1.25rem]! leading-[1.29]! font-medium tracking-normal text-balance text-foreground"
                     >
                       {item.title}
                     </h3>

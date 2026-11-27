@@ -1,14 +1,11 @@
 "use client";
 
-import { Inter_Tight } from "next/font/google";
 import { useRef } from "react";
 
 import { ChevronDownIcon as ChevronDown } from "@/components/ui/icon";
 import type { MenuItem } from "@/lib/menu/types";
 
 // The site's display face, so the nav links read with the homepage cards and section titles.
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "600"] });
-
 import { DropdownPanel } from "./dropdown-panel";
 import { MegaPanel, type MegaDetail } from "./mega-panel";
 import { MenuLink } from "./menu-link";
@@ -36,7 +33,7 @@ export function QuickLinks({
 }
 
 // The trigger text matches the links inside the shop menu; Inter Tight keeps the nav in the site's display voice.
-const TRIGGER_CLASS = `${interTight.className} flex items-center gap-1 rounded-sm px-2.5 py-1 text-[15px] font-medium tracking-[0.01em] text-black/70 transition-colors hover:bg-black/5 hover:text-black`;
+const TRIGGER_CLASS = `font-sans flex items-center gap-1 rounded-sm px-2.5 py-1 text-[15px] font-medium tracking-[0.01em] text-black/70 transition-colors hover:bg-black/5 hover:text-black`;
 
 function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
   const host = useRef<HTMLLIElement>(null);
@@ -63,7 +60,7 @@ function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
           />
         </MenuLink>
         <DropdownPanel
-          className="absolute left-0 right-0 top-full z-40 mx-auto mt-2 w-fit"
+          className="absolute left-0 right-0 top-full z-40 mx-auto w-fit pt-2"
           host={host}
         >
           <ul className="min-w-56 rounded-2xl bg-white p-2 shadow-card-hover">
@@ -71,7 +68,7 @@ function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
               <li key={entry.id}>
                 <MenuLink
                   url={entry.url}
-                  className={`block rounded-full px-5 py-3 text-base font-semibold text-foreground transition-colors hover:bg-[#fff1e8] ${interTight.className}`}
+                  className={`block rounded-full px-5 py-3 text-base font-semibold text-foreground transition-colors hover:bg-[#fff1e8] font-sans`}
                 >
                   {entry.title}
                 </MenuLink>
@@ -93,7 +90,7 @@ function NavItem({ item, mega }: { item: MenuItem; mega?: MegaMenu }) {
           aria-hidden="true"
         />
       </MenuLink>
-      <DropdownPanel className="absolute inset-x-0 top-full z-40 mt-2" host={host}>
+      <DropdownPanel className="absolute inset-x-0 top-full z-40 pt-2" host={host}>
         <div className="rounded-2xl bg-white shadow-card-hover">
           <MegaPanel defaultId={mega.defaultId} details={mega.details} entries={item.items} />
         </div>

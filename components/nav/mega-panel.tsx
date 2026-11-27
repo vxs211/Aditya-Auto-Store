@@ -1,7 +1,6 @@
 "use client";
 
 import { cn } from "cn";
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -13,11 +12,23 @@ import type { MenuItem } from "@/lib/menu/types";
 import { MenuLink } from "./menu-link";
 
 // The site's display face, so the menu reads with the rest of the nav.
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
-
 // Slow, soft entrance; each piece sets its own delay so they arrive one after another.
 const ENTER =
   "animate-[menu-in_900ms_cubic-bezier(0.16,1,0.3,1)_backwards] motion-reduce:animate-none";
+
+// Brand logo files in /public/brand/manufacturers, matched by the collection handle in the entry URL.
+const BRAND_LOGOS: Partial<Record<string, string>> = {
+  "bajaj-chetak-accessories": "bajaj",
+  honda: "honda",
+  "suzuki-accessories": "suzuki",
+  "tvs-accessories": "tvs",
+  "yamaha-accessories": "yamaha",
+};
+
+function brandLogo(url: string) {
+  const logo = BRAND_LOGOS[url.split("/").filter(Boolean).pop() ?? ""];
+  return logo ? `/brand/manufacturers/${logo}.svg` : undefined;
+}
 
 export interface MegaCard {
   image: { altText: string; url: string };
@@ -78,7 +89,7 @@ export function MegaPanel({
   }
 
   return (
-    <Container className="grid grid-cols-[1.2fr_3fr] gap-10 pt-10 pb-12" ref={root}>
+    <Container className="grid grid-cols-[1.2fr_3fr] gap-10 pt-10 pb-8" ref={root}>
       <ul className="grid content-start gap-2">
         {entries.map((entry) => (
           <li
@@ -88,9 +99,20 @@ export function MegaPanel({
           >
             <MenuLink
               url={entry.url}
-              className={`flex items-center justify-between gap-2 rounded-full px-4 py-3 text-base font-semibold transition-[background-color,box-shadow] ${interTight.className} ${entry.id === current ? "bg-white shadow-card" : "hover:bg-[#fff1e8]"}`}
+              className={`flex items-center justify-between gap-2 rounded-full px-4 py-3 text-base font-semibold transition-[background-color,box-shadow] font-sans ${entry.id === current ? "bg-white shadow-card" : "hover:bg-[#fff1e8]"}`}
             >
-              {entry.title}
+              <span className="flex min-w-0 items-center gap-3">
+                {brandLogo(entry.url) && (
+                  <Image
+                    alt=""
+                    className="h-7 w-14 shrink-0 object-contain object-left"
+                    height={28}
+                    src={brandLogo(entry.url) ?? ""}
+                    width={56}
+                  />
+                )}
+                <span className="truncate">{entry.title}</span>
+              </span>
               <ArrowRIcon
                 aria-hidden="true"
                 className={`size-4 shrink-0 transition-opacity ${entry.id === current ? "opacity-100" : "opacity-0"}`}
@@ -99,7 +121,7 @@ export function MegaPanel({
           </li>
         ))}
       </ul>
-      <div className="relative">
+      <div className="grid">
         {armed &&
           stack.map((id, index) => {
             const detail = details[id];
@@ -110,45 +132,45 @@ export function MegaPanel({
             return (
               <div
                 className={cn(
-                  "grid content-start gap-5",
-                  entering && "absolute inset-0",
+                  "grid content-start gap-5 [grid-area:1/1]",
                   leaving &&
                     "pointer-events-none animate-[menu-out_140ms_ease-in_forwards] motion-reduce:animate-none",
                 )}
+                inert={leaving}
                 key={id}
               >
                 <div
                   className={cn("flex items-center justify-between gap-4", entering && ENTER)}
                   style={entering ? { animationDelay: "120ms" } : undefined}
                 >
-                  <p className={`text-2xl leading-tight font-semibold ${interTight.className}`}>
+                  <p className={`text-2xl leading-tight font-semibold font-sans`}>
                     {detail.heading}
                   </p>
                   <p className="rounded-full bg-[#fff1e8] px-3 py-1 text-small text-foreground tabular-nums">
                     {detail.caption}
                   </p>
                 </div>
-                <ul className="grid grid-cols-3 gap-4">
+                <ul className="grid grid-cols-[repeat(3,minmax(0,1fr))] content-start gap-4">
                   {detail.cards.map((card, cardIndex) => (
                     <li
-                      className={cn("h-full", entering && ENTER)}
+                      className={cn("h-full min-w-0", entering && ENTER)}
                       key={card.url}
                       style={entering ? { animationDelay: `${180 + cardIndex * 90}ms` } : undefined}
                     >
                       <Link
-                        className="group/card grid h-full grid-rows-[auto_1fr] gap-3 rounded-2xl bg-white p-3 shadow-card transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-card-hover motion-reduce:transform-none motion-reduce:transition-none"
+                        className="group/card grid h-full min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-3 rounded-2xl bg-white p-3 shadow-card transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-card-hover motion-reduce:transform-none motion-reduce:transition-none"
                         href={card.url}
                       >
-                        <span className="relative block aspect-4/3 overflow-hidden rounded-2xl bg-[#fff1e8]">
+                        <span className="relative block aspect-square overflow-hidden rounded-2xl bg-white">
                           <Image
                             alt={card.image.altText || card.title}
                             className={cn(
-                              "object-contain p-2 mix-blend-multiply transition-transform duration-700 group-hover/card:scale-105",
+                              "object-contain p-1 transition-transform duration-700 group-hover/card:scale-105",
                               entering &&
                                 "animate-[menu-zoom_1400ms_cubic-bezier(0.16,1,0.3,1)_backwards] motion-reduce:animate-none",
                             )}
                             fill
-                            sizes="100vw"
+                            sizes="(min-width: 1024px) 260px, 100vw"
                             src={card.image.url}
                             style={
                               entering ? { animationDelay: `${180 + cardIndex * 90}ms` } : undefined
@@ -156,9 +178,14 @@ export function MegaPanel({
                           />
                         </span>
                         <span
-                          className={`flex items-center justify-between gap-2 px-1 pb-0.5 text-small leading-tight font-semibold text-foreground ${interTight.className}`}
+                          className={`flex items-center justify-between gap-2 px-1 pb-0.5 text-small leading-tight font-semibold text-foreground font-sans`}
                         >
-                          {card.title}
+                          <span
+                            className="line-clamp-2 min-h-[2lh] min-w-0 wrap-anywhere"
+                            title={card.title}
+                          >
+                            {card.title}
+                          </span>
                           <span
                             aria-hidden="true"
                             className="grid size-6 shrink-0 place-items-center rounded-full bg-primary text-white transition-transform group-hover/card:translate-x-0.5 motion-reduce:transform-none"

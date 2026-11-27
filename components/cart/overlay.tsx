@@ -99,7 +99,7 @@ function OverlayContent() {
           <span className="mb-4 grid size-20 place-items-center rounded-2xl bg-[#fff1e8]">
             <PremiumBagIcon className="size-12 text-primary" />
           </span>
-          <h3 className="mb-6 font-heading text-2xl font-semibold">Your cart is empty</h3>
+          <h3 className="mb-6 font-heading text-2xl font-medium">Your cart is empty</h3>
           <Button
             onClick={() => {
               setOverlayOpen(false);

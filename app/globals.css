@@ -17,34 +17,40 @@
   --color-wash: #0000000d;
   --color-silver: #A3A3A3;
   --color-amber: #ffb110;
-  --font-sans: var(--font-inter);
-  --font-heading: var(--font-geist);
+  --font-sans: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: var(--font-inter-tight), "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Linear's Inter weights: variable-font steps between regular and bold. */
+  --font-weight-medium: 510;
+  --font-weight-semibold: 590;
+  --font-weight-bold: 680;
   --font-label: var(--font-michroma);
   --text-xxs: 0.75rem;
   --text-display: clamp(3rem, 7.5vw, 6rem);
-  --text-display--line-height: 1.05;
-  --text-display--letter-spacing: -0.048em;
-  --text-display--font-weight: 600;
+  --text-display--line-height: 1.06;
+  --text-display--letter-spacing: -0.0209em;
+  --text-display--font-weight: 510;
   --text-h1: clamp(2.5rem, 5.5vw, 4.5rem);
-  --text-h1--line-height: 1.2;
-  --text-h1--letter-spacing: -0.028em;
-  --text-h1--font-weight: 500;
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.0209em;
+  --text-h1--font-weight: 510;
   --text-h2: clamp(2.125rem, 4.2vw, 3.375rem);
-  --text-h2--line-height: 1.05;
-  --text-h2--letter-spacing: -0.035em;
-  --text-h2--font-weight: 700;
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.0209em;
+  --text-h2--font-weight: 510;
   --text-h3: 1.375rem;
-  --text-h3--line-height: 1.25;
-  --text-h3--letter-spacing: -0.011em;
-  --text-h3--font-weight: 700;
+  --text-h3--line-height: 1.33;
+  --text-h3--letter-spacing: -0.0114em;
+  --text-h3--font-weight: 590;
   --text-h4: 1.25rem;
   --text-h4--line-height: 1.4;
-  --text-h4--letter-spacing: -0.006em;
-  --text-h4--font-weight: 600;
-  --text-body: 1rem;
-  --text-body--line-height: 1.5;
-  --text-small: 0.875rem;
-  --text-small--line-height: 1.45;
+  --text-h4--letter-spacing: -0.0114em;
+  --text-h4--font-weight: 590;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-body--letter-spacing: -0.01045em;
+  --text-small: 1rem;
+  --text-small--line-height: 1.5;
+  --text-small--letter-spacing: -0.01235em;
   --text-label: 0.75rem;
   --text-label--line-height: 1.35;
   --text-label--letter-spacing: 0.01em;
@@ -123,9 +129,15 @@
 
 @layer components {
 
-  .prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-    letter-spacing: -0.02em;
-    font-weight: 600;
+  .prose :where(h1, h2):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    font-weight: 510;
+    letter-spacing: -0.0209em;
+    line-height: 1.1;
+  }
+  .prose :where(h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    font-weight: 590;
+    letter-spacing: -0.0114em;
+    line-height: 1.33;
   }
 }
 
@@ -138,8 +150,19 @@
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
+  html {
+    /* Linear's Inter setup: alternate 1 and rounded quotes, crisp rendering. */
+    font-feature-settings: "cv01", "ss03";
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
   body {
     @apply bg-background text-foreground;
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    letter-spacing: -0.01045em;
     /* Digits are the same width everywhere, so prices and counts never jiggle. */
     font-variant-numeric: tabular-nums;
   }
@@ -155,7 +178,16 @@
   h4,
   h5,
   h6 {
-    @apply font-heading font-semibold;
+    @apply font-heading;
+  }
+  h1, h2 {
+    font-weight: 510;
+    letter-spacing: -0.0209em;
+    line-height: 1.1;
+  }
+  h3, h4 {
+    font-weight: 590;
+    letter-spacing: -0.0114em;
   }
   button,
   [role="button"] {
@@ -168,23 +200,27 @@
 }
 
 @layer utilities {
-  .font-heading { font-weight: 600; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-display { font-size: clamp(3.052rem, 7.5vw, 4.768rem); line-height: 1.1; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h1 { font-size: clamp(2.441rem, 5.5vw, 3.815rem); line-height: 1.1; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h2 { font-size: clamp(1.953rem, 4.2vw, 3.052rem); line-height: 1.1; font-weight: 600; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h3 { font-size: 1.563rem; line-height: 1.25; font-weight: 600; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h4 { font-size: 1.25rem; line-height: 1.45; }
+  .font-heading { font-weight: 590; }
+  :is(h1, h2).font-heading { font-weight: 510; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-display { font-size: clamp(3.302rem, calc(7.5vw + 0.25rem), 5.018rem); line-height: 1.06; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h1 { font-size: clamp(2.691rem, calc(5.5vw + 0.25rem), 4.065rem); line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h2 { font-size: clamp(2.203rem, calc(4.2vw + 0.25rem), 3.302rem); line-height: 1.1; font-weight: 510; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h3 { font-size: 1.75rem; line-height: 1.33; font-weight: 590; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-h4 { font-size: 1.4375rem; line-height: 1.4; font-weight: 590; }
+  :is(h1, h2).text-h3 { font-weight: 590; letter-spacing: -0.0114em; line-height: 1.33; }
 
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-xs { font-size: 0.64rem; line-height: 1.5; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-sm { font-size: 0.8rem; line-height: 1.5; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-base { font-size: 1rem; line-height: 1.45; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-lg { font-size: 1.25rem; line-height: 1.45; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-xl { font-size: 1.563rem; line-height: 1.25; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-2xl { font-size: 1.953rem; line-height: 1.25; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-3xl { font-size: 2.441rem; line-height: 1.25; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-4xl { font-size: 3.052rem; line-height: 1.1; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-5xl { font-size: 3.815rem; line-height: 1.1; }
-  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-6xl { font-size: 4.768rem; line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-xs { font-size: 0.765rem; line-height: 1.5; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-sm { font-size: 0.925rem; line-height: 1.5; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-base { font-size: 1.125rem; line-height: 1.45; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-lg { font-size: 1.375rem; line-height: 1.45; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-xl { font-size: 1.688rem; line-height: 1.25; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-2xl { font-size: 2.078rem; line-height: 1.25; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-3xl { font-size: 2.566rem; line-height: 1.25; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-4xl { font-size: 3.177rem; line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-5xl { font-size: 3.94rem; line-height: 1.1; }
+  :is(h1, h2, h3, h4, h5, h6, .font-heading).text-6xl { font-size: 4.893rem; line-height: 1.1; }
+  :is(h1, h2)[class]:is(.text-xl, .text-2xl, .text-3xl, .text-4xl, .text-5xl, .text-6xl) { line-height: 1.1; }
+  h3[class]:is(.text-base, .text-lg, .text-xl, .text-2xl) { line-height: 1.29; }
 
   /* Hide scrollbar for Chrome, Safari and Opera */
   .scrollbar-hide::-webkit-scrollbar {

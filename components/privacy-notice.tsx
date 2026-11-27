@@ -38,7 +38,7 @@ export function PrivacyNotice() {
       aria-labelledby="privacy-notice-title"
       className="fixed right-4 bottom-[calc(9rem+env(safe-area-inset-bottom,0px))] left-4 z-50 grid max-h-[70dvh] gap-5 overflow-y-auto rounded-xl border border-black/10 bg-white p-6 text-black shadow-2xl sm:left-auto sm:w-[32rem] sm:p-8 lg:bottom-24"
     >
-      <h2 id="privacy-notice-title" className="text-3xl font-semibold tracking-tight">
+      <h2 id="privacy-notice-title" className="text-3xl">
         We value your privacy
       </h2>
       <p className="text-sm leading-relaxed sm:text-base">

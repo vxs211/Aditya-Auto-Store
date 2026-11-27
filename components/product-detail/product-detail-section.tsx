@@ -1,5 +1,4 @@
 import { cn } from "cn";
-import { Inter_Tight } from "next/font/google";
 import { type ReactNode, Suspense } from "react";
 
 import { BundleComponents, BundleParents } from "@/components/product-detail/bundle-components";
@@ -44,8 +43,6 @@ import { type SelectedOptions } from "@/lib/product/types";
 import type { ProductDetails, ProductVariant } from "@/lib/product/types";
 
 // The site's display face, so the PDP title reads with the homepage and nav.
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "600"] });
-
 function BreadcrumbRow({ product }: { product: ProductDetails }) {
   const trail = [
     { name: "Home", path: "/" },
@@ -165,15 +162,11 @@ function ProductInfoArea({
       >
         <div data-slot="product-info-header">
           {product.vendor ? (
-            <p
-              className={`text-xs tracking-[0.14em] text-muted-foreground uppercase ${interTight.className}`}
-            >
+            <p className={`text-xs tracking-[0.14em] text-muted-foreground uppercase font-sans`}>
               {product.vendor}
             </p>
           ) : null}
-          <h1
-            className={`mt-1.5 text-h2 text-balance wrap-anywhere text-foreground ${interTight.className}`}
-          >
+          <h1 className="mt-1.5 text-h2 text-balance wrap-anywhere text-foreground">
             {product.title}
           </h1>
           {product.hasUniformPricing ? (

@@ -2,7 +2,6 @@
 
 import type { CartLine as HydrogenCartLine } from "@shopify/hydrogen";
 import { cn } from "cn";
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 
 import { MinusIcon, PlusIcon, TrashIcon as Trash2Icon } from "@/components/ui/icon";
@@ -14,8 +13,6 @@ import { formatPrice } from "@/lib/money";
 
 import { CartLineForm } from "./line-form";
 import { CartWarnings } from "./warnings";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 interface CartLineItemsProps {
   cards?: boolean;
@@ -110,12 +107,12 @@ function CartLineItem({ card, item }: CartLineItemProps) {
       {href ? (
         <Link
           href={href}
-          className="relative size-20 shrink-0 cursor-pointer self-start overflow-hidden rounded-2xl bg-[#fff1e8] transition-opacity hover:opacity-80"
+          className="relative size-20 shrink-0 cursor-pointer self-start overflow-hidden rounded-2xl bg-white transition-opacity hover:opacity-80"
         >
           {imageContent}
         </Link>
       ) : (
-        <div className="relative size-20 shrink-0 self-start overflow-hidden rounded-2xl bg-[#fff1e8]">
+        <div className="relative size-20 shrink-0 self-start overflow-hidden rounded-2xl bg-white">
           {imageContent}
         </div>
       )}
@@ -124,16 +121,12 @@ function CartLineItem({ card, item }: CartLineItemProps) {
           <div className="grid gap-1">
             {href ? (
               <Link href={href} className="cursor-pointer transition-opacity hover:opacity-70">
-                <h3
-                  className={`${interTight.className} text-base leading-snug font-semibold text-pretty wrap-anywhere text-foreground`}
-                >
+                <h3 className="text-base leading-[1.29] font-medium tracking-normal text-pretty wrap-anywhere text-foreground">
                   {title}
                 </h3>
               </Link>
             ) : (
-              <h3
-                className={`${interTight.className} text-base leading-snug font-semibold text-pretty wrap-anywhere text-foreground`}
-              >
+              <h3 className="text-base leading-[1.29] font-medium tracking-normal text-pretty wrap-anywhere text-foreground">
                 {title}
               </h3>
             )}
@@ -219,7 +212,7 @@ function CartLineItem({ card, item }: CartLineItemProps) {
       </div>
       <div className="grid gap-0.5 self-start py-0.5 text-right text-sm tabular-nums tracking-tight">
         <span
-          className={`${interTight.className} text-base font-semibold text-foreground data-[pending=true]:text-muted-foreground`}
+          className={`font-sans text-base font-semibold text-foreground data-[pending=true]:text-muted-foreground`}
           data-pending={isCostPending || !currencyCode}
         >
           {isCostPending || !currencyCode ? "Updating…" : price(finalUnitPrice)}

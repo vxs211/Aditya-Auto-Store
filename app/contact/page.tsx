@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
 
 import { Button } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -25,8 +24,6 @@ import {
 import { SectionHeading } from "@/components/ui/section-heading";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 const TITLE = "Contact us";
 const DESCRIPTION =
@@ -81,7 +78,7 @@ function ContactRow({
         <p className="text-small text-muted-foreground">{label}</p>
         {href ? (
           <a
-            className={`${interTight.className} text-xl leading-tight font-semibold tabular-nums hover:underline hover:underline-offset-4`}
+            className={`font-sans text-xl leading-tight font-semibold tabular-nums hover:underline hover:underline-offset-4`}
             href={href}
           >
             {children}
@@ -177,9 +174,7 @@ export default function ContactPage() {
 
           <div className="grid gap-5 rounded-2xl bg-white p-6 shadow-card sm:p-10 md:flex md:items-center md:justify-between">
             <div className="grid gap-2">
-              <h2 className={`${interTight.className} text-2xl leading-tight font-semibold`}>
-                Know the part you need?
-              </h2>
+              <h2 className="text-2xl">Know the part you need?</h2>
               <p className="text-body text-muted-foreground">Find it by your scooter model.</p>
             </div>
             <Button className={PRIMARY_PILL} render={<Link href="/collections" />} size="lg">

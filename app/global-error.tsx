@@ -1,8 +1,16 @@
 "use client";
 
+import { Inter_Tight } from "next/font/google";
+
 import { AlertCircleIcon } from "@/components/ui/icon";
 
 import "./globals.css";
+
+const inter = Inter_Tight({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-inter-tight",
+});
 
 export default function GlobalError({
   retry,
@@ -11,7 +19,7 @@ export default function GlobalError({
   retry: () => void;
 }) {
   return (
-    <html lang="en">
+    <html className={`${inter.className} ${inter.variable}`} lang="en">
       <body className="font-sans antialiased">
         <div className="flex min-h-screen flex-col items-center justify-center px-5 py-10 text-center">
           <div className="mb-6 flex justify-center">

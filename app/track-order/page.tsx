@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
 
 import { TrackOrderForm } from "@/components/track-order/form";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,6 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 const TITLE = "Track your order";
 const DESCRIPTION =
@@ -71,7 +69,7 @@ export default function TrackOrderPage() {
         <Container className="grid gap-8 sm:gap-10">
           <div className="mx-auto grid w-full max-w-2xl gap-5 rounded-2xl bg-white p-6 shadow-card sm:p-10">
             <div className="grid gap-1">
-              <h2 className={`${interTight.className} text-2xl leading-tight font-semibold`}>
+              <h2 className="text-2xl">
                 Ask about your order
               </h2>
               <p className="text-body text-muted-foreground">We check it and reply on WhatsApp.</p>
@@ -102,7 +100,7 @@ export default function TrackOrderPage() {
 
           <div className="grid gap-5 rounded-2xl bg-white p-6 shadow-card sm:p-10 md:flex md:items-center md:justify-between">
             <div className="grid gap-2">
-              <h2 className={`${interTight.className} text-2xl leading-tight font-semibold`}>
+              <h2 className="text-2xl">
                 Something wrong with your order?
               </h2>
               <p className="text-body text-pretty text-muted-foreground">

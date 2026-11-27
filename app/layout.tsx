@@ -1,6 +1,6 @@
 import { BotIdClient } from "botid/client";
 import type { Metadata, Viewport } from "next";
-import { Geist, Inter, Michroma } from "next/font/google";
+import { Inter_Tight, Michroma } from "next/font/google";
 
 import "./globals.css";
 import Script from "next/script";
@@ -23,7 +23,7 @@ import { SiteSchema } from "@/components/schema/site-schema";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { botIdProtectedRoutes } from "@/lib/botid";
 import { seedCartData } from "@/lib/cart/server";
-import { brandDisplayName, modelDisplayName } from "@/lib/collections";
+import { brandDisplayName, HIDDEN_MODEL_HANDLES, modelDisplayName } from "@/lib/collections";
 import { getFitmentBrands } from "@/lib/collections/server";
 import { shopConfig } from "@/lib/config";
 
@@ -33,13 +33,8 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const geist = Geist({
-  variable: "--font-geist",
+const inter = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
 });
 
@@ -49,20 +44,11 @@ const michroma = Michroma({
   weight: "400",
 });
 
-// Collections the shopping assistant does not offer as a vehicle choice.
-const HIDDEN_ASSISTANT_MODELS = new Set([
-  "chetak-black-accessories",
-  "chetak-c2501-black-accessories",
-  "leg-guard-honda-shine-sp",
-  "honda-shine-leg-guard",
-  "honda-unicorn-leg-guard",
-]);
-
 async function StoreAssistant() {
   const brands = (await getFitmentBrands()).map(({ handle, models, title }) => ({
     handle,
     models: models
-      .filter(({ handle }) => !HIDDEN_ASSISTANT_MODELS.has(handle))
+      .filter(({ handle }) => !HIDDEN_MODEL_HANDLES.has(handle))
       .map(({ handle, title }) => ({ handle, title: modelDisplayName(title, handle) })),
     title: brandDisplayName(title),
   }));
@@ -73,7 +59,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   // Un-awaited: the promise streams to the client provider; never block the shell on it.
   const cartData = seedCartData();
   return (
-    <html lang={shopConfig.localization.locale} suppressHydrationWarning>
+    <html
+      className={`${inter.className} ${inter.variable}`}
+      lang={shopConfig.localization.locale}
+      suppressHydrationWarning
+    >
       <head>
         {/* Marks whether this visit began on the home page, so the nav and bottom bar only play their entrance then. */}
         <Script
@@ -86,9 +76,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {shopConfig.botid.isEnabled && <BotIdClient protect={botIdProtectedRoutes} />}
         <CartStandardActionsScript />
       </head>
-      <body
-        className={`${geist.variable} ${inter.variable} ${michroma.variable} flex min-h-dvh flex-col font-sans antialiased`}
-      >
+      <body className={`${michroma.variable} flex min-h-dvh flex-col font-sans antialiased`}>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-100 focus:rounded-md focus:bg-background focus:px-5 focus:py-2 focus:text-sm focus:font-medium focus:shadow-lg focus:ring-2 focus:ring-foreground focus:outline-none"

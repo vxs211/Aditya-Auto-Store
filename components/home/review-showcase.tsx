@@ -1,15 +1,12 @@
 "use client";
 
 import { cn } from "cn";
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import { useState } from "react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ChevronLeftIcon, ChevronRightIcon, StarIcon } from "@/components/ui/icon";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 export interface ShowcaseReview {
   author: string;
@@ -164,7 +161,7 @@ export function ReviewShowcase({ reviews }: { reviews: ShowcaseReview[] }) {
                     Purchased
                   </p>
                   {review.photo ? (
-                    <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg bg-[#fff1e8] max-sm:size-14 max-sm:flex-none">
+                    <div className="relative min-h-0 flex-1 overflow-hidden rounded-lg bg-white max-sm:size-14 max-sm:flex-none">
                       <Image
                         alt={`${review.author}'s scooter`}
                         className="object-contain object-center p-2 mix-blend-multiply"
@@ -191,7 +188,7 @@ export function ReviewShowcase({ reviews }: { reviews: ShowcaseReview[] }) {
                     </span>
                     <span className="grid min-w-0">
                       <span
-                        className={`${interTight.className} truncate text-lg leading-tight font-semibold text-foreground`}
+                        className={`font-sans truncate text-lg leading-tight font-semibold text-foreground`}
                       >
                         {review.author}
                       </span>

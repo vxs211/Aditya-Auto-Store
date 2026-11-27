@@ -1,4 +1,3 @@
-import { Inter_Tight } from "next/font/google";
 import localFont from "next/font/local";
 import Image from "next/image";
 
@@ -17,8 +16,6 @@ import { FeatureCarousel } from "./feature-carousel";
 import { HeroReveal } from "./hero-reveal";
 import { PartHotspots } from "./part-hotspots";
 import { VehicleScroll } from "./vehicle-scroll";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 const might = localFont({
   src: "../../app/fonts/Might.ttf",
@@ -136,7 +133,7 @@ export function ShopByBrand() {
               </span>
               <span className="grid grid-rows-[2.5rem_auto] items-center justify-items-center gap-2 px-3 py-4 text-center">
                 <span
-                  className={`${interTight.className} flex min-w-0 items-center justify-center text-xl leading-tight font-normal text-foreground`}
+                  className={`font-sans flex min-w-0 items-center justify-center text-xl leading-tight font-normal text-foreground`}
                 >
                   {name}
                 </span>
@@ -300,7 +297,7 @@ export function PartsTour() {
                 <SparklesIcon className="size-5" />
               </span>
               <p className="grid text-small text-black">
-                <span className="font-semibold">Jindal 202</span>
+                <span className="font-semibold">Jindal 202 SD Quality</span>
                 <span className="text-black">Stainless steel</span>
               </p>
             </div>
@@ -423,7 +420,7 @@ export async function BlogSection() {
             </span>
           </Button>
         </div>
-        <ul className="scroll-fade-x mx-auto flex w-full max-w-6xl snap-x snap-mandatory gap-3 overflow-x-auto pb-3 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0 lg:grid-cols-3 lg:grid-rows-[auto_auto]">
+        <ul className="scroll-fade-x mx-auto flex w-full max-w-6xl snap-x snap-mandatory gap-3 overflow-x-auto p-4 sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-3 lg:grid-rows-[auto_auto]">
           {latest.map((guide, index) => {
             const photo = photos.get(guide.slug);
             const isCollection = guide.slug === "how-to-install-a-scooter-guard-at-home";
@@ -439,11 +436,11 @@ export async function BlogSection() {
                 }`}
               >
                 <Link
-                  className={`group flex h-full overflow-hidden rounded-2xl bg-white shadow-card p-3 sm:p-4 transition-shadow hover:shadow-card-hover ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
+                  className={`group flex h-full overflow-hidden rounded-2xl bg-white shadow-lg p-3 sm:p-4 transition-shadow hover:shadow-xl ${index === 3 ? "flex-col sm:flex-row-reverse" : "flex-col"}`}
                   href={isCollection ? "/collections/all" : `/guides/${guide.slug}`}
                 >
                   <span
-                    className={`relative block shrink-0 overflow-hidden rounded-2xl bg-[#fff1e8] ${index === 0 ? "aspect-[16/9] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : guide.slug === "how-to-install-a-scooter-guard-at-home" ? "aspect-[21/9]" : "aspect-[16/9]"}`}
+                    className={`relative block shrink-0 overflow-hidden rounded-2xl bg-white ${index === 0 ? "aspect-[16/9] lg:aspect-square" : index === 3 ? "aspect-[16/9] sm:aspect-auto sm:w-2/5" : guide.slug === "how-to-install-a-scooter-guard-at-home" ? "aspect-[21/9]" : "aspect-[16/9]"}`}
                   >
                     {photo && (
                       <Image
@@ -463,13 +460,11 @@ export async function BlogSection() {
                         {formatPostDate(guide.published)}
                       </span>
                     )}
-                    <h3
-                      className={`${interTight.className} text-xl font-semibold leading-tight sm:text-2xl text-foreground group-hover:text-link`}
-                    >
+                    <h3 className="text-xl leading-[1.29] font-medium tracking-normal sm:text-2xl text-foreground group-hover:text-link">
                       {isCollection ? "Explore our collection" : guide.headline}
                     </h3>
                     <span
-                      className={`${interTight.className} line-clamp-3 sm:line-clamp-2 text-base leading-relaxed font-normal text-muted-foreground`}
+                      className={`font-sans line-clamp-3 sm:line-clamp-2 text-base leading-relaxed font-normal text-muted-foreground`}
                     >
                       {isCollection
                         ? "Discover scooter accessories made for a precise fit."
@@ -519,7 +514,7 @@ export function HomeContactBand() {
             <p className="text-xs font-medium tracking-[0.16em] text-white uppercase sm:text-label sm:tracking-[0.2em]">
               Made in Ahmedabad since 2006
             </p>
-            <h2 className="font-heading text-[clamp(2.5rem,10vw,4rem)] leading-[1.05] font-semibold text-white md:text-h1">
+            <h2 className="font-heading text-[clamp(2.75rem,calc(10vw+0.25rem),4.25rem)] leading-[1.04] text-white md:text-h1">
               Made to fit your scooter
             </h2>
           </div>

@@ -29,7 +29,7 @@ export function CartPageContent() {
               <PremiumBagIcon className="size-12 text-primary" />
             </span>
             <div className="grid gap-1">
-              <h2 className="font-heading text-2xl font-semibold">Your cart is empty</h2>
+              <h2 className="font-heading text-2xl">Your cart is empty</h2>
               <p className="text-body text-muted-foreground">
                 Pick your scooter and see the parts made for it.
               </p>

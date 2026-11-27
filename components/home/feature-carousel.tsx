@@ -1,10 +1,7 @@
 "use client";
 
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import { useState } from "react";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: "400" });
 
 export interface FeatureSlide {
   caption: string;
@@ -81,7 +78,7 @@ export function FeatureCarousel({ slides }: { slides: FeatureSlide[] }) {
                   <>
                     <span className="absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-black via-black/60 to-transparent" />
                     <span
-                      className={`${interTight.className} absolute inset-x-0 bottom-0 p-5 text-lg leading-tight font-normal text-white`}
+                      className={`font-sans absolute inset-x-0 bottom-0 p-5 text-lg leading-tight font-normal text-white`}
                     >
                       {slide.caption}
                     </span>

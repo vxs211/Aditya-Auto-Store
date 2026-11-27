@@ -39,9 +39,14 @@ export function FilterSheet({ children, label, trigger }: FilterSheetProps) {
   return (
     <Sheet>
       <SheetTrigger render={trigger} />
-      <SheetContent side="left" className="scroll-fade-y gap-0 overflow-y-auto px-5 pb-5">
-        <div className="flex h-16 shrink-0 items-center gap-2">
-          <SheetTitle className="text-lg font-semibold">{label}</SheetTitle>
+      <SheetContent
+        side="left"
+        className="scroll-fade-y gap-0 overflow-y-auto bg-white px-4 pb-6 sm:px-5"
+      >
+        <div className="flex h-20 shrink-0 items-center gap-2">
+          <SheetTitle className="font-heading text-2xl font-semibold tracking-[-0.1px]">
+            {label}
+          </SheetTitle>
         </div>
         {children}
       </SheetContent>
@@ -103,9 +108,9 @@ export function CollectionFilterSidebar({ filters, priceRange }: CollectionFilte
     actions.setFilters(next);
   };
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-3">
       {activeBadges.length > 0 || priceFilter ? (
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap items-center gap-2">
           {activeBadges.map((badge) => {
             const filter = parseFilterInput(
               findFilterInput(filters, badge.paramKey, badge.value) ?? "",
@@ -126,6 +131,13 @@ export function CollectionFilterSidebar({ filters, priceRange }: CollectionFilte
               onRemove={() => applyPrice(null, null)}
             />
           ) : null}
+          <button
+            className="inline-flex h-8 cursor-pointer items-center rounded-full px-3 text-xs font-semibold text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"
+            onClick={() => actions.setFilters([])}
+            type="button"
+          >
+            Clear all
+          </button>
         </div>
       ) : null}
 
@@ -139,7 +151,9 @@ export function CollectionFilterSidebar({ filters, priceRange }: CollectionFilte
               placeholder="From"
               value={minInput}
             />
-            <span className="text-muted-foreground">–</span>
+            <span className="text-muted-foreground" aria-hidden="true">
+              –
+            </span>
             <PriceInput
               currencyCode={priceRange.currencyCode}
               label="Maximum price"
@@ -149,11 +163,11 @@ export function CollectionFilterSidebar({ filters, priceRange }: CollectionFilte
             />
             <button
               aria-label="Apply price"
-              className="flex size-8 cursor-pointer items-center justify-center rounded-lg bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
+              className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-primary-hover bg-linear-to-b from-primary from-65% to-[#ffae78] text-white shadow-md ring-1 ring-white/25 ring-inset transition-shadow hover:shadow-lg"
               onClick={() => applyPrice(parsePriceValue(minInput), parsePriceValue(maxInput))}
               type="button"
             >
-              <CheckIcon className="size-4" />
+              <CheckIcon className="size-5" />
             </button>
           </div>
         </FilterSection>
@@ -192,7 +206,7 @@ export function CollectionFilterSidebar({ filters, priceRange }: CollectionFilte
                 })}
               </div>
             ) : (
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col gap-1">
                 {filter.values.map((value) => {
                   const isSelected = isFilterInputActive(state.filters, value.input);
                   return (
@@ -226,8 +240,8 @@ interface FilterSectionProps {
 
 function FilterSection({ children, title }: FilterSectionProps) {
   return (
-    <div className="flex flex-col gap-2.5">
-      <span className="text-base font-semibold text-muted-foreground">{title}</span>
+    <div className="flex flex-col gap-3 rounded-2xl bg-white p-4 shadow-card">
+      <span className="font-heading text-base font-semibold text-foreground">{title}</span>
       {children}
     </div>
   );
@@ -241,7 +255,7 @@ interface FilterBadgeProps {
 
 function FilterBadge({ href, label, onRemove }: FilterBadgeProps) {
   const className =
-    "inline-flex cursor-pointer items-center gap-1 rounded-full bg-primary/15 px-2.5 py-1 text-xs font-semibold text-primary transition-colors hover:bg-primary/25";
+    "inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-full bg-[#fff1e8] px-3 text-xs font-semibold text-foreground transition-colors hover:bg-primary-tint-hover";
   const content = (
     <>
       {label}
@@ -289,22 +303,24 @@ function FilterOption({ count, href, label, onClick, pending, selected }: Filter
       onKeyDown={pressOnSpace}
       role="button"
       data-selected={selected}
-      className="flex items-center justify-between text-left text-sm text-muted-foreground transition-colors hover:text-foreground data-[selected=true]:font-medium"
+      className="flex min-h-11 items-center gap-3 rounded-xl px-2 text-left text-sm text-foreground transition-colors hover:bg-[#fff1e8] data-[selected=true]:bg-[#fff1e8] data-[selected=true]:font-semibold"
       onClick={onClick}
     >
-      <span>
-        {label}
-        {count !== undefined && <span className="text-muted-foreground"> ({count})</span>}
+      <span
+        aria-hidden="true"
+        className="flex size-5 shrink-0 items-center justify-center rounded-md bg-white shadow-card data-[on=true]:bg-primary data-[on=true]:text-white"
+        data-on={selected || pending}
+      >
+        {pending ? (
+          <LoaderCircleIcon className="size-3.5 animate-spin" />
+        ) : selected ? (
+          <CheckIcon className="size-3.5" />
+        ) : null}
       </span>
-      {pending || selected ? (
-        <span className="flex size-3.5 shrink-0 items-center justify-center overflow-hidden">
-          {pending ? (
-            <LoaderCircleIcon className="size-3.5 animate-spin text-muted-foreground" />
-          ) : (
-            <CheckIcon className="size-3.5 text-muted-foreground" />
-          )}
-        </span>
-      ) : null}
+      <span className="min-w-0 flex-1">{label}</span>
+      {count !== undefined && (
+        <span className="text-xs font-normal text-muted-foreground tabular-nums">{count}</span>
+      )}
     </Link>
   );
 }
@@ -319,7 +335,7 @@ interface PriceInputProps {
 
 function PriceInput({ currencyCode, label, onChange, placeholder, value }: PriceInputProps) {
   return (
-    <div className="flex h-8 flex-1 items-center rounded-lg bg-input px-2.5">
+    <div className="flex h-11 min-w-0 flex-1 items-center rounded-full bg-white px-3.5 shadow-card focus-within:ring-2 focus-within:ring-primary/40">
       <span className="text-base text-muted-foreground md:text-sm">
         {currencyCode ? formatCurrencySymbol(currencyCode) : null}
       </span>

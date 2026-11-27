@@ -99,6 +99,18 @@ export function brandDisplayName(title: string): string {
     .join(" ");
 }
 
+// Model collections that are not offered as a vehicle choice in the nav menu or the shopping assistant.
+export const HIDDEN_MODEL_HANDLES = new Set([
+  "chetak-black-accessories",
+  "chetak-c2501-black-accessories",
+  "leg-guard-honda-shine-sp",
+  "honda-shine-leg-guard",
+  "honda-unicorn-leg-guard",
+  "access-125-old-model-accessories",
+  "burgman-bull-accessories",
+  "yamaha-new-fascino-2026-accessories",
+]);
+
 export function modelDisplayName(title: string, handle: string): string {
   if (handle === "bajaj-chetak-c2501-accessories") return "Bajaj Chetak C25 Series";
   if (handle === "bajaj-chetak-ev-accessories") return "Bajaj Chetak C35 Series";

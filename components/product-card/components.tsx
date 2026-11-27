@@ -1,5 +1,4 @@
 import { cn } from "cn";
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import type { ComponentProps, ReactNode } from "react";
 
@@ -8,7 +7,6 @@ import { Price } from "@/components/product/price";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { getDiscountPercent } from "@/lib/product";
 
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 function ProductCard({ className, children, ...props }: ComponentProps<"article">) {
   return (
@@ -63,7 +61,7 @@ function ProductCardImage({
   return (
     <div
       data-slot="product-card-image"
-      className={cn("relative aspect-square overflow-hidden rounded-2xl bg-[#fff1e8]", className)}
+      className={cn("relative aspect-square overflow-hidden rounded-2xl bg-white", className)}
     >
       {src ? (
         <Image
@@ -106,7 +104,7 @@ function ProductCardTitle({ className, children, ...props }: ComponentProps<"h3"
     <h3
       data-slot="product-card-title"
       className={cn(
-        `${interTight.className} line-clamp-2 text-base/5 font-medium wrap-anywhere text-foreground`,
+        "line-clamp-2 text-base leading-[1.29] font-medium tracking-normal wrap-anywhere text-foreground",
         className,
       )}
       {...props}
@@ -183,7 +181,7 @@ function ProductCardSkeleton({ className }: { className?: string }) {
         className,
       )}
     >
-      <div className="rounded-2xl bg-[#fff1e8]">
+      <div className="rounded-2xl bg-white">
         <ImagePlaceholder className="aspect-square animate-pulse" />
       </div>
       <div className="grid h-16 box-content grid-rows-[auto_1fr] gap-2 p-4">

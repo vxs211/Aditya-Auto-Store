@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 import { Suspense } from "react";
 
@@ -18,7 +17,6 @@ const TITLE = "Blog: scooter accessory guides";
 const DESCRIPTION =
   "Guides to choosing, fitting and looking after scooter accessories, with real parts and prices, from Aditya Auto Accessories in Ahmedabad.";
 
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -71,7 +69,7 @@ async function Posts() {
                   className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-card p-3 transition-shadow hover:shadow-card-hover sm:p-4"
                   href={`/guides/${guide.slug}`}
                 >
-                  <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-[#fff1e8]">
+                  <div className="relative aspect-16/10 overflow-hidden rounded-2xl bg-white">
                     {photo && (
                       <Image
                         alt={photo.alt}
@@ -91,7 +89,7 @@ async function Posts() {
                       {formatPostDate(guide.published)}
                     </time>
                     <h3
-                      className={`${interTight.className} text-xl leading-tight font-semibold text-balance text-foreground`}
+                      className="text-xl leading-[1.29] font-medium tracking-normal text-balance text-foreground"
                     >
                       {guide.title}
                     </h3>

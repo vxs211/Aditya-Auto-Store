@@ -50,7 +50,7 @@ export function ArticlePage({ article }: ArticlePageProps) {
             >
               {article.blogTitle}
             </Link>
-            <h1 className="text-3xl tracking-tight sm:text-4xl md:text-5xl">{article.title}</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl">{article.title}</h1>
             <div className="flex flex-wrap justify-center gap-x-2 text-muted-foreground text-sm">
               {article.author && <span>{article.author}</span>}
               {article.author && <span aria-hidden>·</span>}

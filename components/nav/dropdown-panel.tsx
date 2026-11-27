@@ -40,9 +40,14 @@ export function DropdownPanel({ children, className, host }: DropdownPanelProps)
     }
 
     let grace: ReturnType<typeof setTimeout> | undefined;
+    // `open` stops focusin events from restarting the tween; `quietUntil` stops Escape's refocus from reopening it.
+    let open = false;
+    let quietUntil = 0;
 
     function show() {
       clearTimeout(grace);
+      if (open || Date.now() < quietUntil) return;
+      open = true;
       gsap.killTweensOf(el);
       originFromTrigger();
       gsap.set(el, { visibility: "visible" });
@@ -52,6 +57,7 @@ export function DropdownPanel({ children, className, host }: DropdownPanelProps)
 
     function hide() {
       clearTimeout(grace);
+      open = false;
       gsap.killTweensOf(el);
       if (reduced) return gsap.set(el, { opacity: 0, visibility: "hidden" });
       grace = setTimeout(() => {
@@ -67,20 +73,44 @@ export function DropdownPanel({ children, className, host }: DropdownPanelProps)
     }
 
     function onKey(event: KeyboardEvent) {
-      if (event.key === "Escape") hide();
+      if (event.key !== "Escape") return;
+      quietUntil = Date.now() + 400;
+      li?.querySelector<HTMLElement>("a, button")?.focus();
+      hide();
+    }
+
+    // Tabbing out of the menu closes it.
+    function onFocusOut(event: FocusEvent) {
+      if (!li?.contains(event.relatedTarget as Node | null)) hide();
+    }
+
+    // Following a link closes it straight away, so it never sits open over the next page.
+    function closeNow() {
+      clearTimeout(grace);
+      open = false;
+      quietUntil = Date.now() + 400;
+      gsap.killTweensOf(el);
+      gsap.set(el, { opacity: 0, visibility: "hidden" });
+    }
+    function onClick(event: MouseEvent) {
+      if ((event.target as HTMLElement).closest("a")) closeNow();
     }
 
     li.addEventListener("mouseenter", show);
     li.addEventListener("mouseleave", hide);
     li.addEventListener("focusin", show);
+    li.addEventListener("click", onClick);
     li.addEventListener("keydown", onKey);
+    li.addEventListener("focusout", onFocusOut);
     return () => {
       clearTimeout(grace);
       gsap.killTweensOf(el);
       li.removeEventListener("mouseenter", show);
       li.removeEventListener("mouseleave", hide);
       li.removeEventListener("focusin", show);
+      li.removeEventListener("click", onClick);
       li.removeEventListener("keydown", onKey);
+      li.removeEventListener("focusout", onFocusOut);
     };
   }, [host]);
 

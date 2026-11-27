@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter_Tight } from "next/font/google";
 
 import {
   Accordion,
@@ -20,8 +19,6 @@ import {
 } from "@/components/ui/page-cards";
 import { shopConfig } from "@/lib/config";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 const TITLE = "Frequently asked questions";
 const DESCRIPTION =
@@ -126,7 +123,7 @@ export default function FaqPage() {
                 key={question}
                 value={question}
               >
-                <AccordionTrigger className={`${interTight.className} text-lg font-semibold hover:no-underline`}>
+                <AccordionTrigger className={`font-sans text-lg font-semibold hover:no-underline`}>
                   {question}
                 </AccordionTrigger>
                 <AccordionContent className="max-w-prose text-base/relaxed text-pretty text-muted-foreground">

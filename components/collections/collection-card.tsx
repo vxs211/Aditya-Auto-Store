@@ -1,13 +1,10 @@
 import { cn } from "cn";
-import { Inter_Tight } from "next/font/google";
 import Image from "next/image";
 
 import { ArrowRIcon } from "@/components/ui/icon";
 import { ImagePlaceholder } from "@/components/ui/image-placeholder";
 import { Link } from "@/components/ui/link";
 import type { CollectionWithThumbnail } from "@/lib/collections/types";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 export interface CollectionCardProps {
   className?: string;
@@ -64,7 +61,7 @@ export function CollectionCard({
       <div className="flex flex-1 flex-col items-center gap-2 px-3 py-4 text-center">
         <h2
           data-slot="collection-card-title"
-          className={`${interTight.className} flex min-w-0 items-center justify-center text-base leading-tight font-normal text-foreground sm:text-xl`}
+          className="flex min-w-0 items-center justify-center text-base leading-[1.04] font-normal text-foreground sm:text-xl"
         >
           <span className="line-clamp-2">{title}</span>
         </h2>

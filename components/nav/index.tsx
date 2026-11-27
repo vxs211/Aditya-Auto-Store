@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 import { Container } from "@/components/ui/container";
 import { Link } from "@/components/ui/link";
-import { brandDisplayName, modelDisplayName } from "@/lib/collections";
+import { brandDisplayName, HIDDEN_MODEL_HANDLES, modelDisplayName } from "@/lib/collections";
 import { getFitmentBrands } from "@/lib/collections/server";
 import { shopConfig } from "@/lib/config";
 import type { MenuItem } from "@/lib/menu/types";
@@ -17,7 +17,10 @@ import { QuickLinks, type MegaMenu } from "./quick-links";
 import { SearchModal } from "./search-modal";
 
 export async function Nav() {
-  const brands = await getFitmentBrands();
+  const brands = (await getFitmentBrands()).map((brand) => ({
+    ...brand,
+    models: brand.models.filter(({ handle }) => !HIDDEN_MODEL_HANDLES.has(handle)),
+  }));
   const items: MenuItem[] = [
     { id: "nav-home", items: [], title: "Home", url: "/" },
     {
@@ -63,7 +66,7 @@ export async function Nav() {
     const id = `nav-brand-${brand.handle}`;
     mega.defaultId ||= id;
     mega.details[id] = {
-      caption: `${brand.models.length} models`,
+      caption: `${brand.models.length} ${brand.models.length === 1 ? "model" : "models"}`,
       cards,
       heading: brandDisplayName(brand.title),
     };

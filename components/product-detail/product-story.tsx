@@ -78,7 +78,7 @@ export function ProductStory() {
               <Icon aria-hidden className="size-8 text-primary" />
             </span>
             <div className="grid gap-1.5">
-              <h3 className="text-xl leading-tight font-semibold">{title}</h3>
+              <h3 className="text-xl font-medium">{title}</h3>
               <p className="text-body text-pretty text-muted-foreground">{text}</p>
             </div>
           </li>

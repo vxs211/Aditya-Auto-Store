@@ -1,11 +1,8 @@
-import { Inter_Tight } from "next/font/google";
 import type { ComponentProps, ComponentType, ReactNode } from "react";
 
 import { Container } from "@/components/ui/container";
 import { CheckIcon } from "@/components/ui/icon";
 import { SectionHeading } from "@/components/ui/section-heading";
-
-const interTight = Inter_Tight({ subsets: ["latin"], weight: ["400", "600"] });
 
 export type CardIcon = ComponentType<ComponentProps<"svg">>;
 
@@ -27,7 +24,7 @@ export function InfoCard({ body, icon, title }: { body: string; icon: CardIcon; 
     <li className="grid content-start gap-4 rounded-2xl bg-white p-5 shadow-card sm:p-6">
       <IconTile icon={icon} />
       <div className="grid gap-1.5">
-        <h3 className={`${interTight.className} text-xl leading-tight font-semibold`}>{title}</h3>
+        <h3 className="text-xl leading-[1.29] font-medium tracking-normal">{title}</h3>
         <p className="text-body text-pretty text-muted-foreground">{body}</p>
       </div>
     </li>
@@ -86,14 +83,12 @@ export function PolicyCard({
       data-reveal
     >
       <span
-        className={`${interTight.className} grid size-14 shrink-0 place-items-center rounded-2xl bg-[#fff1e8] text-2xl font-semibold text-primary tabular-nums`}
+        className={`font-sans grid size-14 shrink-0 place-items-center rounded-2xl bg-[#fff1e8] text-2xl font-semibold text-primary tabular-nums`}
       >
         {Icon ? <Icon aria-hidden="true" className="size-8 text-primary" /> : number}
       </span>
       <div className="grid min-w-0 gap-3">
-        <h2 className={`${interTight.className} text-xl leading-tight font-semibold sm:text-2xl`}>
-          {heading}
-        </h2>
+        <h2 className="text-xl sm:text-2xl">{heading}</h2>
         {children}
       </div>
     </section>
@@ -131,7 +126,7 @@ export function HelpBand({
   return (
     <div className="grid gap-5 rounded-2xl bg-white p-6 shadow-card sm:p-10 md:flex md:items-center md:justify-between">
       <div className="grid gap-2">
-        <h2 className={`${interTight.className} text-2xl leading-tight font-semibold`}>{title}</h2>
+        <h2 className="text-2xl">{title}</h2>
         <p className="text-body text-pretty text-muted-foreground">{body}</p>
       </div>
       <div className="flex flex-wrap gap-3">{children}</div>
